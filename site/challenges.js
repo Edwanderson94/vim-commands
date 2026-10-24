@@ -20,6 +20,8 @@ const challenges = [
     initialLines: ['Primeira linha.', 'Remova esta linha.', 'Última linha.'],
     instruction: 'Use dd na segunda linha.',
     isComplete: (state) => state.lines.length === 2
+      && state.lines[0] === 'Primeira linha.'
+      && state.lines[1] === 'Última linha.'
   },
   {
     id: 'copy-line',

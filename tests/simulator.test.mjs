@@ -90,6 +90,9 @@ for (const challenge of challenges) {
   state = press(createState(challenge.initialLines), challengeSteps[challenge.id]);
   assert.equal(challenge.isComplete(state), true, `${challenge.id} deve ser concluível com as instruções`);
 }
+state = press(createState(challenges.find(({ id }) => id === 'delete-line').initialLines), ['d', 'd']);
+assert.equal(challenges.find(({ id }) => id === 'delete-line').isComplete(state), false,
+  'apagar a linha errada não deve concluir o desafio de remover a segunda linha');
 assert.equal(challenges.length, 5);
 assert.equal(commands.length, 30);
 assert.deepEqual(createState().lines, ['Linha para praticar.', 'Apague esta linha.', 'Bom estudo!'], 'restaurar texto recria o estado inicial');

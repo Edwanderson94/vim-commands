@@ -19,31 +19,33 @@
 <p><strong>Pré-requisito:</strong> um terminal Linux aberto e o Vim instalado (<code>vim --version</code>).</p>
 <h2>Objetivo</h2>
 <p>Ao final desta aula, você conseguirá criar uma pasta de prática no terminal, abrir um arquivo no Vim, escrever uma frase, salvar e sair.</p>
+<h2>Conceitos</h2>
+<p>O <strong>terminal</strong> recebe comandos para o sistema operacional, como <code>pwd</code> e <code>ls</code>. O <strong>Vim</strong> é o editor aberto a partir do terminal. Dentro do Vim, o modo normal executa comandos; pressione <code>i</code> para inserir texto e <code>Esc</code> para voltar ao modo normal. Assim, <code>mkdir</code> e <code>cd</code> são digitados no terminal, enquanto <code>i</code>, <code>Esc</code> e <code>:wq</code> são usados dentro do Vim.</p>
 <h2>Demonstração</h2>
-<h2>Parte 1 — Onde estou?</h2>
-<p>Você está no <strong>terminal</strong>. O terminal é o lugar onde digitamos comandos para o sistema operacional. Comece descobrindo em qual pasta você está:</p>
+<h3>Parte 1 — Onde estou?</h3>
+<p>No <strong>terminal</strong>, descubra em qual pasta você está:</p>
 <pre><code class="language-bash">pwd</code></pre>
 <p>O resultado será um caminho parecido com <code>/home/seu-usuario</code>. Agora veja os arquivos e pastas desse lugar:</p>
 <pre><code class="language-bash">ls</code></pre>
-<h2>Parte 2 — Criar um espaço seguro para praticar</h2>
+<h3>Parte 2 — Criar um espaço seguro para praticar</h3>
 <p>Ainda no <strong>terminal</strong>, execute um comando por vez:</p>
 <pre><code class="language-bash">mkdir -p ~/vim-pratica
 cd ~/vim-pratica
 pwd</code></pre>
 <p>O último comando deve terminar em <code>/vim-pratica</code>. Esta é sua área de treino: você pode criar, editar e apagar arquivos nela sem mexer nos seus projetos.</p>
-<h2>Parte 3 — Abrir seu primeiro arquivo</h2>
+<h3>Parte 3 — Abrir seu primeiro arquivo</h3>
 <p>No <strong>terminal</strong>, digite:</p>
 <pre><code class="language-bash">vim ola.txt</code></pre>
 <p>Agora você entrou no <strong>Vim</strong>. O cursor aparece na primeira linha, mas você ainda não está digitando texto. O Vim começou no modo normal.</p>
-<h2>Parte 4 — Escrever uma frase</h2>
+<h3>Parte 4 — Escrever uma frase</h3>
 <p>Dentro do <strong>Vim</strong>, pressione <code>i</code>. Na parte inferior da tela, deve aparecer <code>-- INSERT --</code>. Digite a frase abaixo:</p>
 <pre><code class="language-text">Olá, Vim!</code></pre>
 <p>Em seguida, pressione <code>Esc</code>. Você voltou ao modo normal e o indicador `-- INSERT --` desaparece.</p>
-<h2>Parte 5 — Salvar e sair</h2>
+<h3>Parte 5 — Salvar e sair</h3>
 <p>Ainda dentro do <strong>Vim</strong>, digite exatamente:</p>
 <pre><code class="language-text">:wq</code></pre>
 <p>Depois, pressione <code>Enter</code>. O <code>:</code> abre a área de comandos; <code>w</code> vem de <em>write</em> (salvar) e <code>q</code> vem de <em>quit</em> (sair). Você retornará ao terminal.</p>
-<h2>Parte 6 — Conferir seu arquivo</h2>
+<h3>Parte 6 — Conferir seu arquivo</h3>
 <p>No <strong>terminal</strong>, confirme que o arquivo foi criado:</p>
 <pre><code class="language-bash">ls</code></pre>
 <p>Você deve ver <code>ola.txt</code>. Para conferir seu conteúdo sem abri-lo no Vim, use:</p>

@@ -1,6 +1,6 @@
 # Plano de execução
 
-Status revisado em 2026-10-23. As páginas Markdown também são renderizadas em
+Status revisado em 2026-10-24. As páginas Markdown também são renderizadas em
 HTML estático local para leitura formatada no navegador.
 
 ## Fase 1 — Conteúdo Markdown — concluída
@@ -18,7 +18,7 @@ formato Markdown válido.
 **Aceite e verificação:** conferir que todos os links relativos afetados
 existem e que cada material mantém o contexto terminal/Vim.
 
-## Fase 2 — Site de referência — em andamento
+## Fase 2 — Site de referência — verificada em Firefox
 
 **Objetivo:** entregar a interface estática com trilha, catálogo, busca,
 filtros, tema e responsividade.
@@ -36,13 +36,20 @@ colisão de nomes globais; a colisão interrompia a montagem do catálogo e do
 simulador no navegador. A estrutura das aulas agora explicita demonstração e
 autoavaliação conforme a especificação.
 
-**Falta verificar:** busca/filtros e alternância de tema por interação no
-navegador; combinação com leitor de tela e mais tamanhos móveis.
+**Verificado em Firefox:** busca, filtros combinados, estado sem resultados,
+limpeza dos filtros com retorno do foco à busca, alternância e persistência do
+tema. Um frame de teste com larguras de 320, 360, 390, 430, 500, 768 e 1280 px
+não apresentou rolagem horizontal; o catálogo alternou entre uma, duas e três
+colunas conforme os breakpoints.
+
+**Acessibilidade visual:** contraste medido dos textos e links dos dois temas
+ficou entre 4,8:1 e 16,05:1. O contorno de foco claro foi escurecido para
+4,8:1 sobre o fundo principal; no simulador escuro, o contorno chega a 7,57:1.
 
 **Parada:** não avançar sem uma verificação manual básica e links relativos
 válidos.
 
-## Fase 3 — Simulador e desafios — em andamento
+## Fase 3 — Simulador e desafios — verificada em Firefox
 
 **Objetivo:** executar exclusivamente os comandos declarados e validar cinco
 desafios em memória.
@@ -53,8 +60,17 @@ desafios em memória.
 comandos definidos na especificação, busca, inserção, repetição, undo/redo,
 restauração e conclusão dos cinco desafios.
 
-**Falta verificar manualmente:** foco e captura no navegador, restauração pelos
-botões, leitores de tela e comportamento visual.
+**Verificado em Firefox:** tecla ignorada antes da ativação, foco transferido
+para a área ao ativar, `Tab` não capturado, inserção e restauração pelo botão.
+Os cinco desafios foram concluídos conforme suas instruções e reiniciados para
+o estado inicial.
+
+Uma sessão de teclado WebDriver também digitou no simulador e confirmou que
+`Tab` move o foco do editor para o link do exercício seguinte.
+
+O critério do desafio `dd` agora confirma que a segunda linha correta foi
+removida; o teste também confirma que remover a primeira linha não conclui o
+desafio.
 
 **Repetição com `.`:** a última alteração fica registrada como operação
 estruturada. A cobertura inclui inserção e abertura de linha (`i`, `a`, `o`),
@@ -88,13 +104,15 @@ Markdown, execute o gerador; o workflow também o executa antes do deploy.
 **Verificação visual:** Firefox renderizou a página completa e uma aula em
 `file://`, em desktop e mobile. A inspeção estática confirma 19 documentos
 HTML (página principal mais 18 materiais), marcos semânticos e destinos locais
-existentes. A suíte do simulador, checagem sintática dos scripts e `git diff
---check` passaram; links locais das 19 páginas foram resolvidos.
+existentes. O teste `file://` confirmou o catálogo com 30 comandos e a busca.
+As cinco aulas contêm todos os campos e seções especificados. A suíte do
+simulador, checagem sintática dos scripts e `git diff --check` passaram; links
+locais das 19 páginas foram resolvidos.
 
-**Ainda falta:** interação manual de teclado/foco, Chrome, leitor de tela e
-validação completa em celular. O ambiente não oferece uma janela de navegador
-interativa, então esses pontos ainda precisam de validação no navegador do
-usuário.
+**Ainda falta:** validação em Chrome e com leitor de tela. Os testes de
+responsividade e interação foram executados em Firefox headless; não há uma
+janela gráfica de navegador exposta neste ambiente para avaliação assistiva
+manual.
 
 **Publicação de validação:** o workflow do GitHub Pages publica `site/` a
 partir da branch `release/1.0.0`. Ela permite validar o catálogo, tema,
@@ -106,7 +124,6 @@ autorização explícita.
 
 ## Sequência imediata
 
-1. Validar todas as páginas HTML geradas e seus links.
-2. Testar o site manualmente em desktop e celular, com teclado, Chrome, Firefox
-   e leitor de tela.
-3. Corrigir regressões e registrar os resultados da validação.
+1. Validar Chrome e leitor de tela, registrando nome, função, estado e ordem de
+   foco dos controles.
+2. Corrigir regressões encontradas e registrar os resultados.

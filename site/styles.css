@@ -8,7 +8,7 @@
   --border: #d9e1ea;
   --code-bg: #172033;
   --code-text: #e5eef8;
-  --focus: #f59e0b;
+  --focus: #b45309;
 }
 
 html[data-theme="dark"] {
@@ -21,6 +21,7 @@ html[data-theme="dark"] {
   --border: #33445e;
   --code-bg: #08111f;
   --code-text: #e5eef8;
+  --focus: #f59e0b;
 }
 
 * { box-sizing: border-box; }
@@ -152,6 +153,7 @@ kbd, .key {
 .command-card p, .command-card small { color: var(--muted); }
 
 .practice {
+  --focus: #f59e0b;
   margin: 2rem 0 4rem;
   padding: clamp(1.25rem, 4vw, 2rem);
   border-radius: 1rem;

@@ -11,12 +11,19 @@
 Ao final desta aula, você conseguirá criar uma pasta de prática no terminal,
 abrir um arquivo no Vim, escrever uma frase, salvar e sair.
 
+## Conceitos
+
+O **terminal** recebe comandos para o sistema operacional, como `pwd` e `ls`.
+O **Vim** é o editor aberto a partir do terminal. Dentro do Vim, o modo normal
+executa comandos; pressione `i` para inserir texto e `Esc` para voltar ao modo
+normal. Assim, `mkdir` e `cd` são digitados no terminal, enquanto `i`, `Esc` e
+`:wq` são usados dentro do Vim.
+
 ## Demonstração
 
-## Parte 1 — Onde estou?
+### Parte 1 — Onde estou?
 
-Você está no **terminal**. O terminal é o lugar onde digitamos comandos para o
-sistema operacional. Comece descobrindo em qual pasta você está:
+No **terminal**, descubra em qual pasta você está:
 
 ```bash
 pwd
@@ -29,7 +36,7 @@ arquivos e pastas desse lugar:
 ls
 ```
 
-## Parte 2 — Criar um espaço seguro para praticar
+### Parte 2 — Criar um espaço seguro para praticar
 
 Ainda no **terminal**, execute um comando por vez:
 
@@ -42,7 +49,7 @@ pwd
 O último comando deve terminar em `/vim-pratica`. Esta é sua área de treino:
 você pode criar, editar e apagar arquivos nela sem mexer nos seus projetos.
 
-## Parte 3 — Abrir seu primeiro arquivo
+### Parte 3 — Abrir seu primeiro arquivo
 
 No **terminal**, digite:
 
@@ -53,7 +60,7 @@ vim ola.txt
 Agora você entrou no **Vim**. O cursor aparece na primeira linha, mas você ainda
 não está digitando texto. O Vim começou no modo normal.
 
-## Parte 4 — Escrever uma frase
+### Parte 4 — Escrever uma frase
 
 Dentro do **Vim**, pressione `i`. Na parte inferior da tela, deve aparecer
 `-- INSERT --`. Digite a frase abaixo:
@@ -65,7 +72,7 @@ Olá, Vim!
 Em seguida, pressione `Esc`. Você voltou ao modo normal e o indicador `-- INSERT
 --` desaparece.
 
-## Parte 5 — Salvar e sair
+### Parte 5 — Salvar e sair
 
 Ainda dentro do **Vim**, digite exatamente:
 
@@ -76,7 +83,7 @@ Ainda dentro do **Vim**, digite exatamente:
 Depois, pressione `Enter`. O `:` abre a área de comandos; `w` vem de *write*
 (salvar) e `q` vem de *quit* (sair). Você retornará ao terminal.
 
-## Parte 6 — Conferir seu arquivo
+### Parte 6 — Conferir seu arquivo
 
 No **terminal**, confirme que o arquivo foi criado:
 
