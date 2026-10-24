@@ -38,11 +38,19 @@ com o terminal e por que podem querer aprendê-lo.
 - Testes automatizados, links relativos e validação manual da página inicial
   passam antes da promoção da melhoria.
 
-**Estado nesta rodada:** a pesquisa e as fontes foram registradas, a introdução
-já foi adicionada à página inicial, a dica solta de `Esc` foi removida e o
-espaçamento da transição entre apresentação e trilha foi reduzido. Permanecem
-pendentes a revisão visual responsiva e a validação de acessibilidade da nova
-apresentação.
+**Estado:** concluído nesta rodada. A pesquisa e as fontes foram registradas,
+a introdução explica Vim, terminal, modos e alternativas, a dica solta de `Esc`
+foi removida e o espaço entre apresentação e trilha foi reduzido. Em Firefox,
+validei a hierarquia desktop e um viewport de 320 px: os dois botões quebram
+para linhas separadas sem sair da tela, não há rolagem horizontal e a trilha
+começa após a apresentação. A introdução também foi conferida nos temas claro
+e escuro. Navegação por teclado mostrou foco visível; a árvore de acessibilidade
+expôs nomes e papéis esperados para título, introdução e CTAs. Os contrastes dos
+textos principais medidos superam WCAG AA. A checklist e o smoke test agora
+incluem verificações da página inicial. Testes do simulador, validação de
+documentos/links e `git diff --check` passaram. O ChromeDriver não está
+disponível neste ambiente; os testes específicos de Chrome permanecem cobertos
+pelo workflow de CI.
 
 **Branch de trabalho:** `release/1.0.1`.
 

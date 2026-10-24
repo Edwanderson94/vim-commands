@@ -43,8 +43,12 @@ observado.
 - [ ] Confirmar que título, introdução e trilha aparecem em português.
 - [ ] Verificar que os botões “Começar a aprender” e “Ver cola rápida” ficam
   próximos, sem a dica isolada de `Esc` abaixo deles.
+- [ ] Conferir em largura de 320–360 px que os dois botões continuam visíveis,
+  podem quebrar linha sem sobreposição e que a introdução não cria rolagem
+  horizontal.
 - [ ] Ler a introdução “O que é o Vim?” e conferir a distinção entre terminal,
-  editor e sistema Linux.
+  editor e sistema Linux; confirmar que a explicação de modos é legível nos
+  temas claro e escuro.
 - [ ] Abrir os links das aulas e dos exercícios.
 - **Esperado:** cada link abre o material correspondente, sem página ausente ou
   erro de navegação.

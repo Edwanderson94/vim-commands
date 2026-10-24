@@ -180,7 +180,7 @@ if home:
     if home.lang != 'pt-BR':
         errors.append('site/index.html: documento principal deve declarar português do Brasil')
     homepage_source = (SITE / 'index.html').read_text(encoding='utf-8')
-    for introduction in ('id="titulo-o-que-e-vim"', 'Vi IMproved', 'terminal do Linux', 'Nano', 'Emacs', 'Micro'):
+    for introduction in ('id="titulo-o-que-e-vim"', 'Vi IMproved', 'editor de texto modal', 'modo de inserção', 'terminal do Linux', 'Nano', 'Emacs', 'Micro'):
         if introduction not in homepage_source:
             errors.append(f'site/index.html: falta a introdução básica sobre Vim ({introduction})')
     if 'Esc</kbd> volta ao modo normal ou cancela uma operação.' in homepage_source:

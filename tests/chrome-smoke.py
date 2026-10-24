@@ -91,6 +91,23 @@ def main():
         assert execute("return document.querySelectorAll('.command-card').length") == 30
         assert execute("return Boolean(document.querySelector('link[href=\"styles.css\"]')?.sheet)")
         assert execute("return document.querySelector('#status-announcer').textContent") == ''
+        assert execute("return document.querySelector('h1').textContent") == 'Aprenda comandos que ficam na memória.'
+        assert execute("return Boolean(document.querySelector('a[href=\"#aulas\"]') && document.querySelector('a[href=\"materiais/content/cheatsheet.html\"]'))"), 'os dois caminhos de entrada devem estar disponíveis'
+        assert execute("return !document.querySelector('.hero').textContent.includes('Esc volta ao modo normal ou cancela uma operação')"), 'a dica isolada de Esc não deve aparecer no hero'
+        assert execute("return document.querySelector('#aulas article').textContent.includes('editor de texto modal') && document.querySelector('#aulas article').textContent.includes('modo de inserção')"), 'a introdução deve explicar Vim e seus modos'
+        for selector, expected_role, expected_name in (
+            ('h1', 'heading', 'Aprenda comandos que ficam na memória.'),
+            ('#aulas article', 'article', 'O que é o Vim?'),
+            ('.hero > a[href="#aulas"]', 'link', 'Começar a aprender'),
+            ('.hero > a[href="materiais/content/cheatsheet.html"]', 'link', 'Ver cola rápida'),
+        ):
+            element = command('/element', {'using': 'css selector', 'value': selector})['value']
+            element_key = 'element-6066-11e4-a52e-4f735466cecf'
+            element_id = element.get(element_key, element.get('ELEMENT'))
+            assert element_id, f'elemento acessível ausente para {selector}: {element}'
+            role = command(f'/element/{element_id}/computedrole')['value']
+            name = command(f'/element/{element_id}/computedlabel')['value']
+            assert (role, name) == (expected_role, expected_name), f'nome/papel acessível inesperado em {selector}: {(role, name)}'
         assert execute("return document.activeElement.id") != 'terminal-input', 'o terminal não deve roubar o foco ao carregar a página'
         assert execute("return !document.querySelector('#terminal-form') && ![...document.querySelectorAll('button')].some((button) => button.textContent.includes('Executar comando simulado'))"), 'não deve existir formulário separado nem botão para executar comandos'
         assert execute("return ['#activate-simulator', '#reset-simulator', '#restart-challenge'].every((selector) => !document.querySelector(selector))"), 'a prática não deve depender de botões de ativação, restauração ou reinício'
@@ -159,6 +176,16 @@ def main():
         mobile = execute("return {width: innerWidth, page: document.documentElement.scrollWidth}")
         assert 300 <= mobile['width'] <= 360, f"viewport móvel inesperada: {mobile}"
         assert mobile['page'] <= mobile['width'], f"transbordamento móvel: {mobile}"
+        mobile_home = execute("""
+          const hero = document.querySelector('.hero').getBoundingClientRect();
+          const lessons = document.querySelector('#aulas').getBoundingClientRect();
+          const actions = [...document.querySelectorAll('.hero > a')].map((link) => link.getBoundingClientRect());
+          return {heroBottom: hero.bottom, lessonsTop: lessons.top,
+                  actionCount: actions.length,
+                  actionsInViewport: actions.every((rect) => rect.left >= 0 && rect.right <= innerWidth)};
+        """)
+        assert mobile_home['actionCount'] == 2 and mobile_home['actionsInViewport'], f'CTAs da página inicial fora da tela móvel: {mobile_home}'
+        assert mobile_home['lessonsTop'] >= mobile_home['heroBottom'] - 1, f'hero e trilha se sobrepõem em tela móvel: {mobile_home}'
         command('/window/rect', {'width': 1366, 'height': 900})
 
         search_result = execute("""
@@ -209,6 +236,13 @@ def main():
                   document.querySelector('#theme-toggle').getAttribute('aria-pressed')];
         """)
         assert theme == ['dark', 'true'], f'estado do tema inesperado: {theme}'
+        dark_intro = execute("""
+          const intro = document.querySelector('.vim-intro');
+          return {background: getComputedStyle(intro).backgroundColor,
+                  color: getComputedStyle(intro).color,
+                  text: intro.textContent};
+        """)
+        assert dark_intro['background'] != 'rgba(0, 0, 0, 0)' and 'O que é o Vim?' in dark_intro['text'], dark_intro
 
         scenarios = {
             'insert-text': ('i', 'O', 'K', '\ue00c'),
