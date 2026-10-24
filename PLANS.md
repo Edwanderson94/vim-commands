@@ -131,6 +131,14 @@ instalado neste ambiente. Orca está disponível e reconheceu o Firefox como
 aplicativo Mozilla, mas a sessão gráfica não permitiu ativar a janela temporária
 para avaliar a leitura falada; a leitura assistiva do conteúdo segue pendente.
 
+**Validação desta rodada:** Firefox abriu a cópia local e a publicação atual
+em GitHub Pages; ambas montaram 30 comandos e recursos sem erro. Busca por
+texto, filtro combinado, troca de tema, ativação/entrada/restauração do
+simulador e links locais foram conferidos. Uma moldura de navegador com largura
+de 320 px não apresentou elementos fora da área visível. O README agora aponta
+diretamente para `/site/`, que é o caminho publicado; a raiz do projeto contém
+apenas um redirecionamento para essa página.
+
 **Publicação de validação:** o workflow do GitHub Pages publica `site/` a
 partir da branch `release/1.0.0`. Ela permite validar o catálogo, tema,
 simulador e desafios, mas não substitui a correção das lacunas acima antes do
