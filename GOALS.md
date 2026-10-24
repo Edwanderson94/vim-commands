@@ -36,10 +36,14 @@ em português do Brasil.
 **Estado atual:** `clear`, a ordem didática, a distinção entre Linux real e
 simulador, os testes de terminal e foco móvel foram implementados e publicados
 na branch `release/1.0.1`. A solicitação mais recente (favicon e identificação
-EDEVOPS) está em implementação local, ainda não publicada. Testes unitários,
-auditoria dos 19 HTML, links locais, `git diff --check` e workflows Chrome
-anteriores passaram. O fechamento da release aguarda validação do site e desses
-ajustes pela pessoa responsável.
+EDEVOPS) teve uma primeira versão enviada no commit `32385ab`. Atendendo ao
+pedido mais recente, o favicon foi ajustado localmente para usar a letra E e a
+paleta do logo EDEVOPS no GitHub; essa revisão ainda não foi enviada. Os testes
+unitários, auditoria dos 19 HTML e links locais passaram nesta revisão. O workflow
+`40137031143` falhou no passo combinado de validação; como os logs detalhados não
+estão acessíveis neste ambiente, a publicação do favicon ainda precisa ser
+confirmada. A página pública continua servindo a versão anterior. O fechamento
+da release aguarda validação do workflow e do site pela pessoa responsável.
 
 **Branch de trabalho:** `release/1.0.1`.
 

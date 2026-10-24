@@ -34,7 +34,7 @@ vim-commands/
     ├── simulator.js
     ├── challenges.js
     ├── terminal.js
-    ├── assets/favicon.svg (favicon SVG quadrado, com dimensões intrínsecas explícitas)
+    ├── assets/favicon.svg (favicon SVG quadrado, com E em degradê ciano/azul-roxo sobre fundo preto)
     ├── materiais.css
     ├── materiais/ (HTML derivado, gerado pelo script)
     └── README.md
@@ -66,7 +66,7 @@ O site usa HTML5 semântico, CSS3 e JavaScript puro em arquivos separados, sem f
 
 | Arquivo | Responsabilidade |
 | :--- | :--- |
-| `index.html` | Estrutura semântica, pontos de montagem, favicon e atribuição da publicadora EDEVOPS. |
+| `index.html` | Estrutura semântica, pontos de montagem, favicon EDEVOPS e atribuição da publicadora. |
 | `styles.css` | Tokens, tema, layout e responsividade. |
 | `app.js` | Inicialização, tema, busca e filtros. |
 | `carousel.js` | Carrossel de introdução com rotação, controles e pausa acessíveis. |

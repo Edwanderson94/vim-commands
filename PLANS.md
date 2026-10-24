@@ -12,13 +12,24 @@ módulo Vim. As três mudanças estão implementadas e publicadas na branch `rel
 discrepância entre exemplos de terminal Linux real (`cd`, `mkdir`, `touch`) e a
 lista menor do simulador web.
 
-**Ajuste adicional solicitado antes do fechamento — implementado localmente:**
+**Ajuste adicional solicitado antes do fechamento — implementado e enviado:**
 o favicon foi redesenhado com dimensões SVG quadradas explícitas e URL
 versionada para renovar o cache. EDEVOPS foi registrada como publicadora em
 `FONTES.md`, README e rodapé do site. Os testes de simulador, auditoria das 19
 páginas, links e metadados do favicon passaram. O SVG também foi servido por HTTP
-local com MIME `image/svg+xml`. As mudanças aguardam sua validação antes da
-próxima publicação.
+local com MIME `image/svg+xml`. O commit `32385ab` foi enviado à branch
+`release/1.0.1`, mas o workflow `40137031143` falhou no passo combinado de
+validação. Nesta máquina, testes unitários e auditoria do site passaram; o
+Chrome smoke não pôde ser executado por falta de ChromeDriver. A página pública
+ainda serve a versão anterior, portanto a publicação do ajuste não foi
+confirmada. Repetir/diagnosticar a validação antes de fechar a release.
+
+**Revisão visual do favicon — local:** após consultar a imagem EDEVOPS usada no
+README do perfil GitHub, o ícone foi atualizado para uma letra E em degradê
+ciano/azul-roxo sobre fundo preto, seguindo a marca. `FONTES.md` registra essa
+imagem como referência, e o link do favicon recebeu um novo identificador para
+renovar o cache. Testes unitários, auditoria do site e `git diff --check`
+passaram. Esta revisão local ainda não foi enviada nem publicada.
 
 **Comportamento de `clear`:** remove as linhas de saída do terminal, restaura o
 prompt e o foco para a entrada e mantém intactos os arquivos virtuais. A

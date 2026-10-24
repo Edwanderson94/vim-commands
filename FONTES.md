@@ -6,6 +6,10 @@ O conteúdo educacional deste projeto é publicado por **EDEVOPS**. Esta
 identificação registra a publicadora e não atribui à empresa a autoria das
 ferramentas, documentações ou referências listadas abaixo.
 
+## Identidade visual EDEVOPS
+
+- [EDEVOPS — imagem de marca no perfil GitHub de Edwanderson94](https://github.com/Edwanderson94/Edwanderson94/blob/main/assets/EdevOps.png). Referência visual para o favicon: letra em destaque, fundo preto e degradê ciano/azul para roxo. Acesso em 24 out. 2026.
+
 ## Definição do Vim e alternativas
 
 - [Vim — About](https://www.vim.org/about.php), site oficial do projeto. Descreve o Vim como editor de texto configurável, derivado do Vi, para editar diferentes tipos de texto.

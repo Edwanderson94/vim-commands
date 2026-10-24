@@ -181,7 +181,7 @@ if home:
     if home.lang != 'pt-BR':
         errors.append('site/index.html: documento principal deve declarar português do Brasil')
     homepage_source = (SITE / 'index.html').read_text(encoding='utf-8')
-    if '<link rel="icon" href="assets/favicon.svg?v=edevops-1" type="image/svg+xml" sizes="any">' not in homepage_source:
+    if '<link rel="icon" href="assets/favicon.svg?v=edevops-2" type="image/svg+xml" sizes="any">' not in homepage_source:
         errors.append('site/index.html: favicon deve usar SVG escalável e URL versionada para invalidar cache')
     if 'Conteúdo publicado por EDEVOPS.' not in homepage_source:
         errors.append('site/index.html: rodapé deve identificar EDEVOPS como publicadora')
