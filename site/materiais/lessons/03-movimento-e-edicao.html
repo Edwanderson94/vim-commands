@@ -15,10 +15,11 @@
   <main class="material-content">
 <h1>Aula 3 — Movimento e edição sem as setas</h1>
 <p><strong>Duração estimada:</strong> 20 minutos</p>
-<p><strong>Nível:</strong> iniciante <strong>Pré-requisito:</strong> ter concluído a <a href="02-primeiro-arquivo-no-vim.html">Aula 2</a>.</p>
+<p><strong>Nível:</strong> iniciante</p>
+<p><strong>Pré-requisito:</strong> ter concluído a <a href="02-primeiro-arquivo-no-vim.html">Aula 2</a>.</p>
 <h2>Objetivo</h2>
 <p>Ao final desta aula, você conseguirá percorrer e editar um texto no modo normal com movimentos, remoção, cópia, colagem e desfazer.</p>
-<h2>Conceitos</h2>
+<h2>Demonstração</h2>
 <p>No <strong>terminal</strong>, abra <code>treino-edicao.txt</code>:</p>
 <pre><code class="language-bash">cd ~/vim-pratica
 vim treino-edicao.txt</code></pre>
@@ -27,6 +28,7 @@ vim treino-edicao.txt</code></pre>
 Movimentos pequenos economizam tempo.
 Aprender aos poucos é suficiente.</code></pre>
 <p>Agora você está no modo normal. Use estes comandos para mover o cursor:</p>
+<h2>Conceitos</h2>
 <div class="table-scroll"><table><thead><tr><th scope="col">Comando</th><th scope="col">Movimento</th></tr></thead><tbody><tr><td><code>h</code> <code>j</code> <code>k</code> <code>l</code></td><td>Esquerda, baixo, cima e direita.</td></tr><tr><td><code>w</code> / <code>b</code></td><td>Próxima palavra / palavra anterior.</td></tr><tr><td><code>0</code> / <code>$</code></td><td>Início / fim da linha atual.</td></tr><tr><td><code>gg</code> / <code>G</code></td><td>Primeira / última linha do arquivo.</td></tr></tbody></table></div>
 <p>No modo normal, <code>x</code> remove um caractere, <code>dd</code> remove uma linha e <code>dw</code> remove até o fim da palavra. Use <code>u</code> para desfazer e <code>Ctrl-r</code> para refazer.</p>
 <p>Para copiar uma linha, pressione <code>yy</code>. Vá ao destino e use <code>p</code> para colar. O <code>p</code> também cola texto removido por <code>dd</code> ou <code>dw</code>.</p>

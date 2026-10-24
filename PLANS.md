@@ -26,9 +26,18 @@ filtros, tema e responsividade.
 **Evidência:** `site/` contém a página, estilos, busca, tema, catálogo,
 simulador, desafios e páginas HTML locais geradas a partir dos materiais.
 
-**Falta verificar:** comportamento no navegador, acessibilidade por teclado,
-responsividade, persistência do tema e inspeção visual dos 30 cartões. A interface
-carrega os scripts clássicos em ordem para abrir também via `file://`.
+**Verificado:** Firefox carregou a página diretamente via `file://`, incluindo
+scripts, 30 cartões, tema inicial e estado do simulador. A captura desktop mostra
+a página completa; a visualização mobile mostra a dobra inicial sem corte
+horizontal.
+
+**Correção desta rodada:** scripts isolados em escopos próprios para impedir
+colisão de nomes globais; a colisão interrompia a montagem do catálogo e do
+simulador no navegador. A estrutura das aulas agora explicita demonstração e
+autoavaliação conforme a especificação.
+
+**Falta verificar:** busca/filtros e alternância de tema por interação no
+navegador; combinação com leitor de tela e mais tamanhos móveis.
 
 **Parada:** não avançar sem uma verificação manual básica e links relativos
 válidos.
@@ -76,11 +85,16 @@ aulas, exercícios e referência de comandos para 18 páginas estáticas em
 `site/materiais/`, sem alterar os arquivos Markdown de origem. Após alterar
 Markdown, execute o gerador; o workflow também o executa antes do deploy.
 
-**Ainda falta:** validação manual de responsividade, teclado, leitores de tela,
-Chrome e Firefox. A inspeção estática confirma 19 documentos HTML (página
-principal mais 18 materiais), marcos semânticos e destinos locais existentes;
-comportamento/renderização visual e links entre aulas ainda precisam de
-confirmação em navegador.
+**Verificação visual:** Firefox renderizou a página completa e uma aula em
+`file://`, em desktop e mobile. A inspeção estática confirma 19 documentos
+HTML (página principal mais 18 materiais), marcos semânticos e destinos locais
+existentes. A suíte do simulador, checagem sintática dos scripts e `git diff
+--check` passaram; links locais das 19 páginas foram resolvidos.
+
+**Ainda falta:** interação manual de teclado/foco, Chrome, leitor de tela e
+validação completa em celular. O ambiente não oferece uma janela de navegador
+interativa, então esses pontos ainda precisam de validação no navegador do
+usuário.
 
 **Publicação de validação:** o workflow do GitHub Pages publica `site/` a
 partir da branch `release/1.0.0`. Ela permite validar o catálogo, tema,

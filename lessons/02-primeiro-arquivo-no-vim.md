@@ -3,6 +3,7 @@
 **Duração estimada:** 15 minutos
 
 **Nível:** iniciante
+
 **Pré-requisito:** ter concluído a [Aula 1](01-terminal-e-arquivos.md) e estar na pasta `~/vim-pratica`.
 
 ## Objetivo

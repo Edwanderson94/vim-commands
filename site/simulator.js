@@ -1,3 +1,4 @@
+(function (global) {
 const initialLines = ['Linha para praticar.', 'Apague esta linha.', 'Bom estudo!'];
 
 function createState(lines = initialLines) {
@@ -245,4 +246,5 @@ function applyKey(state, key) {
 
 const VimSimulator = { initialLines, createState, keyForSimulator, applyKey };
 if (typeof module !== 'undefined' && module.exports) module.exports = VimSimulator;
-globalThis.VimSimulator = VimSimulator;
+global.VimSimulator = VimSimulator;
+})(globalThis);

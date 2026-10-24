@@ -1,3 +1,4 @@
+(function () {
 const { commands } = globalThis.VimCommands;
 const { createState, applyKey, keyForSimulator } = globalThis.VimSimulator;
 const { challenges } = globalThis.VimChallenges;
@@ -124,3 +125,4 @@ editor.addEventListener('keydown', (event) => {
 
 renderCatalog();
 drawSimulator();
+})();

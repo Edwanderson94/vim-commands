@@ -1,3 +1,4 @@
+(function (global) {
 const challenges = [
   {
     id: 'insert-text',
@@ -38,4 +39,5 @@ const challenges = [
 
 const VimChallenges = { challenges };
 if (typeof module !== 'undefined' && module.exports) module.exports = VimChallenges;
-globalThis.VimChallenges = VimChallenges;
+global.VimChallenges = VimChallenges;
+})(globalThis);

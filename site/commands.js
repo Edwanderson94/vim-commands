@@ -1,3 +1,4 @@
+(function (global) {
 const entries = [
   ['i', 'Inserir antes', 'Começa a inserir antes do cursor.', 'modos', 'normal', 'Aula 2'],
   ['a', 'Inserir depois', 'Começa a inserir depois do cursor.', 'modos', 'normal', 'Aula 2'],
@@ -43,4 +44,5 @@ const commands = entries.map(([keys, title, description, category, mode, lesson]
 
 const VimCommands = { commands };
 if (typeof module !== 'undefined' && module.exports) module.exports = VimCommands;
-globalThis.VimCommands = VimCommands;
+global.VimCommands = VimCommands;
+})(globalThis);

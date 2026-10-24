@@ -3,13 +3,14 @@
 **Duração estimada:** 15 minutos
 
 **Nível:** iniciante
+
 **Pré-requisito:** ter concluído a [Aula 3](03-movimento-e-edicao.md).
 
 ## Objetivo
 
 Ao final desta aula, você conseguirá buscar palavras, percorrer os resultados e substituir texto com confirmação dentro do Vim.
 
-## Conceitos
+## Demonstração
 
 No **terminal**, abra um novo arquivo:
 
@@ -27,6 +28,8 @@ Praticar Vim todos os dias ajuda.
 ```
 
 Salve com `:w` e `Enter`. A partir daqui, faça os comandos no modo normal.
+
+## Conceitos
 
 Para buscar, digite `/Vim` e pressione `Enter`. Use `n` para a próxima ocorrência e `N` para a anterior. Se a busca ainda estiver sendo digitada, `Esc` a cancela.
 

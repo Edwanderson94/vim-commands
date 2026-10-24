@@ -3,12 +3,15 @@
 **Duração estimada:** 15 minutos
 
 **Nível:** iniciante
+
 **Pré-requisito:** um terminal Linux aberto e o Vim instalado (`vim --version`).
 
 ## Objetivo
 
 Ao final desta aula, você conseguirá criar uma pasta de prática no terminal,
 abrir um arquivo no Vim, escrever uma frase, salvar e sair.
+
+## Demonstração
 
 ## Parte 1 — Onde estou?
 
@@ -117,6 +120,7 @@ conteúdo pelo terminal.
 | Terminal | `pwd` | Mostra a pasta atual. |
 | Terminal | `mkdir -p ~/vim-pratica` | Cria sua pasta de treino. |
 | Terminal | `cd ~/vim-pratica` | Entra na pasta de treino. |
+
 | Terminal | `vim ola.txt` | Abre ou cria o arquivo no Vim. |
 | Vim | `i` | Entra no modo de inserção. |
 | Vim | `Esc` | Volta ao modo normal. |

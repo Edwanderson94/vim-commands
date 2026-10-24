@@ -15,16 +15,18 @@
   <main class="material-content">
 <h1>Aula 5 — Arquivos e janelas</h1>
 <p><strong>Duração estimada:</strong> 20 minutos</p>
-<p><strong>Nível:</strong> iniciante <strong>Pré-requisito:</strong> ter concluído a <a href="04-busca-e-revisao.html">Aula 4</a>.</p>
+<p><strong>Nível:</strong> iniciante</p>
+<p><strong>Pré-requisito:</strong> ter concluído a <a href="04-busca-e-revisao.html">Aula 4</a>.</p>
 <h2>Objetivo</h2>
 <p>Ao final desta aula, você conseguirá alternar entre arquivos abertos e usar uma divisão de tela para consultar dois arquivos dentro do Vim.</p>
-<h2>Conceitos</h2>
+<h2>Demonstração</h2>
 <p>No <strong>terminal</strong>, crie dois arquivos de prática:</p>
 <pre><code class="language-bash">cd ~/vim-pratica
 printf &#39;Lista de tarefas.\n&#39; &gt; tarefas.txt
 printf &#39;Anotações sobre Vim.\n&#39; &gt; notas.txt
 vim tarefas.txt</code></pre>
 <p>O sinal <code>&gt;</code> grava o texto em cada arquivo; use esses nomes apenas dentro da pasta de prática. Depois de <code>vim tarefas.txt</code>, você está no <strong>Vim</strong>, no modo normal.</p>
+<h2>Conceitos</h2>
 <p>No Vim, digite <code>:e notas.txt</code> e pressione <code>Enter</code>. O arquivo anterior continua aberto em memória como um <strong>buffer</strong>: um arquivo que o Vim mantém disponível durante a sessão.</p>
 <p>Digite <code>:ls</code> e pressione <code>Enter</code> para listar os buffers. Para voltar a um deles, use o número exibido, por exemplo <code>:b 1</code> e <code>Enter</code>.</p>
 <p>Para ver os dois arquivos lado a lado, deixe <code>tarefas.txt</code> visível e digite:</p>

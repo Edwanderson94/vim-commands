@@ -3,13 +3,14 @@
 **Duração estimada:** 20 minutos
 
 **Nível:** iniciante
+
 **Pré-requisito:** ter concluído a [Aula 4](04-busca-e-revisao.md).
 
 ## Objetivo
 
 Ao final desta aula, você conseguirá alternar entre arquivos abertos e usar uma divisão de tela para consultar dois arquivos dentro do Vim.
 
-## Conceitos
+## Demonstração
 
 No **terminal**, crie dois arquivos de prática:
 
@@ -21,6 +22,8 @@ vim tarefas.txt
 ```
 
 O sinal `>` grava o texto em cada arquivo; use esses nomes apenas dentro da pasta de prática. Depois de `vim tarefas.txt`, você está no **Vim**, no modo normal.
+
+## Conceitos
 
 No Vim, digite `:e notas.txt` e pressione `Enter`. O arquivo anterior continua aberto em memória como um **buffer**: um arquivo que o Vim mantém disponível durante a sessão.
 

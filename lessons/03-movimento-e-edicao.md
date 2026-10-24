@@ -3,13 +3,14 @@
 **Duração estimada:** 20 minutos
 
 **Nível:** iniciante
+
 **Pré-requisito:** ter concluído a [Aula 2](02-primeiro-arquivo-no-vim.md).
 
 ## Objetivo
 
 Ao final desta aula, você conseguirá percorrer e editar um texto no modo normal com movimentos, remoção, cópia, colagem e desfazer.
 
-## Conceitos
+## Demonstração
 
 No **terminal**, abra `treino-edicao.txt`:
 
@@ -27,6 +28,8 @@ Aprender aos poucos é suficiente.
 ```
 
 Agora você está no modo normal. Use estes comandos para mover o cursor:
+
+## Conceitos
 
 | Comando | Movimento |
 | :--- | :--- |
