@@ -8,3 +8,15 @@ desafios e páginas HTML geradas dos materiais Markdown.
 Depois de editar um arquivo Markdown, gere novamente as páginas derivadas com
 `node scripts/render-markdown.mjs`. O workflow do GitHub Pages executa essa
 etapa antes de publicar.
+
+## Verificação de desenvolvimento
+
+Na raiz do repositório, execute:
+
+```bash
+node tests/simulator.test.mjs
+python3 tests/site-validation.py
+```
+
+O workflow executa as mesmas verificações antes de preparar o site para
+publicação.

@@ -25,9 +25,13 @@ jobs:
         uses: actions/checkout@v4
       - name: Configurar Pages
         uses: actions/configure-pages@v5
-      - name: Preparar artefato estático
+      - name: Validar site e simulador
         run: |
           node scripts/render-markdown.mjs
+          node tests/simulator.test.mjs
+          python3 tests/site-validation.py
+      - name: Preparar artefato estático
+        run: |
           mkdir -p .pages/site
           cp -R site/. .pages/site/
           cp -R content lessons exercises .pages/

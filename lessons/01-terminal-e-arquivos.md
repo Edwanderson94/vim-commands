@@ -127,7 +127,6 @@ conteúdo pelo terminal.
 | Terminal | `pwd` | Mostra a pasta atual. |
 | Terminal | `mkdir -p ~/vim-pratica` | Cria sua pasta de treino. |
 | Terminal | `cd ~/vim-pratica` | Entra na pasta de treino. |
-
 | Terminal | `vim ola.txt` | Abre ou cria o arquivo no Vim. |
 | Vim | `i` | Entra no modo de inserção. |
 | Vim | `Esc` | Volta ao modo normal. |

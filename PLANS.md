@@ -36,6 +36,12 @@ colisão de nomes globais; a colisão interrompia a montagem do catálogo e do
 simulador no navegador. A estrutura das aulas agora explicita demonstração e
 autoavaliação conforme a especificação.
 
+**Automação contínua:** o workflow agora executa os testes do simulador e
+`tests/site-validation.py` antes de publicar. Essa checagem confere 19 páginas,
+estrutura semântica, nomes de controles, links relativos, material Markdown,
+ausência de recursos remotos e APIs de rede/arquivos. Ela também detectou e
+ajudou a corrigir a tabela de revisão quebrada na Aula 1.
+
 **Verificado em Firefox:** busca, filtros combinados, estado sem resultados,
 limpeza dos filtros com retorno do foco à busca, alternância e persistência do
 tema. Um frame de teste com larguras de 320, 360, 390, 430, 500, 768 e 1280 px
