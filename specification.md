@@ -40,7 +40,13 @@ vim-commands/
     └── README.md
 ```
 
-Os módulos abrangem terminal básico, primeiros passos, navegação, edição, busca e substituição, arquivos e janelas e cheatsheet. A referência detalhada usa modo, categoria, nível, explicação, exemplo e prática por comando.
+Os módulos abrangem Linux/terminal básico, primeiros passos no Vim, navegação,
+edição, busca e substituição, arquivos e janelas e cheatsheet. A sequência
+didática é obrigatória: primeiro o módulo Linux/terminal (localização, listagem
+e abertura de arquivos); depois o módulo Vim. O Vim é um editor de texto modal,
+muito usado no Linux e disponível em outros sistemas, não um sistema operacional.
+A referência detalhada usa modo, categoria, nível, explicação, exemplo e prática
+por comando.
 
 Cada aula dura de 10 a 20 minutos e contém duração, nível, pré-requisito, objetivo, conceitos, demonstração, prática guiada, desafio, revisão e autoavaliação.
 
@@ -77,7 +83,7 @@ funcionem offline. O tema claro/escuro é compartilhado entre a página inicial 
 todas as páginas de materiais; cada subpágina oferece um botão para alterná-lo.
 O workflow de publicação executa o mesmo gerador.
 
-A página contém cabeçalho com âncoras e botão de tema; apresentação com os botões “Começar a aprender” e “Ver cola rápida”; a seção “Informações sobre o Vim”, com um carrossel de quatro cartões: a explicação do Vim e três curiosidades apoiadas por fontes; aulas renderizadas; catálogo; prática por terminal simulado com desafio sempre visível; e rodapé. O carrossel avança a cada 10 segundos quando está visível, oferece controles anterior/próximo e pausa, pausa ao receber foco ou ponteiro ou quando a aba fica oculta e inicia pausado quando a pessoa prefere movimento reduzido. Os cartões e controles precisam continuar utilizáveis por teclado e tecnologia assistiva.
+A página contém cabeçalho com âncoras e botão de tema; apresentação com os botões “Começar a aprender” e “Ver cola rápida”; a seção “Informações sobre o Vim”, com um carrossel de quatro cartões: a explicação do Vim e três curiosidades apoiadas por fontes, além da ordem recomendada dos módulos Linux e Vim sempre visível; aulas renderizadas; catálogo; prática por terminal simulado com desafio sempre visível; e rodapé. O carrossel avança a cada 10 segundos quando está visível, oferece controles anterior/próximo e pausa, pausa ao receber foco ou ponteiro ou quando a aba fica oculta e inicia pausado quando a pessoa prefere movimento reduzido. Os cartões e controles precisam continuar utilizáveis por teclado e tecnologia assistiva.
 
 O catálogo mostra tecla, título, descrição, categoria, nível, modo e aula. A busca verifica tecla, título, descrição, categoria e modo. Os filtros de categoria e nível atuam juntos. Sem resultado, há mensagem clara e botão para limpar filtros.
 
@@ -108,9 +114,10 @@ linha (`aluno@vim:/home/aluno$`) e entrada editável dentro da própria janela,
 sem formulário, campo ou botão separado para executar comandos. A pessoa digita
 diretamente após o prompt e pressiona `Enter`. O diretório inicial é
 `/home/aluno` e já contém o arquivo vazio `teste.txt`. A camada de terminal
-aceita `pwd`, `ls`, `cat arquivo` e `vim arquivo`; `cat` mostra somente o
-conteúdo de arquivos existentes no sistema virtual. Não oferece comandos para
-criar pastas, navegar entre diretórios, listar opções ou limpar a tela.
+aceita `pwd`, `ls`, `cat arquivo`, `clear` e `vim arquivo`; `cat` mostra somente o
+conteúdo de arquivos existentes no sistema virtual. `clear` remove o histórico
+visível da tela e mantém os arquivos virtuais intactos. Não oferece comandos
+para criar pastas, navegar entre diretórios ou listar opções.
 Comandos e argumentos fora desse escopo são recusados. Não interpreta
 operadores, encadeamento, redirecionamento, substituição, scripts nem comandos
 arbitrários. Os arquivos existem apenas em memória e são descartados ao
@@ -211,8 +218,9 @@ Gerar dados a partir do Markdown, disponibilizar inglês, adicionar modo visual,
 - Site e materiais offline, responsivos, acessíveis e sem acesso a dados pessoais ou arquivos locais.
 - Tema, busca e filtros funcionam sem recarregar.
 - Os 30 comandos são consultáveis por categoria.
-- Terminal e simulador executam somente os comandos declarados, mantêm arquivos
-  em memória e permitem o fluxo terminal → Vim → terminal.
+- O terminal aceita somente `pwd`, `ls`, `cat arquivo`, `clear` e `vim arquivo`;
+  `clear` limpa a saída visível sem apagar arquivos. Os arquivos ficam em memória
+  e o fluxo terminal → Vim → terminal funciona.
 - Os cinco desafios podem ser concluídos e iniciados novamente pelo seletor.
 - Caminhos relativos permitem publicação no GitHub Pages.
 

@@ -1,79 +1,109 @@
 # Objetivos do Vim Commands
 
-## Goal ativo — Melhorar a primeira experiência
+## Goal ativo — Concluir a release 1.0.1 e preparar as próximas melhorias
 
-**Objetivo:** melhorar a primeira experiência do Vim Commands com base na
-validação do cliente: simplificar a área inicial, explicar claramente o que é o
-Vim e refinar espaçamento, hierarquia visual, responsividade e acessibilidade da
-página inicial, mantendo o conteúdo alinhado às fontes e à especificação.
+**Objetivo:** concluir a release 1.0.1 do Vim Commands e preparar uma fila
+priorizada de melhorias para o ambiente de aprendizagem do terminal e do Vim,
+mantendo o simulador seguro e a trilha Linux/terminal antes do módulo Vim.
 
-**Público:** iniciantes que ainda não sabem o que é Vim, como ele se relaciona
-com o terminal e por que podem querer aprendê-lo.
+**Público:** iniciantes e autodidatas que estão aprendendo Linux/terminal e Vim
+em português do Brasil.
 
-**Escopo:**
+**Escopo imediato da release 1.0.1:**
 
-- Explicar na página inicial que Vim é um editor de texto modal, aberto pelo
-  terminal, que pode ser usado em Linux e em outros sistemas.
-- Distinguir o Vim do terminal e do sistema operacional; citar outros editores
-  disponíveis no Linux sem sugerir que o Vim é a única opção.
-- Manter as afirmações introdutórias apoiadas pelas referências em
-  [`FONTES.md`](FONTES.md).
-- Refinar o espaço entre o conteúdo principal e os botões de entrada, mantendo
-  “Começar a aprender” e “Ver cola rápida” fáceis de encontrar.
-- Revisar a hierarquia visual e o comportamento da página inicial em telas
-  pequenas, temas claro e escuro e navegação por teclado.
+- Disponibilizar `clear` no terminal virtual. Ele limpa a saída visível, mantém o
+  prompt pronto para uso e não remove arquivos da sessão.
+- Apresentar o módulo Linux/terminal como pré-requisito do módulo Vim na página
+  inicial, README, módulos, aulas e exercícios.
+- Explicar que Vim é um editor de texto muito usado no Linux, aberto a partir do
+  terminal, mas não é o sistema operacional e também existe em outros sistemas.
+- Registrar as mudanças e regressões na especificação e na checklist de QA.
 
-**Critérios de conclusão:**
+**Critérios para concluir a release:**
 
-- A apresentação inicial não mostra uma dica isolada de `Esc` abaixo dos
-  botões.
-- A seção `#aulas` apresenta a introdução “O que é o Vim?” com diferença entre
-  terminal, editor e Linux, modo de inserção e exemplos de alternativas.
-- O texto é coerente com as fontes registradas em `FONTES.md` e usa português
-  claro para iniciantes.
-- O espaçamento entre apresentação, botões e trilha é intencional em desktop e
-  celular, sem sobras grandes nem rolagem horizontal.
-- A introdução permanece legível nos temas claro e escuro e o conteúdo pode ser
-  alcançado e lido por teclado e tecnologia assistiva.
-- Testes automatizados, links relativos e validação manual da página inicial
-  passam antes da promoção da melhoria.
+- `clear` limpa a tela, preserva o prompt e permite continuar digitando; arquivos
+  criados/salvos antes dele continuam disponíveis no sistema virtual.
+- O terminal permanece restrito à lista definida na especificação e não executa
+  comandos reais nem acessa arquivos locais.
+- A sequência Linux/terminal → Vim está clara nos caminhos de entrada e nos
+  materiais; links locais continuam válidos.
+- Testes do simulador, auditoria do site e fluxo de navegador passam; a validação
+  da release e publicação são registradas em `PLANS.md`.
+- A pessoa responsável valida o fluxo de prática antes de fechar a release.
 
-**Estado:** concluído nesta rodada. A pesquisa e as fontes foram registradas,
-a introdução explica Vim, terminal, modos e alternativas, a dica solta de `Esc`
-foi removida e o espaço entre apresentação e trilha foi reduzido. Em Firefox,
-validei a hierarquia desktop e um viewport de 320 px: os dois botões quebram
-para linhas separadas sem sair da tela, não há rolagem horizontal e a trilha
-começa após a apresentação. A introdução também foi conferida nos temas claro
-e escuro. Navegação por teclado mostrou foco visível; a árvore de acessibilidade
-expôs nomes e papéis esperados para título, introdução e CTAs. Os contrastes dos
-textos principais medidos superam WCAG AA. A checklist e o smoke test agora
-incluem verificações da página inicial. Testes do simulador, validação de
-documentos/links e `git diff --check` passaram. O ChromeDriver não está
-disponível neste ambiente; os testes específicos de Chrome permanecem cobertos
-pelo workflow de CI.
+**Estado atual:** as duas melhorias imediatas foram implementadas localmente na
+branch `release/1.0.1`. Testes unitários, auditoria dos 19 HTML, links locais e
+`git diff --check` passaram. O smoke test de navegador foi ampliado, mas não pôde
+ser executado localmente porque ChromeDriver não está disponível. As alterações
+ainda aguardam validação no workflow e validação da pessoa responsável antes do
+fechamento da release.
 
 **Branch de trabalho:** `release/1.0.1`.
 
-**Fora de escopo:** alterar o conjunto de comandos do simulador, executar
-comandos reais do sistema, reescrever a trilha didática ou promover mudanças à
-`master`.
+**Fora do escopo da 1.0.1:** transformar o simulador em shell completo, ampliar
+comandos sem atualizar especificação, executar processos reais, persistir os
+arquivos virtuais após recarregar ou promover alterações para `master` sem o
+fluxo de release.
 
-## Goal concluído — Release 1.0.1
+## Dez melhorias identificadas para trabalharmos
+
+Os itens 1 e 2 já estão implementados localmente como parte desta rodada. Os
+itens seguintes são oportunidades de trabalho priorizadas; devem ser detalhados
+na especificação antes de mudar o escopo do simulador.
+
+1. **Limpar a tela com `clear` — feito localmente.** Aceitar o comando sem
+   argumentos, limpar o histórico visível, conservar o prompt/foco e preservar
+   os arquivos da sessão. Falta validar o fluxo integrado no navegador/CI.
+2. **Ordenar a trilha Linux → Vim — feito localmente.** Apresentar o módulo
+   Linux/terminal antes do Vim na página inicial e explicitar pré-requisitos nos
+   materiais. Falta validação final da experiência publicada.
+3. **Distinguir Linux real do terminal restrito do simulador — feito localmente.**
+   O módulo Linux ensina comandos comuns (`cd`, `mkdir`, `touch`) que a prática
+   web não aceita. README, módulo inicial e Aula 1 agora indicam o ambiente
+   correto para cada exemplo; falta validar a versão integrada/publicada.
+4. **Cobrir erros e limites do terminal ponta a ponta.** Ampliar testes de
+   integração para comandos permitidos/negados, argumentos inválidos, arquivos
+   inexistentes, caminhos externos, `clear` e preservação dos arquivos.
+5. **Polir a edição da linha de comando.** Verificar cursor, seleção, colagem,
+   apagar/corrigir o comando antes de Enter, comportamento em telas táteis e
+   retorno do foco, sem capturar teclas fora do terminal.
+6. **Tornar os desafios mais instrutivos.** Revisar a clareza dos critérios de
+   conclusão, o feedback de sucesso/erro e como a pessoa retoma a instrução ao
+   alternar entre terminal e Vim.
+7. **Fortalecer regressões do editor Vim.** Cobrir por navegador modos, setas,
+   Home/End, Backspace, rolagem do cursor, `:q` com alteração pendente, `:wq`,
+   `:q!`, reabertura e leitura com `cat`.
+8. **Completar acessibilidade do fluxo terminal/Vim.** Validar nomes e estados
+   acessíveis, foco visível, anúncios de `clear`, erros e mudanças de modo, além
+   de conferir o percurso com leitor de tela.
+9. **Completar QA entre navegadores e dispositivos.** Registrar uma matriz
+   manual em Firefox e Chrome; incluir Safari e celulares reais quando
+   disponíveis, e testar o teclado virtual e a área rolável do terminal.
+10. **Separar prévia e publicação pública.** Avaliar um workflow de prévia para
+    candidatos, para que pushes de validação não substituam diretamente o site
+    público. Definir critérios de promoção e retorno antes de habilitar o fluxo.
+
+## Goal concluído — Primeira experiência
+
+**Objetivo anterior:** melhorar a apresentação inicial, explicar o que é Vim e
+refinar espaçamento, hierarquia visual, responsividade e acessibilidade.
+
+**Resultado registrado:** a página inicial explica Vim, terminal, modos e
+alternativas; a dica isolada de `Esc` foi removida; o carrossel de informações e
+a hierarquia responsiva foram implementados. As verificações e limitações da
+rodada anterior estão registradas em `PLANS.md`.
+
+## Goal concluído — Release 1.0.1 (escopo original)
 
 Entregar uma prática em navegador com uma única janela visual de terminal em
 `/home/aluno`, onde a pessoa digita comandos permitidos diretamente no prompt.
 `vim teste.txt` abre o arquivo virtual no editor simulado; a prática inclui
 desafios, edição por teclado e retorno ao terminal.
 
-**Resultado:** o terminal virtual aceita `pwd`, `ls`, `cat arquivo` e
-`vim arquivo`. O Vim simulado oferece os modos normal e inserção, navegação,
-edição, busca, salvamento e saída. O ambiente é restrito a arquivos em memória;
-não executa comandos reais nem acessa arquivos locais. O painel de desafio
-permanece disponível ao editar.
-
-**Validação:** testes automatizados, Chrome no workflow de publicação e
-verificações manuais em Firefox foram executados nas mudanças da release. A
-versão de validação é servida pelo GitHub Pages a partir de `release/1.0.1`.
+**Resultado:** a prática em uma janela, os desafios integrados e o editor Vim
+simulado foram implementados. Esta release recebeu agora as melhorias
+incrementais de `clear` e da ordem didática Linux → Vim, ainda pendentes de
+validação final/publicação.
 
 ## Propósito do projeto
 

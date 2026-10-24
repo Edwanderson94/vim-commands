@@ -1,5 +1,7 @@
 # Exercício: modos e inserção
 
+**Pré-requisito:** conclua [Módulo Linux — Terminal básico](../content/terminal-basics.md) e [Primeiros passos no Vim](../content/getting-started.md).
+
 No **terminal**, prepare um arquivo seguro para praticar:
 
 ```bash

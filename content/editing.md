@@ -1,5 +1,8 @@
 # Edição de texto
 
+**Pré-requisito:** conclua [Módulo Linux — Terminal básico](terminal-basics.md),
+[Primeiros passos no Vim](getting-started.md) e [Navegação](navigation.md).
+
 Os comandos desta página devem ser usados no modo normal. Pressione `Esc` antes
 de começar.
 

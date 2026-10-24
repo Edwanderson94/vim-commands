@@ -88,6 +88,15 @@ function writeTerminal(command, output) {
 
 function runTerminalCommand(command) {
   const result = terminal.execute(command);
+  if (result.action?.type === 'clear') {
+    terminalOutput.replaceChildren();
+    terminalOutput.scrollTop = 0;
+    terminalInput.replaceChildren();
+    terminalPrompt.textContent = terminal.prompt();
+    statusAnnouncer.textContent = 'Tela do terminal limpa.';
+    terminalInput.focus();
+    return;
+  }
   writeTerminal(command, result.output);
   terminalInput.replaceChildren();
   terminalPrompt.textContent = terminal.prompt();

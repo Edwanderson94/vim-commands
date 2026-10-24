@@ -92,6 +92,15 @@ h2 {
 .hero { max-width: 1000px; padding-bottom: .5rem; }
 #aulas { padding-top: 1rem; }
 #aulas > h2 { margin-top: .25rem; }
+.module-sequence {
+  max-width: 900px;
+  margin-block: 0 1.25rem;
+  padding: .85rem 1rem;
+  border-left: .25rem solid var(--primary);
+  border-radius: .35rem;
+  background: var(--surface);
+}
+.module-sequence p { margin: 0; }
 .hero > p:not(:first-child) { color: var(--muted); font-size: 1.1rem; }
 
 .hero > a, #praticar > a {

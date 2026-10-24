@@ -22,8 +22,12 @@ assert.deepEqual(terminal.execute('vim rascunho.txt').action.lines, ['Olá, Vim!
 assert.match(terminal.execute('cat inexistente.txt').output, /arquivo não encontrado/);
 assert.match(terminal.execute('cat ../fora.txt').output, /Uso: cat/);
 assert.match(terminal.execute('cat -n teste.txt').output, /Uso: cat/);
-assert.match(terminal.execute('help').output, /Comandos disponíveis: pwd, ls, cat, vim/);
-for (const command of ['touch outro.txt', 'mkdir pasta', 'cd /tmp', 'clear', 'help']) {
+assert.match(terminal.execute('help').output, /Comandos disponíveis: pwd, ls, cat, vim, clear/);
+const cleared = terminal.execute('clear');
+assert.deepEqual(cleared, { output: '', action: { type: 'clear' } }, 'clear solicita limpar apenas a saída visível');
+assert.equal(terminal.execute('cat rascunho.txt').output, 'Olá, Vim!', 'clear preserva os arquivos virtuais');
+assert.equal(terminal.execute('clear extra').output, 'Uso: clear', 'clear não aceita argumentos');
+for (const command of ['touch outro.txt', 'mkdir pasta', 'cd /tmp', 'help']) {
   assert.match(terminal.execute(command).output, /Comando não disponível/,
     `${command} não pertence à camada de terminal permitida`);
 }

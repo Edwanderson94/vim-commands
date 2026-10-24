@@ -1,5 +1,7 @@
 # Referência dos 30 comandos essenciais do Vim
 
+**Ordem recomendada:** conclua primeiro o módulo Linux de terminal básico e depois o módulo Vim de primeiros passos. Vim é um editor de texto usado no Linux e em outros sistemas, iniciado a partir do terminal.
+
 Os exemplos abaixo acontecem dentro do **Vim**, salvo quando a coluna indica o
 terminal. Para os comandos do modo normal, pressione `Esc` antes de começar.
 Pratique primeiro em arquivos dentro de `~/vim-pratica`.

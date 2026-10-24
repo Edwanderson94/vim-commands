@@ -29,11 +29,14 @@
     </section>
     <section id="aulas" aria-labelledby="titulo-aulas">
       <h2 id="titulo-aulas">Informações sobre o Vim</h2>
+      <aside class="module-sequence" aria-label="Ordem recomendada de aprendizagem">
+        <p><strong>Ordem para aprender:</strong> comece pelo <a href="materiais/content/terminal-basics.html">Módulo Linux — Terminal básico</a> e depois siga para o módulo de Vim nas aulas abaixo. O Vim é um editor de texto usado no Linux e em outros sistemas; não é o sistema operacional. Você o abre a partir do terminal.</p>
+      </aside>
       <div id="vim-carousel" class="vim-carousel" role="region" aria-roledescription="carrossel" aria-label="Informações e curiosidades sobre o Vim" aria-live="off" data-interval="10000">
         <div id="vim-carousel-slides" class="vim-carousel-slides">
           <article id="vim-slide-1" class="vim-slide vim-intro" role="group" aria-roledescription="slide" aria-label="1 de 4" aria-labelledby="titulo-o-que-e-vim">
             <h3 id="titulo-o-que-e-vim">O que é o Vim?</h3>
-            <p>Vim (de <em>Vi IMproved</em>) é um editor de texto modal: um aplicativo para criar e modificar arquivos, como programas e arquivos de configuração. “Modal” quer dizer que as teclas fazem coisas diferentes conforme o modo ativo. O Vim funciona no terminal do Linux e em outros sistemas; também tem uma versão gráfica chamada gVim.</p>
+            <p>Vim (de <em>Vi IMproved</em>) é um editor de texto modal: um aplicativo para criar e modificar arquivos, como programas e arquivos de configuração. “Modal” quer dizer que as teclas fazem coisas diferentes conforme o modo ativo. O Vim é muito usado no terminal do Linux, mas não é o sistema operacional Linux: também funciona em outros sistemas e tem uma versão gráfica chamada gVim.</p>
             <p>O terminal e o Vim são coisas diferentes: no terminal você digita <code>vim arquivo.txt</code> para abrir o arquivo; dentro do Vim, você edita o texto. Pressione <kbd>i</kbd> para entrar no modo de inserção e digitar. Pressione <kbd>Esc</kbd> para voltar ao modo normal e usar comandos de edição.</p>
             <p>Vim é uma entre várias opções. No Linux também existem editores como Nano, Emacs e Micro. Cada um tem seus próprios comandos e jeito de trabalhar; esta trilha ensina Vim.</p>
           </article>
@@ -61,6 +64,7 @@
         </div>
         <p id="vim-carousel-help" class="vim-carousel-help">As informações avançam a cada 10 segundos enquanto o carrossel está visível. A rotação pausa durante a interação; use o controle “Rotação automática” para ler no seu ritmo.</p>
       </div>
+      <h3 id="modulo-vim">Aulas do módulo Vim</h3>
       <ol class="lessons">
         <li><a href="materiais/lessons/01-terminal-e-arquivos.html">Terminal e arquivos</a></li>
         <li><a href="materiais/lessons/02-primeiro-arquivo-no-vim.html">Primeiro arquivo no Vim</a></li>
@@ -82,7 +86,7 @@
     </section>
     <section id="praticar" class="practice" aria-labelledby="titulo-praticar">
       <h2 id="titulo-praticar">Pratique no terminal</h2>
-      <p id="simulator-instructions">Você está em <code>/home/aluno</code>. No terminal, use apenas <code>pwd</code>, <code>ls</code>, <code>cat arquivo</code> e <code>vim arquivo</code>. Digite <code>vim teste.txt</code> nesta janela e pressione <kbd>Enter</kbd>. No Vim, pressione <kbd>i</kbd> para inserir texto e <kbd>Esc</kbd> para voltar ao modo normal. Use <code>:q</code> e <kbd>Enter</kbd> para sair sem alterações pendentes, <code>:wq</code> para salvar e sair ou <code>:q!</code> para descartar alterações. Use <code>cat teste.txt</code> no terminal para ler o arquivo salvo. Os arquivos ficam somente nesta página.</p>
+      <p id="simulator-instructions">Você está em <code>/home/aluno</code>. No terminal, use apenas <code>pwd</code>, <code>ls</code>, <code>cat arquivo</code>, <code>clear</code> e <code>vim arquivo</code>. Digite <code>vim teste.txt</code> nesta janela e pressione <kbd>Enter</kbd>. O comando <code>clear</code> limpa a tela sem apagar arquivos. No Vim, pressione <kbd>i</kbd> para inserir texto e <kbd>Esc</kbd> para voltar ao modo normal. Use <code>:q</code> e <kbd>Enter</kbd> para sair sem alterações pendentes, <code>:wq</code> para salvar e sair ou <code>:q!</code> para descartar alterações. Use <code>cat teste.txt</code> no terminal para ler o arquivo salvo. Os arquivos ficam somente nesta página.</p>
       <div id="challenge-picker" class="challenge-picker">
         <label for="challenge-select">Desafio</label>
         <select id="challenge-select"><option value="">Praticar sem desafio</option></select>
@@ -113,7 +117,7 @@
   <script src="commands.js"></script>
   <script src="simulator.js"></script>
   <script src="challenges.js"></script>
-  <script src="terminal.js?v=09d1a76"></script>
+  <script src="terminal.js?v=clear-101"></script>
   <script src="carousel.js"></script>
   <script src="app.js"></script>
 </body>

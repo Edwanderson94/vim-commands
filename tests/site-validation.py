@@ -182,6 +182,13 @@ if home:
     homepage_source = (SITE / 'index.html').read_text(encoding='utf-8')
     if '<h2 id="titulo-aulas">Informações sobre o Vim</h2>' not in homepage_source:
         errors.append('site/index.html: a seção introdutória deve se chamar Informações sobre o Vim')
+    if 'Módulo Linux — Terminal básico' not in homepage_source or 'id="modulo-vim">Aulas do módulo Vim' not in homepage_source or 'não é o sistema operacional Linux' not in homepage_source:
+        errors.append('site/index.html: deve explicar que o módulo Linux vem antes do módulo Vim e que Vim é um editor')
+    if homepage_source.index('materiais/content/terminal-basics.html') > homepage_source.index('id="modulo-vim"'):
+        errors.append('site/index.html: o módulo Linux deve ser apresentado antes das aulas de Vim')
+    terminal_module = (ROOT / 'content' / 'terminal-basics.md').read_text(encoding='utf-8')
+    if any(term not in terminal_module for term in ('terminal Linux real', '`pwd`', '`clear`', '`vim arquivo`', '`cd`', '`mkdir`', '`touch`', 'não são implementados nele')):
+        errors.append('content/terminal-basics.md: deve distinguir comandos Linux reais da lista reduzida do simulador web')
     carousel_ids = {'vim-carousel', 'vim-carousel-slides', 'vim-slide-1', 'vim-slide-2', 'vim-slide-3', 'vim-slide-4', 'vim-carousel-previous', 'vim-carousel-next', 'vim-carousel-autoplay', 'vim-carousel-position', 'vim-carousel-help'}
     if not carousel_ids.issubset(home.ids):
         errors.append(f'site/index.html: carrossel incompleto; faltam {sorted(carousel_ids - home.ids)}')

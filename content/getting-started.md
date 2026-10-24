@@ -1,4 +1,9 @@
-# Primeiros passos no Vim
+# Módulo Vim — Primeiros passos
+
+**Pré-requisito:** conclua primeiro o [Módulo Linux — Terminal básico](terminal-basics.md).
+O Vim é um editor de texto modal muito usado no Linux, mas também disponível em
+outros sistemas. Você o inicia no terminal com `vim nome-do-arquivo`; depois,
+os comandos de edição são digitados dentro do Vim.
 
 O Vim trabalha com modos. No começo, isso parece estranho, mas é o que torna a
 edição rápida quando os comandos se tornam familiares.

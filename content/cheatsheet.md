@@ -1,5 +1,9 @@
 # Cheatsheet: cola rápida do Vim
 
+**Referência rápida:** para aprender a trilha em ordem, comece pelo
+[Módulo Linux — Terminal básico](terminal-basics.md) e depois siga para
+[Módulo Vim — Primeiros passos](getting-started.md).
+
 Pressione `Esc` antes de usar os comandos abaixo.
 
 | Tarefa | Comando |

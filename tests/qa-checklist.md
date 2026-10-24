@@ -158,16 +158,21 @@ observado.
 
 ### QA-11 — Comandos permitidos e limites do terminal
 
+- [ ] Conferir que os materiais distinguem comandos de um terminal Linux real
+  da lista reduzida aceita pelo simulador web.
 - [ ] Executar `pwd`, `ls`, `cat teste.txt` e `vim teste.txt`.
 - [ ] Salvar algum texto no Vim com `:wq` e confirmar que `cat teste.txt`
   mostra o conteúdo salvo.
+- [ ] Executar `clear` após mostrar saídas e conferir que o histórico some; depois
+  usar `cat teste.txt` para confirmar que os arquivos continuam salvos.
 - [ ] Tentar comandos que não pertencem ao terminal mínimo: `help`,
-  `touch outro.txt`, `cd /tmp` e `clear`.
+  `touch outro.txt` e `cd /tmp`.
 - [ ] Tentar abrir caminho fora da pasta virtual com `vim ../fora.txt`.
 - [ ] Tentar ler caminho fora da pasta e opção não suportada com `cat ../fora.txt`
   e `cat -n teste.txt`.
 - [ ] Tentar encadear comandos, por exemplo `pwd; ls`.
-- **Esperado:** `pwd`, `ls`, `cat arquivo` e `vim arquivo` são aceitos; `cat`
+- **Esperado:** `pwd`, `ls`, `cat arquivo`, `clear` e `vim arquivo` são aceitos;
+  `clear` limpa a tela sem apagar arquivos e não aceita argumentos; `cat`
   só lê arquivos virtuais existentes em `/home/aluno`. Outros comandos,
   caminhos fora da pasta e operadores de shell são recusados. Nenhum comando
   real do sistema é executado.

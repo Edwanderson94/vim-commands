@@ -1,5 +1,7 @@
 # Exercício: copiar e colar
 
+**Pré-requisito:** conclua [Módulo Linux — Terminal básico](../content/terminal-basics.md) e [Edição de texto](../content/editing.md).
+
 No **terminal**, abra um arquivo de prática:
 
 ```bash

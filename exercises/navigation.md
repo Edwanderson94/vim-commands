@@ -1,5 +1,7 @@
 # Exercício: navegação
 
+**Pré-requisito:** conclua [Módulo Linux — Terminal básico](../content/terminal-basics.md), [Primeiros passos no Vim](../content/getting-started.md) e [Navegação](../content/navigation.md).
+
 Abra qualquer arquivo de texto com pelo menos dez linhas. Faça as tarefas sem
 usar as setas do teclado.
 

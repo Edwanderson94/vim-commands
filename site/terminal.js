@@ -19,6 +19,11 @@
         ? { output: root, action: null }
         : { output: 'Uso: pwd', action: null };
     }
+    if (command === 'clear') {
+      return args.length === 0
+        ? { output: '', action: { type: 'clear' } }
+        : { output: 'Uso: clear', action: null };
+    }
     if (command === 'ls') {
       if (args.length) return { output: 'Uso: ls', action: null };
       const names = [...files.keys()].map((path) => path.slice(root.length + 1)).sort();
@@ -44,7 +49,7 @@
       };
     }
     return {
-      output: `Comando não disponível: ${command}. Comandos disponíveis: pwd, ls, cat, vim.`,
+      output: `Comando não disponível: ${command}. Comandos disponíveis: pwd, ls, cat, vim, clear.`,
       action: null
     };
   }

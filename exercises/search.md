@@ -1,5 +1,7 @@
 # Exercício: busca e substituição
 
+**Pré-requisito:** conclua [Módulo Linux — Terminal básico](../content/terminal-basics.md), [Edição de texto](../content/editing.md) e [Busca e substituição](../content/search-and-replace.md).
+
 Crie um arquivo com o texto abaixo:
 
 ```text

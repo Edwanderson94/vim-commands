@@ -191,6 +191,12 @@ def main():
         run_terminal('cat teste.txt')
         displayed = execute("return document.querySelector('#terminal-output').textContent")
         assert 'O!' in displayed, displayed
+        run_terminal('clear')
+        cleared = execute("return {output: document.querySelector('#terminal-output').textContent, input: document.querySelector('#terminal-input').textContent, prompt: document.querySelector('#terminal-prompt').textContent, focused: document.activeElement.id}")
+        assert cleared == {'output': '', 'input': '', 'prompt': 'aluno@vim:/home/aluno$', 'focused': 'terminal-input'}, cleared
+        run_terminal('cat teste.txt')
+        preserved = execute("return document.querySelector('#terminal-output').textContent")
+        assert 'O!' in preserved, f'clear deve preservar os arquivos virtuais: {preserved}'
         run_terminal('cat ../fora.txt')
         rejected = execute("return document.querySelector('#terminal-output').textContent")
         assert 'Uso: cat' in rejected, rejected
