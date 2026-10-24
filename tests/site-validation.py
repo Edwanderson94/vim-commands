@@ -31,6 +31,7 @@ class PageAudit(HTMLParser):
         self.editor_attrs = None
         self.live_roles = {}
         self.live_atomic = {}
+        self.aria_hidden = {}
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
@@ -47,6 +48,8 @@ class PageAudit(HTMLParser):
             if element_id in self.ids:
                 errors.append(f'{self.path}: id duplicado #{element_id}')
             self.ids.add(element_id)
+            if attrs.get('aria-hidden') is not None:
+                self.aria_hidden[element_id] = attrs['aria-hidden']
         if tag == 'label' and attrs.get('for'):
             self.labels.append(attrs['for'])
         if tag in ('input', 'select', 'textarea'):
@@ -168,16 +171,20 @@ if home:
     expected_scripts = ['commands.js', 'simulator.js', 'challenges.js', 'app.js']
     if [Path(src).name for src in home.script_sources] != expected_scripts:
         errors.append('site/index.html: scripts clássicos devem carregar na ordem especificada')
-    for live_id in ('summary', 'challenge-status', 'simulator-feedback'):
+    for live_id in ('status-announcer',):
         if home.live_regions.get(live_id) != 'polite':
             errors.append(f'site/index.html: #{live_id} deve usar aria-live="polite"')
         if home.live_roles.get(live_id) != 'status' or home.live_atomic.get(live_id) != 'true':
             errors.append(f'site/index.html: #{live_id} deve ser uma região status atômica')
+    if home.aria_hidden.get('challenge-status') != 'true':
+        errors.append('site/index.html: #challenge-status duplicado deve ficar fora da árvore assistiva')
+    if home.aria_hidden.get('simulator-feedback') != 'true':
+        errors.append('site/index.html: #simulator-feedback visual deve ficar fora da árvore assistiva')
     if not home.editor_attrs or not (
         home.editor_attrs.get('role') == 'textbox'
         and home.editor_attrs.get('aria-multiline') == 'true'
         and home.editor_attrs.get('aria-label')
-        and home.editor_attrs.get('aria-describedby') == 'simulator-feedback'
+        and home.editor_attrs.get('aria-describedby') == 'simulator-instructions'
     ):
         errors.append('site/index.html: simulador deve expor caixa de texto multilinha nomeada e descrita')
 

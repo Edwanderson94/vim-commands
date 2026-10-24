@@ -54,9 +54,9 @@ ficou entre 4,8:1 e 16,05:1. O contorno de foco claro foi escurecido para
 
 **Acessibilidade computada no Firefox:** os 23 controles visíveis e focáveis
 expõem nome acessível; o botão “Limpar filtros” só entra na árvore quando o
-estado vazio é mostrado. As três regiões de status usam `aria-live="polite"`.
-O simulador expõe a área como caixa de texto multilinha e informa via
-`aria-disabled` se está ativada.
+estado vazio é mostrado. As mensagens dinâmicas usam uma região de status
+polida e atômica. O simulador expõe a área como caixa de texto multilinha e
+informa via `aria-disabled` se está ativada.
 
 **Parada:** não avançar sem uma verificação manual básica e links relativos
 válidos.
@@ -148,12 +148,14 @@ desafio ser selecionado. A navegação por Tab percorreu cabeçalho, trilha,
 catálogo, simulador e rodapé. Esta inspeção confirma a árvore consumida por
 leitores de tela, mas não substitui a verificação da fala do Orca.
 
-**Mensagens dinâmicas:** Orca não anunciou de forma confiável a contagem da
-busca nem a conclusão do desafio na sessão de fala desativada; em outra
-tentativa, o foco passou para o terminal. As três mensagens agora usam
-`role="status"`, `aria-live="polite"` e `aria-atomic="true"`. A validação
-estática e o papel computado no Chrome cobrem essa semântica. A fala do Orca
-segue pendente até uma sessão com foco estável.
+**Mensagens dinâmicas:** contagem do catálogo e retorno do simulador agora são
+centralizados em uma região `role="status"`, `aria-live="polite"` e
+`aria-atomic="true"`. Os textos visíveis correspondentes ficam fora da árvore
+assistiva para evitar anúncios duplicados; a área do simulador aponta para
+instruções estáticas. A validação estática e o teste Chrome verificam a função
+e o texto da região. Orca ainda não confirmou a apresentação dessas mensagens:
+na última tentativa, a automação não conectou ao Firefox isolado e o leitor
+apresentou apenas o shell da área de trabalho.
 
 **Validação desta rodada:** Firefox abriu a cópia local e a publicação atual
 em GitHub Pages; ambas montaram 30 comandos e recursos sem erro. Busca por
@@ -161,7 +163,9 @@ texto, filtro combinado, troca de tema, ativação/entrada/restauração do
 simulador e links locais foram conferidos. Uma moldura de navegador com largura
 de 320 px não apresentou elementos fora da área visível. O README agora aponta
 diretamente para `/site/`, que é o caminho publicado; a raiz do projeto contém
-apenas um redirecionamento para essa página.
+apenas um redirecionamento para essa página. A suíte do simulador, auditoria
+estática das 19 páginas e `git diff --check` passaram nesta rodada; a verificação
+manual de Orca permanece inconclusiva.
 
 **Publicação de validação:** o workflow do GitHub Pages publica `site/` a
 partir da branch `release/1.0.0`. Ela permite validar o catálogo, tema,

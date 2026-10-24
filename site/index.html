@@ -19,6 +19,7 @@
     <button id="theme-toggle" type="button" aria-pressed="false">Tema escuro</button>
   </header>
   <main>
+    <p id="status-announcer" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></p>
     <section id="inicio" class="hero" aria-labelledby="titulo">
       <p>VIM NO TERMINAL, SEM PRESSA</p>
       <h1 id="titulo">Aprenda comandos que ficam na memória.</h1>
@@ -44,13 +45,13 @@
         <label for="category">Categoria<select id="category"><option value="">Todas</option></select></label>
         <label for="level">Nível<select id="level"><option value="">Todos</option><option value="iniciante">Iniciante</option></select></label>
       </div>
-      <p id="summary" role="status" aria-live="polite" aria-atomic="true"></p>
+      <p id="summary"></p>
       <div id="command-list"></div>
       <div id="empty-state" hidden><p>Nenhum comando encontrado.</p><button id="clear-filters" type="button">Limpar filtros</button></div>
     </section>
     <section id="praticar" class="practice" aria-labelledby="titulo-praticar">
       <h2 id="titulo-praticar">Pratique com segurança</h2>
-      <p>Ative o simulador e use o teclado somente dentro da área de prática. A tecla Tab continua movendo o foco pelos controles.</p>
+      <p id="simulator-instructions">Ative o simulador e use o teclado somente dentro da área de prática. A tecla Tab continua movendo o foco pelos controles.</p>
       <p>O simulador cobre inserção (<code>i</code>, <code>a</code>, <code>o</code>, <kbd>Esc</kbd>), navegação, edição, busca e os comandos Ex <code>:w</code>, <code>:q</code> e <code>:q!</code>. Os demais comandos do catálogo são referências para praticar no Vim instalado.</p>
       <button id="activate-simulator" type="button">Ativar simulador</button>
       <button id="reset-simulator" type="button">Restaurar texto</button>
@@ -59,13 +60,13 @@
       <select id="challenge-select"><option value="">Escolha um desafio</option></select>
       <button id="restart-challenge" type="button">Reiniciar desafio</button>
       <p id="challenge-instruction"></p>
-      <p id="challenge-status" role="status" aria-live="polite" aria-atomic="true"></p>
-      <div id="simulator-editor" role="textbox" aria-multiline="true" aria-disabled="true" tabindex="0" aria-label="Área de prática do simulador" aria-describedby="simulator-feedback"></div>
+      <p id="challenge-status" aria-hidden="true"></p>
+      <div id="simulator-editor" role="textbox" aria-multiline="true" aria-disabled="true" tabindex="0" aria-label="Área de prática do simulador" aria-describedby="simulator-instructions"></div>
       <dl class="simulator-meta">
         <div><dt>Comando</dt><dd id="simulator-command">—</dd></div>
         <div><dt>Histórico</dt><dd id="simulator-history">—</dd></div>
       </dl>
-      <p id="simulator-feedback" role="status" aria-live="polite" aria-atomic="true"></p>
+      <p id="simulator-feedback" aria-hidden="true"></p>
       <a href="materiais/exercises/modos-e-insercao.html">Abrir primeiro exercício</a>
     </section>
   </main>

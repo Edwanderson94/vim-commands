@@ -10,6 +10,7 @@ const level = find('#level');
 const list = find('#command-list');
 const empty = find('#empty-state');
 const summary = find('#summary');
+const statusAnnouncer = find('#status-announcer');
 const normalize = (value) => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 
 function element(tag, text, className) {
@@ -37,6 +38,7 @@ function renderCatalog() {
     return card;
   }));
   summary.textContent = `${filtered.length} de ${commands.length} comandos exibidos.`;
+  statusAnnouncer.textContent = summary.textContent;
   empty.hidden = filtered.length !== 0;
 }
 
@@ -83,16 +85,21 @@ function renderEditor() {
 }
 
 function drawSimulator() {
+  const challenge = challenges.find((item) => item.id === challengeSelect.value);
+  const challengeComplete = Boolean(challenge && challenge.isComplete(simulator));
+  const feedback = challengeComplete
+    ? `Desafio concluído. ${simulator.feedback}`
+    : simulator.feedback;
   renderEditor();
   editor.setAttribute('aria-disabled', String(!active));
   find('#simulator-mode').textContent = simulator.mode.toUpperCase();
   find('#simulator-command').textContent = simulator.commandBuffer || '—';
   find('#simulator-history').textContent = simulator.keyHistory.length ? simulator.keyHistory.join(' ') : '—';
-  find('#simulator-feedback').textContent = simulator.feedback;
-  const challenge = challenges.find((item) => item.id === challengeSelect.value);
+  find('#simulator-feedback').textContent = feedback;
+  statusAnnouncer.textContent = feedback;
   find('#restart-challenge').disabled = !challenge;
   find('#challenge-instruction').textContent = challenge ? challenge.instruction : 'Escolha um desafio para carregar um texto de prática.';
-  find('#challenge-status').textContent = challenge && challenge.isComplete(simulator) ? 'Desafio concluído.' : '';
+  find('#challenge-status').textContent = challengeComplete ? 'Desafio concluído.' : '';
 }
 
 function loadChallenge() {

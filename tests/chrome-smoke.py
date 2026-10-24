@@ -152,11 +152,12 @@ def main():
         editor_name = command(f'/element/{editor_id}/computedlabel')['value']
         assert editor_role == 'textbox', f'papel acessível do simulador: {editor_role}'
         assert editor_name == 'Área de prática do simulador', f'nome acessível do simulador: {editor_name}'
-        for selector in ('#summary', '#challenge-status', '#simulator-feedback'):
-            live_ref = command('/element', {'using': 'css selector', 'value': selector})['value']
-            live_id = live_ref.get(element_key, live_ref.get('ELEMENT'))
-            role = command(f'/element/{live_id}/computedrole')['value']
-            assert role == 'status', f'papel acessível de {selector}: {role}'
+        live_ref = command('/element', {'using': 'css selector', 'value': '#status-announcer'})['value']
+        live_id = live_ref.get(element_key, live_ref.get('ELEMENT'))
+        role = command(f'/element/{live_id}/computedrole')['value']
+        assert role == 'status', f'papel acessível do anunciador: {role}'
+        announced_count = execute("return document.querySelector('#status-announcer').textContent")
+        assert announced_count == f'{search_result} de 30 comandos exibidos.', announced_count
         command('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': [
             {'type': 'keyDown', 'value': '\ue004'}, {'type': 'keyUp', 'value': '\ue004'}
         ]}]})
@@ -184,6 +185,8 @@ def main():
             command('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': actions}]})
             status = execute("return document.querySelector('#challenge-status').textContent")
             assert status == 'Desafio concluído.', f'{challenge} não foi concluído: {status!r}'
+            feedback = execute("return document.querySelector('#status-announcer').textContent")
+            assert feedback.startswith('Desafio concluído.'), f'{challenge} não foi anunciado: {feedback!r}'
 
         print(f'Chrome {browser}: site, viewport móvel, busca/filtros, foco, tema, simulador e cinco desafios passaram.')
     finally:
