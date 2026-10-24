@@ -97,6 +97,8 @@ def main():
           return document.querySelectorAll('.command-card').length;
         """)
         assert 0 < search_result < 30, f'busca inesperada: {search_result}'
+        announced_count = execute("return document.querySelector('#status-announcer').textContent")
+        assert announced_count == f'{search_result} de 30 comandos exibidos.', announced_count
         filtered = execute("""
           const search = document.querySelector('#search');
           search.value = '';
@@ -156,8 +158,6 @@ def main():
         live_id = live_ref.get(element_key, live_ref.get('ELEMENT'))
         role = command(f'/element/{live_id}/computedrole')['value']
         assert role == 'status', f'papel acessível do anunciador: {role}'
-        announced_count = execute("return document.querySelector('#status-announcer').textContent")
-        assert announced_count == f'{search_result} de 30 comandos exibidos.', announced_count
         command('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': [
             {'type': 'keyDown', 'value': '\ue004'}, {'type': 'keyUp', 'value': '\ue004'}
         ]}]})
