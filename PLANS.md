@@ -309,6 +309,12 @@ em `/home/aluno`. O conteúdo salvo com `:wq` pode ser lido pelo terminal; nomes
 inexistentes, opções, caminhos externos e operadores são recusados. A
 especificação, os guias, a checklist e os testes foram atualizados.
 
+**Cache do navegador:** após a publicação, foi observada uma aba com o HTML novo
+e a mensagem de comandos antigos. Uma sessão limpa já carregava `cat`, portanto
+o JavaScript local estava em cache. A URL do `terminal.js` agora inclui uma
+versão associada à implementação de `cat` para forçar o download após atualizar
+a página.
+
 ## Auditoria de promoção da 1.0.0
 
 **Estado do goal:** os quatro resultados descritos em `GOALS.md` estão

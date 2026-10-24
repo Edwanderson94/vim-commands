@@ -169,7 +169,7 @@ if home:
     if home.lang != 'pt-BR':
         errors.append('site/index.html: documento principal deve declarar português do Brasil')
     expected_scripts = ['commands.js', 'simulator.js', 'challenges.js', 'terminal.js', 'app.js']
-    if [Path(src).name for src in home.script_sources] != expected_scripts:
+    if [Path(urlsplit(src).path).name for src in home.script_sources] != expected_scripts:
         errors.append('site/index.html: scripts clássicos devem carregar na ordem especificada')
     for live_id in ('status-announcer',):
         if home.live_regions.get(live_id) != 'polite':
