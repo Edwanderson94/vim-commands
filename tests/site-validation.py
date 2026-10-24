@@ -29,6 +29,8 @@ class PageAudit(HTMLParser):
         self.anchors = []
         self.buttons = []
         self.editor_attrs = None
+        self.live_roles = {}
+        self.live_atomic = {}
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
@@ -59,6 +61,8 @@ class PageAudit(HTMLParser):
             self.paragraphs.append('')
         if attrs.get('aria-live'):
             self.live_regions[element_id] = attrs['aria-live']
+            self.live_roles[element_id] = attrs.get('role')
+            self.live_atomic[element_id] = attrs.get('aria-atomic')
         if element_id == 'simulator-editor':
             self.editor_attrs = attrs
         attr = 'src' if tag in ('script', 'img') else 'href'
@@ -167,6 +171,8 @@ if home:
     for live_id in ('summary', 'challenge-status', 'simulator-feedback'):
         if home.live_regions.get(live_id) != 'polite':
             errors.append(f'site/index.html: #{live_id} deve usar aria-live="polite"')
+        if home.live_roles.get(live_id) != 'status' or home.live_atomic.get(live_id) != 'true':
+            errors.append(f'site/index.html: #{live_id} deve ser uma região status atômica')
     if not home.editor_attrs or not (
         home.editor_attrs.get('role') == 'textbox'
         and home.editor_attrs.get('aria-multiline') == 'true'

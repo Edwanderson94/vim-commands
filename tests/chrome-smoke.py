@@ -152,6 +152,11 @@ def main():
         editor_name = command(f'/element/{editor_id}/computedlabel')['value']
         assert editor_role == 'textbox', f'papel acessível do simulador: {editor_role}'
         assert editor_name == 'Área de prática do simulador', f'nome acessível do simulador: {editor_name}'
+        for selector in ('#summary', '#challenge-status', '#simulator-feedback'):
+            live_ref = command('/element', {'using': 'css selector', 'value': selector})['value']
+            live_id = live_ref.get(element_key, live_ref.get('ELEMENT'))
+            role = command(f'/element/{live_id}/computedrole')['value']
+            assert role == 'status', f'papel acessível de {selector}: {role}'
         command('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': [
             {'type': 'keyDown', 'value': '\ue004'}, {'type': 'keyUp', 'value': '\ue004'}
         ]}]})

@@ -44,7 +44,7 @@
         <label for="category">Categoria<select id="category"><option value="">Todas</option></select></label>
         <label for="level">Nível<select id="level"><option value="">Todos</option><option value="iniciante">Iniciante</option></select></label>
       </div>
-      <p id="summary" aria-live="polite"></p>
+      <p id="summary" role="status" aria-live="polite" aria-atomic="true"></p>
       <div id="command-list"></div>
       <div id="empty-state" hidden><p>Nenhum comando encontrado.</p><button id="clear-filters" type="button">Limpar filtros</button></div>
     </section>
@@ -59,13 +59,13 @@
       <select id="challenge-select"><option value="">Escolha um desafio</option></select>
       <button id="restart-challenge" type="button">Reiniciar desafio</button>
       <p id="challenge-instruction"></p>
-      <p id="challenge-status" aria-live="polite"></p>
+      <p id="challenge-status" role="status" aria-live="polite" aria-atomic="true"></p>
       <div id="simulator-editor" role="textbox" aria-multiline="true" aria-disabled="true" tabindex="0" aria-label="Área de prática do simulador" aria-describedby="simulator-feedback"></div>
       <dl class="simulator-meta">
         <div><dt>Comando</dt><dd id="simulator-command">—</dd></div>
         <div><dt>Histórico</dt><dd id="simulator-history">—</dd></div>
       </dl>
-      <p id="simulator-feedback" aria-live="polite"></p>
+      <p id="simulator-feedback" role="status" aria-live="polite" aria-atomic="true"></p>
       <a href="materiais/exercises/modos-e-insercao.html">Abrir primeiro exercício</a>
     </section>
   </main>
