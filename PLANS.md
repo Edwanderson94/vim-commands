@@ -29,10 +29,14 @@ eventos `touchStart`/`touchEnd` do Chrome DevTools, sem movimento intermediário
 depois de medir o ponto podia deslocar o seletor fixo sobre a coordenada. O run
 `40140687645` confirmou uma segunda particularidade: em viewport estreita,
 `#terminal-input` colapsa para largura zero e não é um alvo tocável. A revisão
-atual ativa a emulação antes da rolagem, posiciona `.terminal-screen` com
-comportamento instantâneo e escolhe um ponto visível cujo elemento-alvo pertence
-ao terminal, evitando o seletor fixo. Essa revisão passou nas verificações
-locais e aguarda nova validação no Chrome do workflow.
+atual posiciona `.terminal-screen` com comportamento instantâneo e escolhe um
+ponto visível cujo elemento-alvo pertence ao terminal, evitando o seletor fixo.
+O workflow `40140814346` passou na branch, porém a integração em `master`
+`40140870261` reproduziu rolagem automática durante o gesto CDP e deixou o foco
+no seletor de desafio. Para tornar a verificação estável, a revisão dispara no
+ponto visível um evento `click` borbulhante e confirma o comportamento usado
+pela interface para focar a linha de comando. Isso ainda precisa ser validado
+no Chrome do workflow.
 
 O workflow agora separa validação e publicação: valida pushes em `release/**`
 sem exigir o ambiente `github-pages`, e publica somente após uma validação
@@ -46,10 +50,11 @@ As verificações locais `python3 -m py_compile tests/chrome-smoke.py`,
 validação. O run de `master` `40140176786` falhou no foco móvel; o smoke passou em
 `40140400539`, mas `40140579171` revelou outra mudança de alvo após emulação de
 toque. `40140687645` também detectou que o campo de comando fica sem largura em
-viewport estreita. A revisão atual toca uma área visível da própria tela do
-terminal e aguarda nova validação. A tag `1.0.2` está no merge anterior `2fa7f96`; só deve
-ser realinhada ao merge final após validação verde. O deploy de Pages deverá ser
-confirmado no workflow de `master`.
+viewport estreita. A revisão seguinte passou na release mas falhou na master
+(`40140870261`) por rolagem automática durante o gesto CDP. A revisão atual
+valida o evento de clique no ponto visível; aguardar novo resultado antes de
+realinhar a tag `1.0.2`, que permanece no merge anterior `2fa7f96`. O deploy de
+Pages deverá ser confirmado no workflow de `master`.
 
 ## Histórico — release/1.0.1
 

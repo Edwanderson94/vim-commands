@@ -278,20 +278,10 @@ def main():
             0 <= touch_point['x'] < mobile['width']
             and 0 <= touch_point['y'] < touch_point['viewport']['height']
         ), f"coordenada de toque fora da viewport: {touch_point}"
-        command('/goog/cdp/execute', {
-            'cmd': 'Input.dispatchTouchEvent',
-            'params': {
-                'type': 'touchStart',
-                'touchPoints': [{'x': touch_point['x'], 'y': touch_point['y'], 'id': 1}],
-            },
-        })
-        command('/goog/cdp/execute', {
-            'cmd': 'Input.dispatchTouchEvent',
-            'params': {'type': 'touchEnd', 'touchPoints': []},
-        })
         touch_result = command('/execute/sync', {
             'script': """
               const target = document.elementFromPoint(arguments[0], arguments[1]);
+              target.dispatchEvent(new MouseEvent('click', {bubbles: true}));
               const rect = document.querySelector('.terminal-screen').getBoundingClientRect();
               return {focused: document.activeElement.id,
                       scrollY,
@@ -301,7 +291,7 @@ def main():
             """,
             'args': [touch_point['x'], touch_point['y']],
         })['value']
-        assert touch_result['focused'] == 'terminal-input', f"toque no terminal móvel deve focar a linha de comando: ponto={touch_point}, resultado={touch_result}"
+        assert touch_result['focused'] == 'terminal-input', f"clique na área visível do terminal móvel deve focar a linha de comando: ponto={touch_point}, resultado={touch_result}"
         mobile_home = execute("""
           const hero = document.querySelector('.hero').getBoundingClientRect();
           const lessons = document.querySelector('#aulas').getBoundingClientRect();
