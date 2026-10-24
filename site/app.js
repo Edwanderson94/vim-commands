@@ -180,7 +180,21 @@ find('#activate-simulator').addEventListener('click', () => {
 find('#reset-simulator').addEventListener('click', () => {
   simulator = createState(); challengeSelect.value = ''; active = false; currentFile = null; savedLines = null; workspace.hidden = true; drawSimulator();
 });
-find('#back-to-terminal').addEventListener('click', () => closeVim(false));
+find('#back-to-terminal').addEventListener('click', () => {
+  if (currentFile && JSON.stringify(simulator.lines) !== JSON.stringify(savedLines)) {
+    simulator.feedback = 'Há alterações não salvas. Use :wq para salvar ou :q! para descartar.';
+    editor.focus();
+    drawSimulator();
+    return;
+  }
+  if (currentFile) closeVim(false);
+  else {
+    workspace.hidden = true;
+    active = false;
+    terminalInput.focus();
+    statusAnnouncer.textContent = 'Voltando ao terminal simulado.';
+  }
+});
 editor.addEventListener('keydown', (event) => {
   if (!active) return;
   const key = keyForSimulator(event, simulator);

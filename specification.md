@@ -108,7 +108,9 @@ arquivos existem apenas em memória e são descartados ao recarregar a página.
 abre o editor em memória. `:w` salva no sistema virtual, `:wq` salva e retorna
 ao terminal, `:q` retorna se não houver alterações desde o último salvamento e
 `:q!` retorna descartando alterações. O formulário do terminal e o editor têm
-foco próprios; teclas do terminal não são capturadas pelo editor.
+foco próprios; teclas do terminal não são capturadas pelo editor. O botão
+“Voltar ao terminal” não fecha um arquivo com alterações pendentes; ele explica
+como salvar ou descartar explicitamente.
 
 O simulador não é um editor completo. Começa no modo normal e mantém apenas estado em memória:
 

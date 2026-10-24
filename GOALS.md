@@ -18,8 +18,10 @@ simulador educacional seguro.
   legíveis em Markdown no GitHub.
 - O site estático e os materiais funcionam offline, em celular e desktop, com
   catálogo pesquisável, filtros, tema e conteúdo renderizado.
-- O simulador suporta somente os comandos definidos em `specification.md`,
-  restaura o texto e valida cinco desafios.
+- O terminal virtual e o editor Vim simulado suportam somente os comandos
+  definidos em `specification.md`, mantêm arquivos em memória, permitem
+  praticar o fluxo entre terminal e Vim, restauram o texto e validam cinco
+  desafios.
 - A experiência é utilizável por teclado e não acessa dados ou arquivos locais.
 
 ## Escopo atual

@@ -211,6 +211,43 @@ Chrome agora também percorre terminal → Vim → terminal e verifica o arquivo
 Chrome não está instalado localmente; o resultado de navegador será confirmado
 pelo workflow após a publicação desta alteração.
 
+## Auditoria de promoção da 1.0.0
+
+**Estado do goal:** os quatro resultados descritos em `GOALS.md` estão
+implementados: conteúdo, site estático, terminal e Vim simulados em memória e
+cinco desafios. As decisões de idioma adicional, nome final e futuro técnico
+permanecem decisões de produto, não bloqueios da primeira versão.
+
+**Defeito corrigido antes da promoção:** o botão “Voltar ao terminal” descartava
+alterações sem aviso. Agora mantém o editor aberto e explica como salvar com
+`:wq` ou descartar com `:q!`. O smoke test Chrome cobre a tentativa de retorno
+com alterações pendentes. A checklist manual também registra esse caso.
+
+**Resultado:** a release `1.0.0` é adequada para promoção à `master` depois que
+o workflow do commit candidato concluir com sucesso. O escopo é claramente
+educacional; os comandos são limitados, não executam processos reais e não
+acessam arquivos do aluno. Os materiais e os testes automatizados cobrem os
+fluxos publicados. A fala do Orca e a repetição manual de toda a matriz QA não
+foram verificadas nesta auditoria; não são bloqueios documentados para o
+aceite, mas devem continuar explícitas nos registros.
+
+**Itens mapeados para a próxima release:**
+
+1. Generalizar o gatilho do workflow de Pages: hoje o push automático atende
+   somente `release/1.0.0`. Antes de abrir outra branch de release, ajustar o
+   gatilho ou documentar uma execução manual aprovada.
+2. Definir uma etapa de prévia para candidatos futuros. O workflow atual publica
+   diretamente no Pages quando há push em `release/1.0.0`, então QA nessa branch
+   altera o site público de validação.
+3. Completar a matriz manual com o terminal simulado no Firefox, testar a saída
+   falada do Orca e, se disponíveis, Safari e dispositivos móveis reais.
+4. Ampliar os testes de integração para erros de terminal, `:q` com e sem
+   alterações, `:q!`, arquivos vazios e caminhos de arquivo aninhados. O smoke
+   test atual cobre o percurso principal e recusa comandos não permitidos.
+
+Esses itens são melhorias planejadas. Não foi encontrado defeito conhecido que
+impeça a finalidade declarada da versão 1.0.0 após a correção acima.
+
 ## Estado de aceite
 
 Os critérios das Fases 1 a 4 estão verificados por inspeção do conteúdo,

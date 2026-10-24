@@ -101,7 +101,19 @@ def main():
         assert terminal_flow['visible'] and terminal_flow['focused'] == 'simulator-editor', terminal_flow
         assert terminal_flow['path'] == '/home/aluno/vim-pratica $', terminal_flow
         actions = []
-        for key in ('i', 'O', 'K', '\ue00c', ':', 'w', 'q', '\ue007'):
+        for key in ('i', 'O', 'K', '\ue00c'):
+            actions.extend([{'type': 'keyDown', 'value': key}, {'type': 'keyUp', 'value': key}])
+        command('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': actions}]})
+        unsaved_back = execute("""
+          document.querySelector('#back-to-terminal').click();
+          return {visible: !document.querySelector('#vim-workspace').hidden,
+                  focused: document.activeElement.id,
+                  feedback: document.querySelector('#status-announcer').textContent};
+        """)
+        assert unsaved_back['visible'] and unsaved_back['focused'] == 'simulator-editor', unsaved_back
+        assert 'alterações não salvas' in unsaved_back['feedback'], unsaved_back
+        actions = []
+        for key in (':', 'w', 'q', '\ue007'):
             actions.extend([{'type': 'keyDown', 'value': key}, {'type': 'keyUp', 'value': key}])
         command('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': actions}]})
         saved_flow = execute("""

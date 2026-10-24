@@ -30,5 +30,7 @@ node tests/simulator.test.mjs
 python3 tests/site-validation.py
 ```
 
+Para uma rodada manual de QA, use a [checklist de testes](../tests/qa-checklist.md).
+
 O workflow executa essas verificações e também `tests/chrome-smoke.py` com
 Chrome e ChromeDriver disponíveis no runner do GitHub Actions.
