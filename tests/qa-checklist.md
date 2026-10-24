@@ -46,9 +46,15 @@ observado.
 - [ ] Conferir em largura de 320–360 px que os dois botões continuam visíveis,
   podem quebrar linha sem sobreposição e que a introdução não cria rolagem
   horizontal.
-- [ ] Ler a introdução “O que é o Vim?” e conferir a distinção entre terminal,
-  editor e sistema Linux; confirmar que a explicação de modos é legível nos
-  temas claro e escuro.
+- [ ] Ler os quatro cartões do carrossel; conferir a distinção entre terminal,
+  editor e sistema Linux e as três curiosidades com fontes registradas em
+  `FONTES.md`.
+- [ ] Confirmar que o carrossel avança a cada 10 segundos, os botões anterior e
+  próxima navegam pelos quatro cartões e a pausa impede a rotação automática.
+- [ ] Focar o carrossel com teclado e passar o ponteiro sobre ele; confirmar que
+  a rotação pausa durante a interação e quando o carrossel sai da tela. Ativar
+  movimento reduzido e confirmar que a rotação inicia pausada.
+- [ ] Conferir legibilidade e controles nos temas claro e escuro.
 - [ ] Abrir os links das aulas e dos exercícios.
 - **Esperado:** cada link abre o material correspondente, sem página ausente ou
   erro de navegação.

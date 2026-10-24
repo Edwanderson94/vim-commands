@@ -180,6 +180,16 @@ if home:
     if home.lang != 'pt-BR':
         errors.append('site/index.html: documento principal deve declarar português do Brasil')
     homepage_source = (SITE / 'index.html').read_text(encoding='utf-8')
+    if '<h2 id="titulo-aulas">Informações sobre o Vim</h2>' not in homepage_source:
+        errors.append('site/index.html: a seção introdutória deve se chamar Informações sobre o Vim')
+    carousel_ids = {'vim-carousel', 'vim-carousel-slides', 'vim-slide-1', 'vim-slide-2', 'vim-slide-3', 'vim-slide-4', 'vim-carousel-previous', 'vim-carousel-next', 'vim-carousel-autoplay', 'vim-carousel-position', 'vim-carousel-help'}
+    if not carousel_ids.issubset(home.ids):
+        errors.append(f'site/index.html: carrossel incompleto; faltam {sorted(carousel_ids - home.ids)}')
+    if 'data-interval="10000"' not in homepage_source or homepage_source.count('aria-roledescription="slide"') != 4 or 'aria-live="off"' not in homepage_source:
+        errors.append('site/index.html: carrossel deve ter quatro cartões, intervalo de 10 segundos e anúncio controlado')
+    for curiosity in ('vimtutor', ':set spell', 'plugins'):
+        if curiosity not in homepage_source:
+            errors.append(f'site/index.html: falta curiosidade sobre {curiosity}')
     for introduction in ('id="titulo-o-que-e-vim"', 'Vi IMproved', 'editor de texto modal', 'modo de inserção', 'terminal do Linux', 'Nano', 'Emacs', 'Micro'):
         if introduction not in homepage_source:
             errors.append(f'site/index.html: falta a introdução básica sobre Vim ({introduction})')
@@ -187,7 +197,7 @@ if home:
         errors.append('site/index.html: dica isolada de Esc removida da apresentação inicial')
     if 'href="#aulas">Começar a aprender</a>' not in homepage_source:
         errors.append('site/index.html: botão principal deve levar à trilha inicial')
-    expected_scripts = ['commands.js', 'simulator.js', 'challenges.js', 'terminal.js', 'app.js']
+    expected_scripts = ['commands.js', 'simulator.js', 'challenges.js', 'terminal.js', 'carousel.js', 'app.js']
     if [Path(urlsplit(src).path).name for src in home.script_sources] != expected_scripts:
         errors.append('site/index.html: scripts clássicos devem carregar na ordem especificada')
     for live_id in ('status-announcer',):

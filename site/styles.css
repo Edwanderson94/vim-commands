@@ -138,6 +138,22 @@ kbd, .key {
 
 .vim-intro h3 { margin-top: 0; }
 .vim-intro p:last-child { margin-bottom: 0; color: var(--muted); }
+.vim-carousel { max-width: 900px; }
+.vim-carousel-slides { display: grid; }
+.vim-slide { grid-area: 1 / 1; align-self: start; width: 100%; }
+.vim-slide[aria-hidden="true"] { visibility: hidden; pointer-events: none; }
+.vim-slide-source { font-size: .9rem; }
+.vim-carousel-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .65rem;
+  margin-top: -.5rem;
+}
+.vim-carousel-controls button { min-height: 2.75rem; }
+#vim-carousel-position { min-width: 4.5rem; text-align: center; color: var(--muted); }
+.vim-carousel-help { margin-top: .65rem; color: var(--muted); font-size: .9rem; }
+.vim-carousel button:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
 
 .lessons a {
   display: block;

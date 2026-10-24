@@ -12,6 +12,16 @@ Consultadas em 24 out. 2026. Essas fontes fundamentam o resumo introdutório
 da página inicial: Vim é um editor de texto que pode ser usado no terminal,
 funciona em diferentes sistemas e é uma entre várias opções de editor.
 
+## Curiosidades apresentadas na página inicial
+
+- [Vim User Manual — Using the Vim tutor](https://vimhelp.org/usr_01.txt.html#vimtutor). Documenta o `vimtutor`, prática interativa de cerca de 30 minutos em duas partes, iniciada com `vimtutor` no terminal Unix.
+- [Vim Reference Manual — Spell checking](https://vimhelp.org/spell.txt.html#spell). Documenta a verificação ortográfica ativada pela opção `spell` e esclarece que o recurso verifica ortografia, não gramática.
+- [Vim User Manual — Write plugins](https://vimhelp.org/usr_51.txt.html#write-plugin). Explica que plugins e scripts podem personalizar e ampliar o Vim.
+
+Consultadas em 24 out. 2026. A página resume esses recursos em linguagem
+introdutória; a disponibilidade de dicionários e recursos específicos pode
+depender da instalação do Vim.
+
 - aalvesjr. [Comandos VIM](https://gist.github.com/aalvesjr/1290585). GitHub Gist, criado em 16 out. 2011. Acesso em 24 out. 2026.
 
   Referência consultada para os modos do Vim e os comandos de inserção e saída,

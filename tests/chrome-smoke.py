@@ -92,12 +92,14 @@ def main():
         assert execute("return Boolean(document.querySelector('link[href=\"styles.css\"]')?.sheet)")
         assert execute("return document.querySelector('#status-announcer').textContent") == ''
         assert execute("return document.querySelector('h1').textContent") == 'Aprenda comandos que ficam na memória.'
+        carousel = execute("return {count: document.querySelectorAll('#vim-carousel .vim-slide').length, interval: document.querySelector('#vim-carousel').dataset.interval, visible: [...document.querySelectorAll('#vim-carousel .vim-slide')].findIndex((slide) => slide.getAttribute('aria-hidden') !== 'true'), label: document.querySelector('#vim-carousel-position').textContent, enabled: document.querySelector('#vim-carousel-autoplay').getAttribute('aria-pressed')}")
+        assert carousel == {'count': 4, 'interval': '10000', 'visible': 0, 'label': '1 de 4', 'enabled': 'true'}, carousel
         assert execute("return Boolean(document.querySelector('a[href=\"#aulas\"]') && document.querySelector('a[href=\"materiais/content/cheatsheet.html\"]'))"), 'os dois caminhos de entrada devem estar disponíveis'
         assert execute("return !document.querySelector('.hero').textContent.includes('Esc volta ao modo normal ou cancela uma operação')"), 'a dica isolada de Esc não deve aparecer no hero'
         assert execute("return document.querySelector('#aulas article').textContent.includes('editor de texto modal') && document.querySelector('#aulas article').textContent.includes('modo de inserção')"), 'a introdução deve explicar Vim e seus modos'
         for selector, expected_role, expected_name in (
             ('h1', 'heading', 'Aprenda comandos que ficam na memória.'),
-            ('#aulas article', 'article', 'O que é o Vim?'),
+            ('#vim-slide-1', 'group', 'O que é o Vim?'),
             ('.hero > a[href="#aulas"]', 'link', 'Começar a aprender'),
             ('.hero > a[href="materiais/content/cheatsheet.html"]', 'link', 'Ver cola rápida'),
         ):
@@ -108,6 +110,28 @@ def main():
             role = command(f'/element/{element_id}/computedrole')['value']
             name = command(f'/element/{element_id}/computedlabel')['value']
             assert (role, name) == (expected_role, expected_name), f'nome/papel acessível inesperado em {selector}: {(role, name)}'
+        execute("document.querySelector('#vim-carousel').scrollIntoView({block: 'center'})")
+        time.sleep(.1)
+        carousel_deadline = time.monotonic() + 12
+        while time.monotonic() < carousel_deadline and execute("return document.querySelector('#vim-carousel-position').textContent") != '2 de 4':
+            time.sleep(.1)
+        assert execute("return document.querySelector('#vim-carousel-position').textContent") == '2 de 4', 'o carrossel deve avançar automaticamente a cada 10 segundos'
+        execute("document.querySelector('#vim-carousel-next').click()")
+        assert execute("return document.querySelector('#vim-carousel-position').textContent") == '3 de 4', 'controle próxima deve mudar o cartão'
+        execute("document.querySelector('#vim-carousel-previous').click()")
+        assert execute("return document.querySelector('#vim-carousel-position').textContent") == '2 de 4', 'controle anterior deve mudar o cartão'
+        actions = []
+        for _ in range(10):
+            actions.extend([{'type': 'keyDown', 'value': '\ue004'}, {'type': 'keyUp', 'value': '\ue004'}])
+        command('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': actions}]})
+        focused_carousel = execute("return {id:document.activeElement.id,live:document.querySelector('#vim-carousel').getAttribute('aria-live'),outline:getComputedStyle(document.activeElement).outlineStyle}")
+        assert focused_carousel['id'] == 'vim-carousel-autoplay', focused_carousel
+        assert focused_carousel['live'] == 'polite' and focused_carousel['outline'] == 'solid', focused_carousel
+        command('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': [
+            {'type': 'keyDown', 'value': '\ue007'}, {'type': 'keyUp', 'value': '\ue007'}
+        ]}]})
+        paused = execute("return {pressed:document.querySelector('#vim-carousel-autoplay').getAttribute('aria-pressed'),text:document.querySelector('#vim-carousel-autoplay').textContent}")
+        assert paused == {'pressed': 'false', 'text': 'Rotação automática'}, paused
         assert execute("return document.activeElement.id") != 'terminal-input', 'o terminal não deve roubar o foco ao carregar a página'
         assert execute("return !document.querySelector('#terminal-form') && ![...document.querySelectorAll('button')].some((button) => button.textContent.includes('Executar comando simulado'))"), 'não deve existir formulário separado nem botão para executar comandos'
         assert execute("return ['#activate-simulator', '#reset-simulator', '#restart-challenge'].every((selector) => !document.querySelector(selector))"), 'a prática não deve depender de botões de ativação, restauração ou reinício'
@@ -180,11 +204,14 @@ def main():
           const hero = document.querySelector('.hero').getBoundingClientRect();
           const lessons = document.querySelector('#aulas').getBoundingClientRect();
           const actions = [...document.querySelectorAll('.hero > a')].map((link) => link.getBoundingClientRect());
+          const carouselControls = [...document.querySelectorAll('.vim-carousel-controls button')].map((button) => button.getBoundingClientRect());
           return {heroBottom: hero.bottom, lessonsTop: lessons.top,
                   actionCount: actions.length,
-                  actionsInViewport: actions.every((rect) => rect.left >= 0 && rect.right <= innerWidth)};
+                  actionsInViewport: actions.every((rect) => rect.left >= 0 && rect.right <= innerWidth),
+                  controlsInViewport: carouselControls.every((rect) => rect.left >= 0 && rect.right <= innerWidth)};
         """)
         assert mobile_home['actionCount'] == 2 and mobile_home['actionsInViewport'], f'CTAs da página inicial fora da tela móvel: {mobile_home}'
+        assert mobile_home['controlsInViewport'], f'controles do carrossel fora da tela móvel: {mobile_home}'
         assert mobile_home['lessonsTop'] >= mobile_home['heroBottom'] - 1, f'hero e trilha se sobrepõem em tela móvel: {mobile_home}'
         command('/window/rect', {'width': 1366, 'height': 900})
 

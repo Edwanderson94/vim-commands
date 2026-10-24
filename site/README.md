@@ -1,8 +1,10 @@
 # Site do Vim Commands
 
 Interface estática, offline e sem dependências externas. Abra `index.html` em
-um navegador moderno ou sirva a raiz do projeto. O site oferece trilha,
-catálogo pesquisável dos 30 comandos, filtros, tema, simulador, cinco desafios
+um navegador moderno ou sirva a raiz do projeto. O site oferece uma introdução
+em carrossel com quatro cartões sobre Vim, troca automática a cada 10 segundos
+e controle de pausa, trilha, catálogo pesquisável dos 30 comandos, filtros,
+tema, simulador, cinco desafios
 e páginas HTML derivadas dos materiais Markdown. Na área de prática, uma única
 janela de terminal em `/home/aluno` já contém `teste.txt`; não há botão de
 execução ou campo de comando separado. Digite `vim teste.txt` diretamente no

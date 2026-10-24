@@ -29,6 +29,7 @@ vim-commands/
     ├── index.html
     ├── styles.css
     ├── app.js
+    ├── carousel.js
     ├── commands.js
     ├── simulator.js
     ├── challenges.js
@@ -62,6 +63,7 @@ O site usa HTML5 semântico, CSS3 e JavaScript puro em arquivos separados, sem f
 | `index.html` | Estrutura semântica e pontos de montagem. |
 | `styles.css` | Tokens, tema, layout e responsividade. |
 | `app.js` | Inicialização, tema, busca e filtros. |
+| `carousel.js` | Carrossel de introdução com rotação, controles e pausa acessíveis. |
 | `commands.js` | Dados dos 30 comandos. |
 | `simulator.js` | Estado, teclas e renderização. |
 | `challenges.js` | Dados e validação dos desafios. |
@@ -75,7 +77,7 @@ funcionem offline. O tema claro/escuro é compartilhado entre a página inicial 
 todas as páginas de materiais; cada subpágina oferece um botão para alterná-lo.
 O workflow de publicação executa o mesmo gerador.
 
-A página contém cabeçalho com âncoras e botão de tema; apresentação com os botões “Começar a aprender” e “Ver cola rápida”; uma introdução na trilha que explica o que é o Vim, sua relação com o terminal, seus modos e outros editores; aulas renderizadas; catálogo; prática por terminal simulado com desafio sempre visível; e rodapé.
+A página contém cabeçalho com âncoras e botão de tema; apresentação com os botões “Começar a aprender” e “Ver cola rápida”; a seção “Informações sobre o Vim”, com um carrossel de quatro cartões: a explicação do Vim e três curiosidades apoiadas por fontes; aulas renderizadas; catálogo; prática por terminal simulado com desafio sempre visível; e rodapé. O carrossel avança a cada 10 segundos quando está visível, oferece controles anterior/próximo e pausa, pausa ao receber foco ou ponteiro ou quando a aba fica oculta e inicia pausado quando a pessoa prefere movimento reduzido. Os cartões e controles precisam continuar utilizáveis por teclado e tecnologia assistiva.
 
 O catálogo mostra tecla, título, descrição, categoria, nível, modo e aula. A busca verifica tecla, título, descrição, categoria e modo. Os filtros de categoria e nível atuam juntos. Sem resultado, há mensagem clara e botão para limpar filtros.
 
