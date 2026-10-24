@@ -126,10 +126,19 @@ As cinco aulas contêm todos os campos e seções especificados. A suíte do
 simulador, checagem sintática dos scripts e `git diff --check` passaram; links
 locais das 19 páginas foram resolvidos.
 
-**Ainda falta:** validação em Chrome e com leitor de tela. Chrome não está
-instalado neste ambiente. Orca está disponível e reconheceu o Firefox como
-aplicativo Mozilla, mas a sessão gráfica não permitiu ativar a janela temporária
-para avaliar a leitura falada; a leitura assistiva do conteúdo segue pendente.
+**Ainda falta:** validação em Chrome e ouvir a leitura completa com Orca. Não
+há Chrome/Chromium instalado nem em cache neste ambiente; Firefox 158 é o
+navegador disponível.
+
+**Árvore de acessibilidade:** no Firefox gráfico, AT-SPI expôs os links e
+controles com nomes e funções. A busca aparece como campo “Buscar comando”, os
+filtros e o seletor de desafio como caixas de combinação, os controles como
+botões e o simulador como caixa de texto de várias linhas com o nome “Área de
+prática do simulador”. O simulador começa desativado e passa ao estado ativado
+e focado após “Ativar simulador”; “Reiniciar desafio” fica indisponível até um
+desafio ser selecionado. A navegação por Tab percorreu cabeçalho, trilha,
+catálogo, simulador e rodapé. Esta inspeção confirma a árvore consumida por
+leitores de tela, mas não substitui a verificação da fala do Orca.
 
 **Validação desta rodada:** Firefox abriu a cópia local e a publicação atual
 em GitHub Pages; ambas montaram 30 comandos e recursos sem erro. Busca por
@@ -150,5 +159,6 @@ autorização explícita.
 ## Sequência imediata
 
 1. Validar Chrome e leitor de tela, registrando nome, função, estado e ordem de
-   foco dos controles.
+   foco dos controles; a inspeção AT-SPI do Firefox já cobre nome, função,
+   estado e foco por Tab. Falta confirmar em Chrome e ouvir a saída do Orca.
 2. Corrigir regressões encontradas e registrar os resultados.
