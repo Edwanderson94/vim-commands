@@ -154,7 +154,8 @@ prática do simulador”. O simulador começa desativado e passa ao estado ativa
 e focado após “Ativar simulador”; “Reiniciar desafio” fica indisponível até um
 desafio ser selecionado. A navegação por Tab percorreu cabeçalho, trilha,
 catálogo, simulador e rodapé. Esta inspeção confirma a árvore consumida por
-leitores de tela, mas não substitui a verificação da fala do Orca.
+leitores de tela. Orca também gerou as duas mensagens verificadas pela saída
+braille; a fala não foi testada.
 
 **Mensagens dinâmicas:** contagem do catálogo e retorno do simulador agora são
 centralizados em uma região `role="status"`, `aria-live="polite"` e
@@ -167,7 +168,8 @@ test verifica esse estado e o workflow `40101978849` (commit `b3987d7`) passou.
 No Firefox isolado, AT-SPI focou a janela de teste. Com intervalos entre as
 teclas, o log de depuração do Orca registrou na saída braille `3 de 30 comandos
 exibidos.` e `Desafio concluído. Modo normal.`. A fala ficou desativada; a saída
-de voz não foi verificada.
+de voz não foi verificada, mas não há critério obrigatório de aceite pendente
+para a primeira versão.
 
 **Validação desta rodada:** Firefox abriu a cópia local e a publicação atual
 em GitHub Pages; ambas montaram 30 comandos e recursos sem erro. Busca por
@@ -177,12 +179,14 @@ de 320 px não apresentou elementos fora da área visível. O README agora apont
 diretamente para `/site/`, que é o caminho publicado; a raiz do projeto contém
 apenas um redirecionamento para essa página. A suíte do simulador, auditoria
 estática das 19 páginas e `git diff --check` passaram nesta rodada. Orca
-apresentou as mensagens na saída braille; a fala permanece pendente.
+apresentou as mensagens na saída braille; a fala não foi testada e fica
+registrada como observação, não como pendência de aceite da primeira versão.
 
 **Publicação de validação:** o workflow do GitHub Pages publica `site/` a
 partir da branch `release/1.0.0`. Ela permite validar o catálogo, tema,
-simulador e desafios, mas não substitui a correção das lacunas acima antes do
-aceite de estabilidade.
+simulador e desafios. O código da interface no commit `b3987d7` passou no
+workflow `40101978849`; o Pages responde com HTTP 200 e serve o anunciador
+único e o estado inicial corrigido. A branch atual é `release/1.0.0`.
 
 **Restrição:** GitHub Pages, commits, push e alterações externas exigem
 autorização explícita.
@@ -192,4 +196,5 @@ autorização explícita.
 Os critérios das Fases 1 a 4 estão verificados por inspeção do conteúdo,
 auditoria HTML e de links, testes do simulador e desafios, validações manuais
 em Firefox, anúncio braille no Orca e Chrome no GitHub Actions. As evoluções da
-Fase 5 permanecem fora do aceite da primeira versão.
+Fase 5 permanecem fora do aceite da primeira versão. A saída falada do Orca
+não foi testada; os anúncios em braille foram confirmados.

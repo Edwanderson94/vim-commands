@@ -10,6 +10,13 @@ Abra [Vim Commands — site estático](https://edwanderson94.github.io/vim-comma
 no navegador para usar a trilha, consultar os comandos e praticar no
 simulador. A página é publicada a partir da `release/1.0.0` para validação.
 
+## Estado da release 1.0.0
+
+As fases 1 a 4 e os critérios de aceite da primeira versão estão concluídos.
+O site publicado passou pelas validações automatizadas e manuais descritas em
+[`PLANS.md`](PLANS.md). O Orca confirmou anúncios pela saída braille; a saída
+falada não foi testada.
+
 ## Comece aqui
 
 1. Leia [Primeiros passos](content/getting-started.md).

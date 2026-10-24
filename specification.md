@@ -167,6 +167,17 @@ Gerar dados a partir do Markdown, disponibilizar inglês, adicionar modo visual,
 - Conteúdo somente em português ou também em inglês.
 - JavaScript puro permanentemente ou gerador estático no futuro.
 
-## 9. Próximo passo
+## 9. Estado da primeira versão e próximo passo
 
-Concluir a validação da Fase 4, incluindo comportamento do site, comandos do simulador, desafios, responsividade e acessibilidade.
+A Fase 4 e os critérios de aceite da versão 1.0.0 estão verificados. O conteúdo,
+as páginas estáticas, o simulador, os cinco desafios, a responsividade, o uso
+por teclado e os caminhos relativos foram validados. Chrome passou no workflow
+de publicação; Firefox e Orca foram verificados manualmente, incluindo os
+anúncios do Orca pela saída braille. A saída falada não foi testada.
+
+A versão 1.0.0 está publicada em
+[GitHub Pages](https://edwanderson94.github.io/vim-commands/site/) para
+validação. A próxima etapa do produto pertence à Fase 5 e deve ser priorizada
+separadamente; suas evoluções não são requisitos de aceite da primeira versão.
+Consulte [`PLANS.md`](PLANS.md) para o histórico de verificações e as decisões
+de publicação.
