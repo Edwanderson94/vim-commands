@@ -35,11 +35,11 @@ release 1.0.1.
 ## Melhorias planejadas
 
 A fila priorizada com dez melhorias, critérios resumidos e status está em
-[`GOALS.md`](GOALS.md), na seção “Dez melhorias identificadas”. Os itens 1–3
-foram implementados e publicados; os itens 4–10 permanecem planejados. O item 4 está em validação: o smoke test de navegador agora cobre a lista de
+[`GOALS.md`](GOALS.md), na seção “Dez melhorias identificadas”. Os itens 1–4
+foram implementados e validados; os itens 5–10 permanecem planejados. O smoke
+test Chrome do item 4 cobre a lista de
 comandos, rejeições, argumentos inválidos, caminhos externos, operadores,
-`clear` com argumento e persistência do arquivo. O workflow precisa passar antes
-de marcar essa melhoria como concluída.
+`clear` com argumento e persistência do arquivo. O workflow `40136235605` passou.
 
 ## Fase 1 — Conteúdo Markdown — concluída
 
