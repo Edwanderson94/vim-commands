@@ -73,7 +73,7 @@ As aulas, módulos e exercícios continuam mantidos em Markdown. O script
 externas, para que os links da trilha sejam formatados no navegador e também
 funcionem offline. O workflow de publicação executa o mesmo gerador.
 
-A página contém cabeçalho com âncoras e botão de tema; apresentação com botão “Começar a aprender” e aviso sobre `Esc`; trilha com aulas renderizadas; catálogo; prática por terminal simulado com seletor opcional de desafio; e rodapé.
+A página contém cabeçalho com âncoras e botão de tema; apresentação com botão “Começar a aprender” e aviso sobre `Esc`; trilha com aulas renderizadas; catálogo; prática por terminal simulado com desafio sempre visível; e rodapé.
 
 O catálogo mostra tecla, título, descrição, categoria, nível, modo e aula. A busca verifica tecla, título, descrição, categoria e modo. Os filtros de categoria e nível atuam juntos. Sem resultado, há mensagem clara e botão para limpar filtros.
 
@@ -118,6 +118,8 @@ ao carregar; clicar em qualquer ponto da janela ativa a linha de comando. Um
 seletor simples permite escolher um desafio ou praticar livremente. Ao escolher
 um desafio, o texto inicial é carregado em `teste.txt` e a instrução aparece
 junto ao seletor; o aluno abre o arquivo pelo fluxo normal com `vim teste.txt`.
+O painel do desafio permanece visível enquanto o Vim está aberto e o seletor
+fica temporariamente desativado para preservar a atividade em andamento.
 Selecionar outro desafio prepara seu texto inicial. Para repetir o mesmo desafio,
 escolha “Praticar sem desafio” e selecione-o novamente. O editor só aparece
 depois de abrir um arquivo com `vim`; não existem botões para ativar o editor,
@@ -148,6 +150,11 @@ O simulador não é um editor completo. Começa no modo normal e mantém apenas 
 | Edição | `x`, `dd`, `dw`, `yy`, `p`, `u`, `Ctrl-r`, `.` |
 | Busca | `/texto`, `n`, `N` |
 | Ex simulado | `:w`, `:q`, `:q!`, `:wq` |
+
+O cursor pode ser movimentado com `h`, `j`, `k`, `l` ou com as setas. `Home` e
+`End` levam ao início e ao fim da linha; o cursor permanece visível quando o
+arquivo excede a área de edição. A navegação com setas também funciona durante
+a inserção de texto.
 
 `:w`, `:wq`, `:q` e `:q!` controlam o ciclo do arquivo no ambiente virtual. O
 `.` repete a última alteração suportada.

@@ -98,7 +98,8 @@ function runTerminalCommand(command) {
     activeChallenge = challengeSelect.value !== '' && currentFile === `${terminal.root}/teste.txt`;
     active = true;
     terminalView.hidden = true;
-    challengePicker.hidden = true;
+    challengePicker.hidden = false;
+    challengeSelect.disabled = true;
     workspace.hidden = false;
     drawSimulator(false);
     simulator.feedback = `Arquivo virtual ${currentFile}. Use i para inserir e :wq para salvar e voltar.`;
@@ -125,6 +126,7 @@ function closeVim(saveChanges) {
   workspace.hidden = true;
   terminalView.hidden = false;
   challengePicker.hidden = false;
+  challengeSelect.disabled = false;
   active = false;
   terminalInput.focus();
   drawSimulator(false);
@@ -149,6 +151,21 @@ function renderEditor() {
     row.append(content); fragment.append(row);
   });
   editor.replaceChildren(fragment);
+  const cursor = editor.querySelector('.cursor');
+  if (cursor) {
+    const viewport = editor.getBoundingClientRect();
+    const caret = cursor.getBoundingClientRect();
+    const top = viewport.top + editor.clientTop;
+    const left = viewport.left + editor.clientLeft;
+    const bottom = top + editor.clientHeight;
+    const right = left + editor.clientWidth;
+    if (caret.top < top) editor.scrollTop -= top - caret.top;
+    else if (caret.bottom > bottom) editor.scrollTop += caret.bottom - bottom;
+    if (caret.left < left) editor.scrollLeft -= left - caret.left;
+    else if (caret.right > right) {
+      editor.scrollLeft += caret.right - right;
+    }
+  }
 }
 
 function drawSimulator(announce = true) {
@@ -184,7 +201,8 @@ function chooseChallenge() {
     statusAnnouncer.textContent = 'Prática livre. O arquivo atual foi mantido.';
   }
   drawSimulator(false);
-  terminalInput.focus();
+  if (active) editor.focus({ preventScroll: true });
+  else terminalInput.focus();
 }
 
 challengeSelect.addEventListener('change', chooseChallenge);

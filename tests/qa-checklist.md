@@ -171,12 +171,19 @@ observado.
 ### QA-14 — Desafios
 
 - [ ] Completar cada um dos cinco desafios usando as instruções exibidas.
+- [ ] Abrir `vim teste.txt` com um desafio selecionado.
+- [ ] Confirmar que o título e a instrução do desafio continuam visíveis e que
+  a seleção fica bloqueada enquanto o Vim está aberto.
+- [ ] Percorrer um arquivo com mais linhas que a janela do Vim e mover o cursor
+  com `h`, `j`, `k`, `l`, setas, `Home` e `End`.
 - [ ] No desafio de apagar uma linha, remover uma linha errada antes de tentar
   novamente.
 - [ ] Reiniciar um desafio pelo seletor, escolhendo “Praticar sem desafio” e
   depois o desafio novamente.
 - **Esperado:** cada desafio correto mostra conclusão; uma ação incorreta não é
-  aceita como sucesso; selecionar novamente restaura o texto inicial.
+  aceita como sucesso; selecionar novamente restaura o texto inicial; o painel
+  do desafio permanece visível durante a edição e o cursor continua visível ao
+  navegar pelo arquivo.
 
 ## Acessibilidade exploratória
 

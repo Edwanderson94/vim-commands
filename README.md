@@ -11,13 +11,13 @@ no navegador para usar a trilha, consultar os comandos e praticar. Na área de
 prática há um único terminal simulado em `/home/aluno`: digite `vim teste.txt`
 diretamente após o prompt e pressione `Enter`. A camada Linux aceita somente
 `pwd`, `ls` e `vim`; o arquivo é editado no Vim simulado.
-O seletor opcional de desafio prepara `teste.txt` com o texto e a instrução da
-atividade escolhida.
+O painel do desafio permanece visível quando o Vim abre. Escolha uma atividade
+antes de editar; a seleção fica bloqueada enquanto o arquivo estiver aberto.
 
 ## Estado da release 1.0.1
 
-Esta versão simplifica a área de prática para um terminal integrado e um seletor
-opcional de desafio. O aluno escolhe o desafio e abre o arquivo com
+Esta versão simplifica a área de prática para um terminal integrado. O painel
+do desafio permanece visível com o Vim aberto, e o aluno abre o arquivo com
 `vim teste.txt`. O histórico de validações está em [`PLANS.md`](PLANS.md).
 
 ## Comece aqui

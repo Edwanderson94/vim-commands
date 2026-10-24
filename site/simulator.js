@@ -18,6 +18,8 @@ function keyForSimulator(event, state) {
   if (event.altKey || event.metaKey) return null;
   if (event.key === 'Backspace') return state.mode === 'insert' ? 'Backspace' : null;
   if (event.key === 'Escape') return 'Escape';
+  if (event.key.startsWith('Arrow')) return event.key;
+  if (event.key === 'Home' || event.key === 'End') return event.key;
   if (event.key === 'Enter') {
     return state.mode === 'insert' || state.commandBuffer.startsWith('/') || state.commandBuffer.startsWith(':')
       ? 'Enter'
@@ -209,6 +211,15 @@ function moveSearch(state, direction) {
 
 function applyKey(state, key) {
   if (state.mode === 'insert') {
+    if (key === 'ArrowLeft') state.cursor.column -= 1;
+    else if (key === 'ArrowRight') state.cursor.column += 1;
+    else if (key === 'ArrowUp') state.cursor.line -= 1;
+    else if (key === 'ArrowDown') state.cursor.line += 1;
+    else if (key === 'Home') state.cursor.column = 0;
+    else if (key === 'End') state.cursor.column = state.lines[state.cursor.line].length;
+    if (key.startsWith('Arrow') || key === 'Home' || key === 'End') {
+      return finish(state, 'Cursor movido.');
+    }
     if (key === 'Escape') {
       state.mode = 'normal';
       if (state.insertOperations.length) state.lastChange = {
@@ -242,6 +253,13 @@ function applyKey(state, key) {
     state.feedback = 'Texto inserido. Pressione Esc para voltar ao modo normal.';
     return state;
   }
+
+  if (key === 'ArrowLeft') key = 'h';
+  else if (key === 'ArrowDown') key = 'j';
+  else if (key === 'ArrowUp') key = 'k';
+  else if (key === 'ArrowRight') key = 'l';
+  else if (key === 'Home') key = '0';
+  else if (key === 'End') key = '$';
 
   if (key === 'Escape') return finish(state, 'Operação cancelada.');
   if (key === 'Ctrl-r') {

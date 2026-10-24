@@ -31,7 +31,9 @@ const press = (state, keys) => { keys.forEach((key) => applyKey(state, key)); re
 
 const normalState = createState();
 assert.equal(keyForSimulator({ key: 'Tab' }, normalState), null, 'Tab deve continuar navegando o foco');
-assert.equal(keyForSimulator({ key: 'ArrowDown' }, normalState), null, 'setas não suportadas não devem ser capturadas');
+assert.equal(keyForSimulator({ key: 'ArrowDown' }, normalState), 'ArrowDown', 'setas são encaminhadas ao Vim');
+assert.equal(keyForSimulator({ key: 'Home' }, normalState), 'Home', 'Home é encaminhado ao Vim');
+assert.equal(keyForSimulator({ key: 'End' }, normalState), 'End', 'End é encaminhado ao Vim');
 assert.equal(keyForSimulator({ key: 'Backspace' }, normalState), null, 'Backspace em modo normal não é edição de texto');
 assert.equal(keyForSimulator({ key: 'Backspace' }, { mode: 'insert' }), 'Backspace', 'Backspace funciona no modo de inserção');
 assert.equal(keyForSimulator({ key: 'r', ctrlKey: true }, normalState), 'Ctrl-r');
@@ -45,6 +47,12 @@ press(state, ['u']);
 assert.deepEqual(state.lines, ['Linha.'], 'u desfaz toda a inserção');
 press(state, ['Ctrl-r']);
 assert.deepEqual(state.lines, ['OkLinha.'], 'Ctrl-r refaz a inserção');
+
+state = createState(['abc', 'def']);
+press(state, ['ArrowRight', 'ArrowDown', 'Home']);
+assert.deepEqual(state.cursor, { line: 1, column: 0 }, 'setas e Home movem o cursor no modo normal');
+press(state, ['End', 'i', '!', 'ArrowLeft', '?']);
+assert.equal(state.lines[1], 'def?!', 'setas movem o cursor durante a inserção');
 
 state = press(createState(['abc']), ['i', '!', 'Escape', '0', '.']);
 assert.equal(state.lines[0], '!!abc', '. repete a inserção');

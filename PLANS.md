@@ -275,6 +275,20 @@ ou reinício. Os testes unitários, validação estática, links relativos e
 `release/1.0.1`, já que `release/1.0.0` foi encerrada. O push desta versão deve
 passar pela validação Chrome do workflow antes de atualizar o site público.
 
+**Ajuste solicitado para a 1.0.1 — desafio persistente e navegação no Vim:** ao
+abrir `vim teste.txt`, o painel do desafio deve continuar visível junto ao
+editor, em vez de desaparecer. A seleção fica bloqueada enquanto o arquivo
+estiver aberto para não trocar o texto-base durante a atividade. No editor, as
+setas e `Home`/`End` complementam `h`, `j`, `k`, `l`; o cursor deve acompanhar a
+navegação mesmo quando o arquivo ultrapassa a área visível. O painel do desafio
+fica preso ao topo da seção de prática durante o uso.
+
+**Implementado nesta rodada:** removido o rótulo “Desafio opcional”; a área de
+desafio permanece na tela ao entrar e sair do Vim; o seletor fica desabilitado
+durante a edição; setas, `Home` e `End` movem o cursor tanto no modo normal
+quanto no modo de inserção; a rolagem interna mantém o cursor visível. QA manual
+de teclado, seleção e rolagem deve ser registrado antes da próxima publicação.
+
 ## Auditoria de promoção da 1.0.0
 
 **Estado do goal:** os quatro resultados descritos em `GOALS.md` estão

@@ -176,7 +176,18 @@ kbd, .key {
 
 .practice label { display: block; font-weight: 700; }
 .practice #challenge-select { max-width: 32rem; background: #ffffff; color: #172033; }
-.practice .challenge-picker { max-width: 56rem; margin-bottom: 1rem; }
+.practice .challenge-picker {
+  position: sticky;
+  top: .5rem;
+  z-index: 2;
+  max-width: 56rem;
+  margin-bottom: 1rem;
+  padding: .8rem 1rem;
+  border: 1px solid #53627a;
+  border-radius: .55rem;
+  background: #151e2b;
+  box-shadow: 0 .5rem 1.5rem #0005;
+}
 .practice .challenge-picker p { margin: .4rem 0 0; }
 
 .practice .terminal-screen,
@@ -238,6 +249,7 @@ kbd, .key {
 .practice #simulator-editor {
   min-height: 15rem;
   max-height: 55vh;
+  min-width: 0;
   margin: 0;
   overflow: auto;
   padding: .75rem 1rem;
