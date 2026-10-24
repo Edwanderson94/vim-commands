@@ -239,7 +239,8 @@ def main():
           document.querySelector('.terminal-screen').scrollIntoView({block: 'center', behavior: 'auto'});
         """)
         touch_point = execute("""
-          const rect = document.querySelector('.terminal-screen').getBoundingClientRect();
+          const screen = document.querySelector('.terminal-screen');
+          const rect = screen.getBoundingClientRect();
           const viewport = {width: innerWidth, height: innerHeight};
           const visible = {
             left: Math.max(0, rect.left),
@@ -247,15 +248,28 @@ def main():
             top: Math.max(0, rect.top),
             bottom: Math.min(viewport.height, rect.bottom)
           };
+          let point = null;
+          for (const yRatio of [0.25, 0.5, 0.75]) {
+            for (const xRatio of [0.25, 0.5, 0.75]) {
+              const x = Math.floor(visible.left + (visible.right - visible.left) * xRatio);
+              const y = Math.floor(visible.top + (visible.bottom - visible.top) * yRatio);
+              if (screen.contains(document.elementFromPoint(x, y))) {
+                point = {x, y};
+                break;
+              }
+            }
+            if (point) break;
+          }
           return {
-            x: Math.floor((visible.left + visible.right) / 2),
-            y: Math.floor((visible.top + visible.bottom) / 2),
+            ...point,
+            hitInsideTerminal: Boolean(point),
             visible: visible.right > visible.left && visible.bottom > visible.top,
             viewport,
             rect: {left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom}
           };
         """)
         assert touch_point['visible'], f"terminal sem área visível para toque: {touch_point}"
+        assert touch_point['hitInsideTerminal'], f"nenhum ponto visível do terminal recebe o toque: {touch_point}"
         assert (
             0 <= touch_point['x'] < mobile['width']
             and 0 <= touch_point['y'] < touch_point['viewport']['height']
@@ -264,7 +278,16 @@ def main():
             {'type': 'pointerMove', 'x': touch_point['x'], 'y': touch_point['y'], 'duration': 50},
             {'type': 'pointerDown', 'button': 0}, {'type': 'pointerUp', 'button': 0}
         ]}]})
-        assert execute("return document.activeElement.id") == 'terminal-input', 'toque no terminal móvel deve focar a linha de comando'
+        touch_result = command('/execute/sync', {
+            'script': """
+              const target = document.elementFromPoint(arguments[0], arguments[1]);
+              return {focused: document.activeElement.id,
+                      hit: target && {id: target.id, className: target.className,
+                                      insideTerminal: Boolean(target.closest('.terminal-screen'))}};
+            """,
+            'args': [touch_point['x'], touch_point['y']],
+        })['value']
+        assert touch_result['focused'] == 'terminal-input', f"toque no terminal móvel deve focar a linha de comando: ponto={touch_point}, resultado={touch_result}"
         mobile_home = execute("""
           const hero = document.querySelector('.hero').getBoundingClientRect();
           const lessons = document.querySelector('#aulas').getBoundingClientRect();

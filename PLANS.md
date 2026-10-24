@@ -14,11 +14,13 @@ O teste rolava `.terminal-screen` para o centro e media seu retângulo logo em
 seguida. Como `site/styles.css` aplica `scroll-behavior: smooth` globalmente, a
 rolagem ainda estava em andamento quando o teste calculou as coordenadas. O
 Firefox local reproduziu a leitura do elemento fora da viewport nessa condição.
-O teste agora desativa a rolagem suave durante essa etapa e escolhe o centro da
-interseção entre o terminal e a viewport, com verificações de limites e uma
-mensagem diagnóstica. Firefox WebDriver confirmou que o toque foca
-`terminal-input`; a geometria em Chrome ainda precisa ser confirmada pelo
-workflow, pois ChromeDriver não está disponível localmente.
+O teste desativa a rolagem suave durante essa etapa, procura um ponto atingido
+realmente pelo terminal na área visível e verifica os limites antes de enviar o
+toque. Firefox WebDriver confirmou o gesto e o foco em `terminal-input` em
+viewport desktop. No workflow `40139803427`, o erro de coordenadas foi removido,
+mas o toque não focou a linha de comando. O smoke agora inclui diagnóstico do
+elemento atingido; a causa da falha de foco ainda precisa ser confirmada em
+Chrome, que não está disponível localmente.
 
 O workflow agora separa validação e publicação: valida pushes em `release/**`
 sem exigir o ambiente `github-pages`, e publica somente após uma validação
@@ -30,9 +32,11 @@ As verificações locais `python3 -m py_compile tests/chrome-smoke.py`,
 `python3 tests/site-validation.py` e `git diff --check` passaram. A correção está
 no commit `6c1f984` da `release/1.0.2`. A execução `40139686095` foi bloqueada
 antes da validação porque as regras do ambiente `github-pages` não permitem
-deploy direto dessa branch. A separação entre validação e deploy está em revisão
-local; após o push, o workflow poderá validar a release e só publicar depois da
-promoção validada para `master`.
+deploy direto dessa branch. O workflow foi separado: validação ocorre nas
+branches de release e deploy apenas em `master`. A tentativa `40139803427`
+executou as validações e encontrou a falha subsequente de foco no toque. O novo
+diagnóstico do ponto atingido está local e ainda precisa passar pelo workflow;
+somente depois o deploy poderá ocorrer em `master`.
 
 ## Histórico — release/1.0.1
 

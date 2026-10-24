@@ -25,12 +25,12 @@ em português do Brasil.
 
 **Estado atual:** a investigação do workflow `40138061252` confirmou que as etapas
 de renderização, testes unitários e auditoria HTML passaram. O smoke test falhou
-ao enviar um toque fora dos limites. A página usa rolagem suave global, mas o
-teste media o retângulo logo após `scrollIntoView`; no Firefox local, reproduzi
-que o elemento ainda podia estar fora da viewport. Na branch `release/1.0.2`, o
-teste agora desativa a rolagem suave para essa medição e escolhe o centro da
-interseção visível. Firefox confirmou que o toque foca `terminal-input`. Chrome
-não está disponível localmente; aguarda validação no workflow.
+ao enviar um toque fora dos limites porque media o retângulo durante a rolagem
+suave. A correção removeu esse erro; no workflow `40139803427`, o toque deixou de
+falhar por coordenadas, mas a linha de comando não recebeu foco. A branch agora
+faz a seleção de um ponto realmente visível dentro do terminal e registra o
+elemento atingido para diagnosticar essa segunda falha. Firefox confirmou a
+interação em viewport desktop; a confirmação em Chrome móvel continua pendente.
 
 **Branch de trabalho:** `release/1.0.2`, criada a partir da `master` no commit
 `bd32474`.
