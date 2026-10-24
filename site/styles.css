@@ -89,7 +89,8 @@ h2 {
   letter-spacing: -.04em;
 }
 
-.hero { max-width: 760px; }
+.hero { max-width: 760px; padding-bottom: 1.25rem; }
+#aulas { padding-top: 1.75rem; }
 .hero > p:not(:first-child) { color: var(--muted); font-size: 1.1rem; }
 
 .hero > a, #praticar > a {

@@ -41,6 +41,10 @@ observado.
 
 - [ ] Abrir a página inicial.
 - [ ] Confirmar que título, introdução e trilha aparecem em português.
+- [ ] Verificar que os botões “Começar a aprender” e “Ver cola rápida” ficam
+  próximos, sem a dica isolada de `Esc` abaixo deles.
+- [ ] Ler a introdução “O que é o Vim?” e conferir a distinção entre terminal,
+  editor e sistema Linux.
 - [ ] Abrir os links das aulas e dos exercícios.
 - **Esperado:** cada link abre o material correspondente, sem página ausente ou
   erro de navegação.

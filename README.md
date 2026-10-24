@@ -64,5 +64,6 @@ do desafio permanece visível com o Vim aberto, e o aluno abre o arquivo com
 
 ## Projeto
 
+- [Goal ativo e objetivos do projeto](GOALS.md)
 - [Especificação do projeto](specification.md)
 - [Licença MIT](LICENSE)

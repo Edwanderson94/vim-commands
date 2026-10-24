@@ -1,78 +1,102 @@
 # Objetivos do Vim Commands
 
-## Goal ativo — Release 1.0.1
+## Goal ativo — Melhorar a primeira experiência
 
-**Objetivo:** aproximar a prática do uso de um terminal Linux simples. A área
-de prática terá uma única janela de terminal, com a linha de comando dentro da
-própria janela; não haverá uma caixa de comando separada. O shell começa em
-`/home/aluno` com `teste.txt` já criado. Ao digitar `vim teste.txt` e pressionar
-`Enter`, o arquivo abre no Vim simulado na mesma área.
+**Objetivo:** melhorar a primeira experiência do Vim Commands com base na
+validação do cliente: simplificar a área inicial, explicar claramente o que é o
+Vim e refinar espaçamento, hierarquia visual, responsividade e acessibilidade da
+página inicial, mantendo o conteúdo alinhado às fontes e à especificação.
+
+**Público:** iniciantes que ainda não sabem o que é Vim, como ele se relaciona
+com o terminal e por que podem querer aprendê-lo.
+
+**Escopo:**
+
+- Explicar na página inicial que Vim é um editor de texto modal, aberto pelo
+  terminal, que pode ser usado em Linux e em outros sistemas.
+- Distinguir o Vim do terminal e do sistema operacional; citar outros editores
+  disponíveis no Linux sem sugerir que o Vim é a única opção.
+- Manter as afirmações introdutórias apoiadas pelas referências em
+  [`FONTES.md`](FONTES.md).
+- Refinar o espaço entre o conteúdo principal e os botões de entrada, mantendo
+  “Começar a aprender” e “Ver cola rápida” fáceis de encontrar.
+- Revisar a hierarquia visual e o comportamento da página inicial em telas
+  pequenas, temas claro e escuro e navegação por teclado.
 
 **Critérios de conclusão:**
 
-- O comando é digitado diretamente após o prompt `aluno@vim:/home/aluno$`.
-- A janela não mostra botão de execução, formulário nem campo separado para
-  digitar comandos.
-- Na camada Linux simulada, só `pwd`, `ls` e `vim arquivo` são aceitos; `ls`
-  lista o arquivo inicial `teste.txt`, e `vim teste.txt` abre esse arquivo.
-- A área de prática oferece somente o terminal e um seletor de desafio. Escolher
-  um desafio prepara o texto inicial em `teste.txt`; o aluno inicia pelo comando
-  normal `vim teste.txt`.
-- Não há controles “Ativar simulador”, “Restaurar texto” ou “Reiniciar desafio”.
-- O Vim aceita a prática declarada, inclusive `Backspace`, `:wq` e retorno ao
-  prompt com o conteúdo salvo na memória virtual.
-- A interação funciona por teclado e permanece segura, sem executar comandos
-  reais nem acessar arquivos do computador.
-- Especificação, checklist e plano refletem o fluxo; testes automatizados e
-  validação manual cobrem o percurso terminal → Vim → terminal.
+- A apresentação inicial não mostra uma dica isolada de `Esc` abaixo dos
+  botões.
+- A seção `#aulas` apresenta a introdução “O que é o Vim?” com diferença entre
+  terminal, editor e Linux, modo de inserção e exemplos de alternativas.
+- O texto é coerente com as fontes registradas em `FONTES.md` e usa português
+  claro para iniciantes.
+- O espaçamento entre apresentação, botões e trilha é intencional em desktop e
+  celular, sem sobras grandes nem rolagem horizontal.
+- A introdução permanece legível nos temas claro e escuro e o conteúdo pode ser
+  alcançado e lido por teclado e tecnologia assistiva.
+- Testes automatizados, links relativos e validação manual da página inicial
+  passam antes da promoção da melhoria.
 
-**Fora do escopo:** implementar um shell Linux completo ou executar comandos
-do sistema operacional. O simulador continua usando uma lista restrita de
-comandos e arquivos em memória.
+**Estado nesta rodada:** a pesquisa e as fontes foram registradas, a introdução
+já foi adicionada à página inicial, a dica solta de `Esc` foi removida e o
+espaçamento da transição entre apresentação e trilha foi reduzido. Permanecem
+pendentes a revisão visual responsiva e a validação de acessibilidade da nova
+apresentação.
 
 **Branch de trabalho:** `release/1.0.1`.
 
-## Propósito
+**Fora de escopo:** alterar o conjunto de comandos do simulador, executar
+comandos reais do sistema, reescrever a trilha didática ou promover mudanças à
+`master`.
+
+## Goal concluído — Release 1.0.1
+
+Entregar uma prática em navegador com uma única janela visual de terminal em
+`/home/aluno`, onde a pessoa digita comandos permitidos diretamente no prompt.
+`vim teste.txt` abre o arquivo virtual no editor simulado; a prática inclui
+desafios, edição por teclado e retorno ao terminal.
+
+**Resultado:** o terminal virtual aceita `pwd`, `ls`, `cat arquivo` e
+`vim arquivo`. O Vim simulado oferece os modos normal e inserção, navegação,
+edição, busca, salvamento e saída. O ambiente é restrito a arquivos em memória;
+não executa comandos reais nem acessa arquivos locais. O painel de desafio
+permanece disponível ao editar.
+
+**Validação:** testes automatizados, Chrome no workflow de publicação e
+verificações manuais em Firefox foram executados nas mudanças da release. A
+versão de validação é servida pelo GitHub Pages a partir de `release/1.0.1`.
+
+## Propósito do projeto
 
 Oferecer um ambiente gratuito, em português do Brasil, para aprender Vim no
 terminal com explicações curtas, prática progressiva, referência rápida e um
 simulador educacional seguro.
 
-## Público
+## Público do projeto
 
 - Pessoas iniciantes no terminal Linux e no Vim.
 - Autodidatas que querem uma trilha prática.
 - Desenvolvedores que precisam consultar comandos rapidamente.
 
-## Resultados e sucesso
+## Resultados permanentes
 
 - A trilha de cinco aulas, os módulos, os 30 comandos e cinco exercícios são
   legíveis em Markdown no GitHub.
 - O site estático e os materiais funcionam offline, em celular e desktop, com
-  catálogo pesquisável, filtros, tema e conteúdo renderizado.
-- O terminal virtual e o editor Vim simulado suportam somente os comandos
-  definidos em `specification.md`, mantêm arquivos em memória, permitem
-  praticar o fluxo entre terminal e Vim e escolher cinco desafios pelo seletor
-  simples da área de prática.
+  catálogo pesquisável, filtros, temas e conteúdo renderizado.
+- Terminal e editor permanecem limitados aos comandos definidos em
+  `specification.md`, usam arquivos em memória e permitem praticar o fluxo
+  terminal → Vim → terminal.
 - A experiência é utilizável por teclado e não acessa dados ou arquivos locais.
 
-## Escopo atual
-
-Conteúdo Markdown, site estático em HTML/CSS/JavaScript puro, catálogo local,
-simulador em memória e desafios educacionais.
-
-## Não objetivos
-
-Não substituir o Vim instalado, editar arquivos do computador, usar
-autenticação, rastreamento, dependências externas ou publicar sem autorização.
-
-## Restrições
+## Restrições permanentes
 
 Separar terminal de Vim; priorizar linguagem simples e prática segura; manter
 Markdown como fonte de conteúdo; usar caminhos relativos; não ampliar o
 simulador fora da especificação.
 
-## Decisões pendentes
+## Decisões de produto pendentes
 
 - Nome final do projeto.
 - Português somente ou inglês adicional.

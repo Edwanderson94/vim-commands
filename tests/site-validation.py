@@ -183,6 +183,10 @@ if home:
     for introduction in ('id="titulo-o-que-e-vim"', 'Vi IMproved', 'terminal do Linux', 'Nano', 'Emacs', 'Micro'):
         if introduction not in homepage_source:
             errors.append(f'site/index.html: falta a introdução básica sobre Vim ({introduction})')
+    if 'Esc</kbd> volta ao modo normal ou cancela uma operação.' in homepage_source:
+        errors.append('site/index.html: dica isolada de Esc removida da apresentação inicial')
+    if 'href="#aulas">Começar a aprender</a>' not in homepage_source:
+        errors.append('site/index.html: botão principal deve levar à trilha inicial')
     expected_scripts = ['commands.js', 'simulator.js', 'challenges.js', 'terminal.js', 'app.js']
     if [Path(urlsplit(src).path).name for src in home.script_sources] != expected_scripts:
         errors.append('site/index.html: scripts clássicos devem carregar na ordem especificada')

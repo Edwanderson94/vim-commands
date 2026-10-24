@@ -75,7 +75,7 @@ funcionem offline. O tema claro/escuro é compartilhado entre a página inicial 
 todas as páginas de materiais; cada subpágina oferece um botão para alterná-lo.
 O workflow de publicação executa o mesmo gerador.
 
-A página contém cabeçalho com âncoras e botão de tema; apresentação com botão “Começar a aprender” e aviso sobre `Esc`; uma introdução na trilha que explica o que é o Vim, sua relação com o terminal, seus modos e outros editores; aulas renderizadas; catálogo; prática por terminal simulado com desafio sempre visível; e rodapé.
+A página contém cabeçalho com âncoras e botão de tema; apresentação com os botões “Começar a aprender” e “Ver cola rápida”; uma introdução na trilha que explica o que é o Vim, sua relação com o terminal, seus modos e outros editores; aulas renderizadas; catálogo; prática por terminal simulado com desafio sempre visível; e rodapé.
 
 O catálogo mostra tecla, título, descrição, categoria, nível, modo e aula. A busca verifica tecla, título, descrição, categoria e modo. Os filtros de categoria e nível atuam juntos. Sem resultado, há mensagem clara e botão para limpar filtros.
 
