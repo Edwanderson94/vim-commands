@@ -62,7 +62,8 @@ restauração e conclusão dos cinco desafios.
 
 **Correções desta rodada:** `n`/`N` agora percorrem ocorrências adicionais na
 mesma linha, e `dw` reconhece letras acentuadas e marcas Unicode combinantes.
-Há casos de regressão para essas situações na suíte do simulador.
+Há casos de regressão para essas situações na suíte do simulador; as duas
+ações também foram verificadas no Firefox em `file://`.
 
 **Verificado em Firefox:** tecla ignorada antes da ativação, foco transferido
 para a área ao ativar, `Tab` não capturado, inserção e restauração pelo botão.
