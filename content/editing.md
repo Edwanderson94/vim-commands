@@ -6,7 +6,7 @@ de começar.
 ## Inserir texto
 
 | Comando | Ação |
-| :-- | :-- |
+| :--- | :--- |
 | `i` | Insere antes do cursor. |
 | `a` | Insere depois do cursor. |
 | `o` | Abre uma linha abaixo e entra no modo de inserção. |
@@ -14,7 +14,7 @@ de começar.
 ## Remover, copiar e colar
 
 | Comando | Ação |
-| :-- | :-- |
+| :--- | :--- |
 | `x` | Remove o caractere sob o cursor. |
 | `dd` | Remove a linha atual. |
 | `dw` | Remove até o fim da palavra. |

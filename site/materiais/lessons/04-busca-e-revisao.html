@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Material de aprendizagem de Vim em português.">
+  <title>Aula 4 — Busca e revisão de texto — Vim Commands</title>
+  <link rel="stylesheet" href="../../materiais.css">
+</head>
+<body>
+  <header class="material-header">
+    <a href="../../index.html">Vim Commands</a>
+    <a href="../../index.html#aulas">Voltar à trilha</a>
+  </header>
+  <main class="material-content">
+<h1>Aula 4 — Busca e revisão de texto</h1>
+<p><strong>Duração estimada:</strong> 15 minutos</p>
+<p><strong>Nível:</strong> iniciante <strong>Pré-requisito:</strong> ter concluído a <a href="03-movimento-e-edicao.html">Aula 3</a>.</p>
+<h2>Objetivo</h2>
+<p>Ao final desta aula, você conseguirá buscar palavras, percorrer os resultados e substituir texto com confirmação dentro do Vim.</p>
+<h2>Conceitos</h2>
+<p>No <strong>terminal</strong>, abra um novo arquivo:</p>
+<pre><code class="language-bash">cd ~/vim-pratica
+vim revisao.txt</code></pre>
+<p>Dentro do <strong>Vim</strong>, pressione <code>i</code>, digite o texto e depois pressione <code>Esc</code>:</p>
+<pre><code class="language-text">Vim usa modos.
+Vim permite editar texto.
+Praticar Vim todos os dias ajuda.</code></pre>
+<p>Salve com <code>:w</code> e <code>Enter</code>. A partir daqui, faça os comandos no modo normal.</p>
+<p>Para buscar, digite <code>/Vim</code> e pressione <code>Enter</code>. Use <code>n</code> para a próxima ocorrência e <code>N</code> para a anterior. Se a busca ainda estiver sendo digitada, <code>Esc</code> a cancela.</p>
+<p>Para trocar cada <code>Vim</code> por <code>Neovim</code>, digite exatamente:</p>
+<pre><code class="language-text">:%s/Vim/Neovim/gc</code></pre>
+<p>Pressione <code>Enter</code>. O <code>%</code> escolhe todas as linhas, <code>g</code> encontra todas as ocorrências e <code>c</code> pede confirmação. Em cada ocorrência, pressione <code>y</code> para confirmar a troca ou <code>n</code> para ignorá-la.</p>
+<h2>Prática guiada</h2>
+<ol><li>No modo normal, busque <code>Vim</code> com <code>/Vim</code> e <code>Enter</code>.</li><li>Pressione <code>n</code> até chegar à última ocorrência e <code>N</code> para voltar uma ocorrência.</li><li>Execute <code>:%s/Vim/Neovim/gc</code> e pressione <code>Enter</code>.</li><li>Responda <code>y</code> às três confirmações e salve com <code>:w</code> e <code>Enter</code>.</li></ol>
+<p>Você concluiu se <code>revisao.txt</code> tiver três ocorrências de <code>Neovim</code> e nenhuma de <code>Vim</code>.</p>
+<h2>Desafio</h2>
+<p>No terminal, crie <code>revisao-parcial.txt</code> com quatro linhas que usem a palavra <code>Vim</code> e abra-o com <code>vim revisao-parcial.txt</code>. Busque a palavra, confirme que <code>n</code> e <code>N</code> percorrem as quatro ocorrências e use <code>:%s/Vim/Neovim/gc</code> para trocar apenas três delas por <code>Neovim</code>. Salve o arquivo.</p>
+<h2>Revisão</h2>
+<div class="table-scroll"><table><thead><tr><th scope="col">Modo</th><th scope="col">Comando</th><th scope="col">Resultado</th></tr></thead><tbody><tr><td>Normal</td><td><code>/texto</code> + <code>Enter</code></td><td>Busca um texto.</td></tr><tr><td>Normal</td><td><code>n</code> / <code>N</code></td><td>Vai à próxima / anterior ocorrência.</td></tr><tr><td>Normal</td><td><code>Esc</code></td><td>Cancela uma busca em digitação.</td></tr><tr><td>Normal</td><td><code>:%s/antigo/novo/gc</code> + <code>Enter</code></td><td>Substitui pedindo confirmação.</td></tr><tr><td>Confirmação</td><td><code>y</code> / <code>n</code></td><td>Aceita / ignora a troca atual.</td></tr></tbody></table></div>
+<h3>Autoavaliação</h3>
+<p>Você sabe explicar por que o <code>c</code> torna uma substituição mais segura?</p>
+  </main>
+  <footer class="material-footer"><a href="../../index.html">Vim Commands</a></footer>
+</body>
+</html>

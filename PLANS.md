@@ -1,10 +1,9 @@
 # Plano de execução
 
-Status baseado na estrutura observada em 2026-10-23. Links listados no README e
-pré-requisitos entre aulas foram encontrados; esta verificação não substitui
-teste manual do site.
+Status revisado em 2026-10-23. As páginas Markdown também são renderizadas em
+HTML estático local para leitura formatada no navegador.
 
-## Fase 1 — Conteúdo Markdown — concluída com ressalva
+## Fase 1 — Conteúdo Markdown — concluída
 
 **Objetivo:** disponibilizar a trilha e a referência inicial.
 
@@ -12,9 +11,9 @@ teste manual do site.
 `lessons/`, cinco exercícios em `exercises/`, `commands.md`, cheatsheet
 e licença.
 
-**Ressalva:** a especificação pede formato detalhado por comando; a referência
-atual é majoritariamente tabular. Confirmar se essa tabela atende à intenção
-antes de reformatá-la.
+**Verificação:** cada um dos 30 itens agora registra contexto/modo, categoria,
+nível, explicação, exemplo e prática. Os separadores das tabelas seguem o
+formato Markdown válido.
 
 **Aceite e verificação:** conferir que todos os links relativos afetados
 existem e que cada material mantém o contexto terminal/Vim.
@@ -24,11 +23,12 @@ existem e que cada material mantém o contexto terminal/Vim.
 **Objetivo:** entregar a interface estática com trilha, catálogo, busca,
 filtros, tema e responsividade.
 
-**Evidência:** `site/` contém `index.html`, `styles.css`, `app.js`,
-`commands.js`, favicon e README.
+**Evidência:** `site/` contém a página, estilos, busca, tema, catálogo,
+simulador, desafios e páginas HTML locais geradas a partir dos materiais.
 
 **Falta verificar:** comportamento no navegador, acessibilidade por teclado,
-responsividade, tema persistente e todos os 30 cartões.
+responsividade, persistência do tema e inspeção visual dos 30 cartões. A interface
+carrega os scripts clássicos em ordem para abrir também via `file://`.
 
 **Parada:** não avançar sem uma verificação manual básica e links relativos
 válidos.
@@ -40,15 +40,17 @@ desafios em memória.
 
 **Evidência:** `simulator.js` e `challenges.js` existem.
 
-**Falta:** confirmar, comando a comando, todos os grupos definidos na
-especificação; feedback, histórico, restauração, desafios, teclado focado e
-ausência de acesso local.
+**Verificação automatizada:** `tests/simulator.test.mjs` cobre os grupos de
+comandos definidos na especificação, busca, inserção, repetição, undo/redo,
+restauração e conclusão dos cinco desafios.
 
-**Repetição com `.`:** registrar a última alteração concluída como uma
-intenção estruturada, não como teclas brutas. Inicialmente cobrir `x`,
-`dd`, `dw` e `p`; movimentos, buscas, cópia, `u`, `Ctrl-r` e
-comandos Ex não devem substituir esse registro. A repetição deve criar um
-snapshot para que `u` a desfaça.
+**Falta verificar manualmente:** foco e captura no navegador, restauração pelos
+botões, leitores de tela e comportamento visual.
+
+**Repetição com `.`:** a última alteração fica registrada como operação
+estruturada. A cobertura inclui inserção e abertura de linha (`i`, `a`, `o`),
+`x`, `dd`, `dw` e `p`; movimentos, buscas, cópia, `u`, `Ctrl-r` e comandos Ex
+não substituem esse registro. A repetição cria um snapshot para `u`.
 
 **Parada:** não declarar aceite sem testes da lógica e teste manual no browser.
 
@@ -64,11 +66,21 @@ e navegadores; adicionar testes unitários para estado e interpretador.
 - O simulador agora registra uma sessão de inserção como uma alteração e `.`
   a repete; os testes em `tests/simulator.test.mjs` cobrem inserir, desfazer,
   refazer, repetir, remover, copiar, buscar e comandos Ex simulados.
-- O artefato do GitHub Pages preserva `site/` e os materiais Markdown na raiz,
-  mantendo os links relativos usados pelo site local e publicado.
+- A interface gera 18 páginas HTML dos materiais Markdown. Isso mantém a fonte
+  didática em Markdown e permite ler as aulas formatadas, offline e no Pages.
+- O catálogo informa o modo real e a aula associada a cada comando. O site
+  também explica quais comandos estão disponíveis no simulador.
+
+**Renderização de materiais:** `scripts/render-markdown.mjs` converte módulos,
+aulas, exercícios e referência de comandos para 18 páginas estáticas em
+`site/materiais/`, sem alterar os arquivos Markdown de origem. Após alterar
+Markdown, execute o gerador; o workflow também o executa antes do deploy.
 
 **Ainda falta:** validação manual de responsividade, teclado, leitores de tela,
-Chrome e Firefox.
+Chrome e Firefox. A inspeção estática confirma 19 documentos HTML (página
+principal mais 18 materiais), marcos semânticos e destinos locais existentes;
+comportamento/renderização visual e links entre aulas ainda precisam de
+confirmação em navegador.
 
 **Publicação de validação:** o workflow do GitHub Pages publica `site/` a
 partir da branch `release/1.0.0`. Ela permite validar o catálogo, tema,
@@ -80,6 +92,7 @@ autorização explícita.
 
 ## Sequência imediata
 
-1. Publicar estas correções e validar a página publicada.
-2. Testar manualmente responsividade, teclado, leitor de tela, Chrome e Firefox.
-3. Registrar os resultados e corrigir eventuais regressões encontradas.
+1. Validar todas as páginas HTML geradas e seus links.
+2. Testar o site manualmente em desktop e celular, com teclado, Chrome, Firefox
+   e leitor de tela.
+3. Corrigir regressões e registrar os resultados da validação.

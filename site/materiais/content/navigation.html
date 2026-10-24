@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Material de aprendizagem de Vim em português.">
+  <title>Navegação no Vim — Vim Commands</title>
+  <link rel="stylesheet" href="../../materiais.css">
+</head>
+<body>
+  <header class="material-header">
+    <a href="../../index.html">Vim Commands</a>
+    <a href="../../index.html#aulas">Voltar à trilha</a>
+  </header>
+  <main class="material-content">
+<h1>Navegação no Vim</h1>
+<p>No modo normal, você move o cursor sem precisar das setas. Comece devagar: os comandos abaixo parecem pequenos, mas são usados o tempo todo.</p>
+<h2>Movimento básico</h2>
+<div class="table-scroll"><table><thead><tr><th scope="col">Comando</th><th scope="col">Ação</th></tr></thead><tbody><tr><td><code>h</code></td><td>Move um caractere para a esquerda.</td></tr><tr><td><code>j</code></td><td>Move uma linha para baixo.</td></tr><tr><td><code>k</code></td><td>Move uma linha para cima.</td></tr><tr><td><code>l</code></td><td>Move um caractere para a direita.</td></tr><tr><td><code>w</code></td><td>Vai ao início da próxima palavra.</td></tr><tr><td><code>b</code></td><td>Vai ao início da palavra anterior.</td></tr><tr><td><code>0</code></td><td>Vai ao início da linha.</td></tr><tr><td><code>$</code></td><td>Vai ao fim da linha.</td></tr><tr><td><code>gg</code></td><td>Vai à primeira linha do arquivo.</td></tr><tr><td><code>G</code></td><td>Vai à última linha do arquivo.</td></tr><tr><td><code>:25</code></td><td>Vai diretamente à linha 25.</td></tr></tbody></table></div>
+<h2>Repetições</h2>
+<p>Coloque um número antes de muitos comandos para repeti-los. Por exemplo:</p>
+<ul><li><code>5j</code> desce cinco linhas.</li><li><code>3w</code> avança três palavras.</li><li><code>10G</code> vai para a linha 10.</li></ul>
+<h2>Pratique</h2>
+<p>Abra um texto com várias linhas. Use <code>gg</code> para ir ao começo, <code>G</code> para ir ao fim e <code>:número</code> para visitar uma linha específica. Depois, tente chegar ao fim de uma linha apenas com <code>$</code>.</p>
+  </main>
+  <footer class="material-footer"><a href="../../index.html">Vim Commands</a></footer>
+</body>
+</html>

@@ -6,7 +6,7 @@ comandos abaixo parecem pequenos, mas são usados o tempo todo.
 ## Movimento básico
 
 | Comando | Ação |
-| :-- | :-- |
+| :--- | :--- |
 | `h` | Move um caractere para a esquerda. |
 | `j` | Move uma linha para baixo. |
 | `k` | Move uma linha para cima. |

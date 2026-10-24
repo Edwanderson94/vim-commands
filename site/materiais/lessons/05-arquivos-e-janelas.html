@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Material de aprendizagem de Vim em português.">
+  <title>Aula 5 — Arquivos e janelas — Vim Commands</title>
+  <link rel="stylesheet" href="../../materiais.css">
+</head>
+<body>
+  <header class="material-header">
+    <a href="../../index.html">Vim Commands</a>
+    <a href="../../index.html#aulas">Voltar à trilha</a>
+  </header>
+  <main class="material-content">
+<h1>Aula 5 — Arquivos e janelas</h1>
+<p><strong>Duração estimada:</strong> 20 minutos</p>
+<p><strong>Nível:</strong> iniciante <strong>Pré-requisito:</strong> ter concluído a <a href="04-busca-e-revisao.html">Aula 4</a>.</p>
+<h2>Objetivo</h2>
+<p>Ao final desta aula, você conseguirá alternar entre arquivos abertos e usar uma divisão de tela para consultar dois arquivos dentro do Vim.</p>
+<h2>Conceitos</h2>
+<p>No <strong>terminal</strong>, crie dois arquivos de prática:</p>
+<pre><code class="language-bash">cd ~/vim-pratica
+printf &#39;Lista de tarefas.\n&#39; &gt; tarefas.txt
+printf &#39;Anotações sobre Vim.\n&#39; &gt; notas.txt
+vim tarefas.txt</code></pre>
+<p>O sinal <code>&gt;</code> grava o texto em cada arquivo; use esses nomes apenas dentro da pasta de prática. Depois de <code>vim tarefas.txt</code>, você está no <strong>Vim</strong>, no modo normal.</p>
+<p>No Vim, digite <code>:e notas.txt</code> e pressione <code>Enter</code>. O arquivo anterior continua aberto em memória como um <strong>buffer</strong>: um arquivo que o Vim mantém disponível durante a sessão.</p>
+<p>Digite <code>:ls</code> e pressione <code>Enter</code> para listar os buffers. Para voltar a um deles, use o número exibido, por exemplo <code>:b 1</code> e <code>Enter</code>.</p>
+<p>Para ver os dois arquivos lado a lado, deixe <code>tarefas.txt</code> visível e digite:</p>
+<pre><code class="language-text">:vsplit notas.txt</code></pre>
+<p>Pressione <code>Enter</code>. Cada área é uma janela que mostra um buffer.</p>
+<div class="table-scroll"><table><thead><tr><th scope="col">Comando</th><th scope="col">Resultado</th></tr></thead><tbody><tr><td><code>Ctrl-w h</code></td><td>Vai para a janela à esquerda.</td></tr><tr><td><code>Ctrl-w l</code></td><td>Vai para a janela à direita.</td></tr><tr><td><code>Ctrl-w q</code></td><td>Fecha a janela atual.</td></tr></tbody></table></div>
+<p>Para usar <code>Ctrl-w h</code>, mantenha <code>Ctrl</code> pressionado, aperte <code>w</code>, solte as teclas e então pressione <code>h</code>.</p>
+<h2>Prática guiada</h2>
+<ol><li>Alterne entre <code>tarefas.txt</code> e <code>notas.txt</code> usando <code>:ls</code> e <code>:b número</code>.</li><li>Abra os dois lado a lado com <code>:vsplit notas.txt</code> e <code>Enter</code>.</li><li>Use <code>Ctrl-w h</code> e <code>Ctrl-w l</code> para mudar de janela.</li><li>Na janela de <code>notas.txt</code>, pressione <code>o</code>, escreva <code>Praticar janelas.</code> e pressione <code>Esc</code>.</li><li>Salve com <code>:w</code> e <code>Enter</code>. Feche somente a janela atual com <code>Ctrl-w q</code>.</li></ol>
+<p>Você concluiu se <code>notas.txt</code> tiver a nova linha salva e <code>tarefas.txt</code> continuar aberto no Vim.</p>
+<h2>Desafio</h2>
+<p>Abra <code>revisao.txt</code> junto de <code>tarefas.txt</code> em uma divisão vertical. Sem sair do Vim, alterne entre as duas janelas, acrescente uma linha em cada arquivo, salve ambos e feche apenas uma janela. Use <code>:ls</code> para confirmar que os dois buffers continuam disponíveis.</p>
+<h2>Revisão</h2>
+<div class="table-scroll"><table><thead><tr><th scope="col">Modo</th><th scope="col">Comando</th><th scope="col">Resultado</th></tr></thead><tbody><tr><td>Normal</td><td><code>:e arquivo.txt</code> + <code>Enter</code></td><td>Abre outro arquivo.</td></tr><tr><td>Normal</td><td><code>:ls</code> + <code>Enter</code></td><td>Lista buffers abertos.</td></tr><tr><td>Normal</td><td><code>:b número</code> + <code>Enter</code></td><td>Vai ao buffer indicado.</td></tr><tr><td>Normal</td><td><code>:vsplit arquivo.txt</code> + <code>Enter</code></td><td>Abre uma divisão vertical.</td></tr><tr><td>Normal</td><td><code>Ctrl-w h</code> / <code>Ctrl-w l</code></td><td>Move entre janelas.</td></tr><tr><td>Normal</td><td><code>Ctrl-w q</code></td><td>Fecha a janela atual.</td></tr></tbody></table></div>
+<h3>Autoavaliação</h3>
+<p>Você consegue distinguir um buffer de uma janela? Um buffer é o arquivo aberto em memória; uma janela é a área da tela que mostra esse arquivo.</p>
+  </main>
+  <footer class="material-footer"><a href="../../index.html">Vim Commands</a></footer>
+</body>
+</html>

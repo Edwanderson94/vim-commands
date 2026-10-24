@@ -3,7 +3,7 @@
 Pressione `Esc` antes de usar os comandos abaixo.
 
 | Tarefa | Comando |
-| :-- | :-- |
+| :--- | :--- |
 | Inserir antes/depois do cursor | `i` / `a` |
 | Nova linha abaixo | `o` |
 | Sair do modo atual | `Esc` |

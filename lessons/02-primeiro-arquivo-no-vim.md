@@ -14,7 +14,7 @@ Ao final desta aula, você conseguirá reconhecer os modos normal e inserção, 
 No Vim, o teclado tem funções diferentes conforme o modo atual.
 
 | Modo | Serve para | Como entrar |
-| :-- | :-- | :-- |
+| :--- | :--- | :--- |
 | Normal | Mover o cursor e executar comandos | `Esc` |
 | Inserção | Digitar texto comum | `i`, `a` ou `o` |
 
@@ -57,7 +57,7 @@ Crie `lembrete.txt` com três linhas sobre o que você quer praticar no Vim. Use
 ## Revisão
 
 | Onde? | Comando | Resultado |
-| :-- | :-- | :-- |
+| :--- | :--- | :--- |
 | Terminal | `vim arquivo.txt` | Abre ou cria um arquivo no Vim. |
 | Vim, modo normal | `i`, `a`, `o` | Entra no modo de inserção. |
 | Vim | `Esc` | Volta ao modo normal. |

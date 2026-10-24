@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Material de aprendizagem de Vim em português.">
+  <title>Exercício: copiar e colar — Vim Commands</title>
+  <link rel="stylesheet" href="../../materiais.css">
+</head>
+<body>
+  <header class="material-header">
+    <a href="../../index.html">Vim Commands</a>
+    <a href="../../index.html#aulas">Voltar à trilha</a>
+  </header>
+  <main class="material-content">
+<h1>Exercício: copiar e colar</h1>
+<p>No <strong>terminal</strong>, abra um arquivo de prática:</p>
+<pre><code class="language-bash">cd ~/vim-pratica
+vim copia.txt</code></pre>
+<p>Dentro do <strong>Vim</strong>, pressione <code>i</code>, crie estas três linhas e depois pressione <code>Esc</code>:</p>
+<pre><code class="language-text">Praticar Vim ajuda.
+Esta linha ficará no meio.
+Copiar economiza tempo.</code></pre>
+<p>No modo normal, execute as tarefas abaixo:</p>
+<ol><li>Vá para a primeira linha com <code>gg</code>.</li><li>Copie a linha com <code>yy</code>.</li><li>Vá para a última linha com <code>G</code>.</li><li>Cole a cópia abaixo da linha atual com <code>p</code>.</li><li>Salve com <code>:w</code> e pressione <code>Enter</code>.</li><li>Saia com <code>:q</code> e pressione <code>Enter</code>.</li><li>No terminal, confira o resultado com <code>cat copia.txt</code>.</li></ol>
+<h2>Conclusão</h2>
+<p>Você concluiu se o arquivo tiver quatro linhas e a primeira linha aparecer novamente no final. A linha original deve continuar no começo: <code>yy</code> copia, enquanto <code>dd</code> remove.</p>
+  </main>
+  <footer class="material-footer"><a href="../../index.html">Vim Commands</a></footer>
+</body>
+</html>

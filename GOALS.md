@@ -16,8 +16,8 @@ simulador educacional seguro.
 
 - A trilha de cinco aulas, os módulos, os 30 comandos e cinco exercícios são
   legíveis em Markdown no GitHub.
-- O site estático funciona offline, em celular e desktop, com catálogo,
-  busca, filtros e tema.
+- O site estático e os materiais funcionam offline, em celular e desktop, com
+  catálogo pesquisável, filtros, tema e conteúdo renderizado.
 - O simulador suporta somente os comandos definidos em `specification.md`,
   restaura o texto e valida cinco desafios.
 - A experiência é utilizável por teclado e não acessa dados ou arquivos locais.
@@ -40,7 +40,7 @@ simulador fora da especificação.
 
 ## Decisões pendentes
 
-- Nome final e URL do GitHub Pages.
+- Nome final do projeto.
 - Português somente ou inglês adicional.
 - Permanência de JavaScript puro versus gerador estático.
-- Branch de publicação.
+- Estratégia de idioma adicional, caso seja priorizado.

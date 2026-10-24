@@ -24,17 +24,17 @@
       <h1 id="titulo">Aprenda comandos que ficam na memória.</h1>
       <p>Uma trilha curta, exemplos seguros e uma referência rápida para praticar Vim com confiança.</p>
       <a href="#aulas">Começar a aprender</a>
-      <a href="../content/cheatsheet.md">Ver cola rápida</a>
+      <a href="materiais/content/cheatsheet.html">Ver cola rápida</a>
       <p><kbd>Esc</kbd> volta ao modo normal ou cancela uma operação.</p>
     </section>
     <section id="aulas" aria-labelledby="titulo-aulas">
       <h2 id="titulo-aulas">Trilha inicial</h2>
       <ol class="lessons">
-        <li><a href="../lessons/01-terminal-e-arquivos.md">Terminal e arquivos</a></li>
-        <li><a href="../lessons/02-primeiro-arquivo-no-vim.md">Primeiro arquivo no Vim</a></li>
-        <li><a href="../lessons/03-movimento-e-edicao.md">Movimento e edição</a></li>
-        <li><a href="../lessons/04-busca-e-revisao.md">Busca e revisão</a></li>
-        <li><a href="../lessons/05-arquivos-e-janelas.md">Arquivos e janelas</a></li>
+        <li><a href="materiais/lessons/01-terminal-e-arquivos.html">Terminal e arquivos</a></li>
+        <li><a href="materiais/lessons/02-primeiro-arquivo-no-vim.html">Primeiro arquivo no Vim</a></li>
+        <li><a href="materiais/lessons/03-movimento-e-edicao.html">Movimento e edição</a></li>
+        <li><a href="materiais/lessons/04-busca-e-revisao.html">Busca e revisão</a></li>
+        <li><a href="materiais/lessons/05-arquivos-e-janelas.html">Arquivos e janelas</a></li>
       </ol>
     </section>
     <section id="comandos" aria-labelledby="titulo-comandos">
@@ -50,7 +50,8 @@
     </section>
     <section id="praticar" class="practice" aria-labelledby="titulo-praticar">
       <h2 id="titulo-praticar">Pratique com segurança</h2>
-      <p>Ative o simulador e use o teclado somente dentro da área de prática.</p>
+      <p>Ative o simulador e use o teclado somente dentro da área de prática. A tecla Tab continua movendo o foco pelos controles.</p>
+      <p>O simulador cobre inserção (<code>i</code>, <code>a</code>, <code>o</code>, <kbd>Esc</kbd>), navegação, edição, busca e os comandos Ex <code>:w</code>, <code>:q</code> e <code>:q!</code>. Os demais comandos do catálogo são referências para praticar no Vim instalado.</p>
       <button id="activate-simulator" type="button">Ativar simulador</button>
       <button id="reset-simulator" type="button">Restaurar texto</button>
       <p>Modo: <strong id="simulator-mode">NORMAL</strong></p>
@@ -65,10 +66,13 @@
         <div><dt>Histórico</dt><dd id="simulator-history">—</dd></div>
       </dl>
       <p id="simulator-feedback" aria-live="polite"></p>
-      <a href="../exercises/modos-e-insercao.md">Abrir primeiro exercício</a>
+      <a href="materiais/exercises/modos-e-insercao.html">Abrir primeiro exercício</a>
     </section>
   </main>
-  <footer><a href="../LICENSE">Licença MIT</a></footer>
-  <script type="module" src="app.js"></script>
+  <footer><a href="../LICENSE">Licença MIT</a> · <a href="materiais/reference/commands.html">Referência completa dos comandos</a></footer>
+  <script src="commands.js"></script>
+  <script src="simulator.js"></script>
+  <script src="challenges.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Material de aprendizagem de Vim em português.">
+  <title>Primeiros passos no Vim — Vim Commands</title>
+  <link rel="stylesheet" href="../../materiais.css">
+</head>
+<body>
+  <header class="material-header">
+    <a href="../../index.html">Vim Commands</a>
+    <a href="../../index.html#aulas">Voltar à trilha</a>
+  </header>
+  <main class="material-content">
+<h1>Primeiros passos no Vim</h1>
+<p>O Vim trabalha com modos. No começo, isso parece estranho, mas é o que torna a edição rápida quando os comandos se tornam familiares.</p>
+<h2>Os dois modos essenciais</h2>
+<div class="table-scroll"><table><thead><tr><th scope="col">Modo</th><th scope="col">Para que serve</th><th scope="col">Como entrar</th></tr></thead><tbody><tr><td>Normal</td><td>Mover, copiar, apagar e executar comandos</td><td><code>Esc</code></td></tr><tr><td>Inserção</td><td>Digitar ou alterar texto</td><td><code>i</code>, <code>a</code> ou <code>o</code></td></tr></tbody></table></div>
+<p>Ao abrir o Vim, você normalmente começa no modo normal. Se algo não funcionar como esperado, pressione <code>Esc</code> uma ou duas vezes e tente novamente.</p>
+<h2>Primeiro contato</h2>
+<ol><li>Abra um arquivo: <code>vim anotacoes.txt</code>.</li><li>Pressione <code>i</code> e digite uma frase.</li><li>Pressione <code>Esc</code> para voltar ao modo normal.</li><li>Digite <code>:w</code> e pressione <code>Enter</code> para salvar.</li><li>Digite <code>:q</code> e pressione <code>Enter</code> para sair.</li></ol>
+<h2>Comandos de sobrevivência</h2>
+<div class="table-scroll"><table><thead><tr><th scope="col">Comando</th><th scope="col">O que faz</th></tr></thead><tbody><tr><td><code>Esc</code></td><td>Volta ao modo normal ou cancela a operação atual.</td></tr><tr><td><code>i</code></td><td>Insere texto antes do cursor.</td></tr><tr><td><code>a</code></td><td>Insere texto depois do cursor.</td></tr><tr><td><code>o</code></td><td>Cria uma linha abaixo e entra no modo de inserção.</td></tr><tr><td><code>:w</code></td><td>Salva o arquivo.</td></tr><tr><td><code>:q</code></td><td>Fecha o Vim quando não há alterações pendentes.</td></tr><tr><td><code>:wq</code></td><td>Salva e fecha.</td></tr><tr><td><code>:q!</code></td><td>Fecha descartando alterações não salvas.</td></tr></tbody></table></div>
+<h2>Pratique</h2>
+<p>Crie <code>teste-vim.txt</code>, escreva seu nome, salve e saia. Abra o arquivo outra vez, adicione uma segunda linha e use <code>:q!</code> sem salvar. Ao abrir novamente, a segunda linha não deve estar no arquivo.</p>
+  </main>
+  <footer class="material-footer"><a href="../../index.html">Vim Commands</a></footer>
+</body>
+</html>

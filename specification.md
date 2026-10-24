@@ -21,6 +21,10 @@ vim-commands/
 ├── content/
 ├── lessons/
 ├── exercises/
+├── scripts/
+│   └── render-markdown.mjs
+├── tests/
+│   └── simulator.test.mjs
 └── site/
     ├── index.html
     ├── styles.css
@@ -29,6 +33,8 @@ vim-commands/
     ├── simulator.js
     ├── challenges.js
     ├── assets/favicon.svg
+    ├── materiais.css
+    ├── materiais/ (HTML derivado, gerado pelo script)
     └── README.md
 ```
 
@@ -37,7 +43,7 @@ Os módulos abrangem terminal básico, primeiros passos, navegação, edição, 
 Cada aula dura de 10 a 20 minutos e contém duração, nível, pré-requisito, objetivo, conceitos, demonstração, prática guiada, desafio, revisão e autoavaliação.
 
 | Aula | Tema | Resultado esperado |
-| :-- | :-- | :-- |
+| :--- | :--- | :--- |
 | 1 | Terminal e arquivos | Criar uma pasta e um arquivo de prática. |
 | 2 | Primeiro arquivo no Vim | Abrir, inserir texto, salvar e sair. |
 | 3 | Movimento e edição | Editar um texto sem depender das setas. |
@@ -48,18 +54,24 @@ Os cinco desafios são: entrar e sair da inserção, chegar ao fim com `G`, remo
 
 ## 3. Site estático
 
-O site usa HTML5 semântico, CSS3 e JavaScript ES Modules, sem frameworks ou bibliotecas externas. Deve abrir sem servidor, usar caminhos relativos e ser compatível com GitHub Pages.
+O site usa HTML5 semântico, CSS3 e JavaScript puro em arquivos separados, sem frameworks ou bibliotecas externas. Os scripts clássicos carregam em ordem para funcionar tanto por `file://` quanto por servidor estático. Use caminhos relativos e mantenha compatibilidade com GitHub Pages.
 
 | Arquivo | Responsabilidade |
-| :-- | :-- |
+| :--- | :--- |
 | `index.html` | Estrutura semântica e pontos de montagem. |
 | `styles.css` | Tokens, tema, layout e responsividade. |
 | `app.js` | Inicialização, tema, busca e filtros. |
 | `commands.js` | Dados dos 30 comandos. |
 | `simulator.js` | Estado, teclas e renderização. |
 | `challenges.js` | Dados e validação dos desafios. |
+| `materiais.css` | Estilo das páginas HTML derivadas do Markdown. |
 
-A página contém cabeçalho com âncoras e botão de tema; apresentação com botão “Começar a aprender” e aviso sobre `Esc`; trilha; catálogo; simulador; desafios; e rodapé.
+As aulas, módulos e exercícios continuam mantidos em Markdown. O script
+`scripts/render-markdown.mjs` gera páginas HTML locais, sem dependências
+externas, para que os links da trilha sejam formatados no navegador e também
+funcionem offline. O workflow de publicação executa o mesmo gerador.
+
+A página contém cabeçalho com âncoras e botão de tema; apresentação com botão “Começar a aprender” e aviso sobre `Esc`; trilha com aulas renderizadas; catálogo; simulador; desafios; e rodapé.
 
 O catálogo mostra tecla, título, descrição, categoria, nível, modo e aula. A busca verifica tecla, título, descrição, categoria e modo. Os filtros de categoria e nível atuam juntos. Sem resultado, há mensagem clara e botão para limpar filtros.
 
@@ -102,7 +114,7 @@ O simulador não é um editor completo. Começa no modo normal e mantém apenas 
 ```
 
 | Grupo | Comandos |
-| :-- | :-- |
+| :--- | :--- |
 | Modos | `Esc`, `i`, `a`, `o` |
 | Movimento | `h`, `j`, `k`, `l`, `w`, `b`, `0`, `$`, `gg`, `G` |
 | Edição | `x`, `dd`, `dw`, `yy`, `p`, `u`, `Ctrl-r`, `.` |
@@ -133,7 +145,7 @@ Criar `simulator.js` e `challenges.js`. Implementar todos os comandos declarados
 
 ### Fase 4 — Qualidade e publicação
 
-Validar HTML e links; testar tema, teclado, desktop, celular, Chrome, Firefox e leitor de tela; testar os comandos e garantir que atalhos externos não sejam bloqueados; adicionar testes unitários. Só com autorização explícita, configurar GitHub Pages na branch escolhida e pasta `/site`.
+Validar HTML e links; testar tema, teclado, desktop, celular, Chrome, Firefox e leitor de tela; testar os comandos e garantir que atalhos externos não sejam bloqueados; adicionar testes unitários. O GitHub Pages é publicado por workflow a partir da branch `release/1.0.0`, com o frontend em `/site` e os materiais HTML derivados ao lado.
 
 ### Fase 5 — Evoluções
 
@@ -142,7 +154,7 @@ Gerar dados a partir do Markdown, disponibilizar inglês, adicionar modo visual,
 ## 7. Critérios de aceite
 
 - Markdown legível no GitHub e independente do site.
-- Site offline, responsivo, acessível e sem acesso a dados pessoais ou arquivos locais.
+- Site e materiais offline, responsivos, acessíveis e sem acesso a dados pessoais ou arquivos locais.
 - Tema, busca e filtros funcionam sem recarregar.
 - Os 30 comandos são consultáveis por categoria.
 - Simulador executa os comandos declarados e restaura o texto.
@@ -151,11 +163,10 @@ Gerar dados a partir do Markdown, disponibilizar inglês, adicionar modo visual,
 
 ## 8. Decisões em aberto
 
-- Nome final e URL do GitHub Pages.
+- Nome final do projeto.
 - Conteúdo somente em português ou também em inglês.
 - JavaScript puro permanentemente ou gerador estático no futuro.
-- Branch de publicação, caso o repositório não use `main`.
 
 ## 9. Próximo passo
 
-Implementar a Fase 2, começando por `site/index.html`, `site/styles.css`, `site/app.js` e `site/commands.js`.
+Concluir a validação da Fase 4, incluindo comportamento do site, comandos do simulador, desafios, responsividade e acessibilidade.

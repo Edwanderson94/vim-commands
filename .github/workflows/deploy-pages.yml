@@ -27,6 +27,7 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Preparar artefato estático
         run: |
+          node scripts/render-markdown.mjs
           mkdir -p .pages/site
           cp -R site/. .pages/site/
           cp -R content lessons exercises .pages/

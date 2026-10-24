@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Material de aprendizagem de Vim em português.">
+  <title>Aula 1 — Terminal e seu primeiro arquivo no Vim — Vim Commands</title>
+  <link rel="stylesheet" href="../../materiais.css">
+</head>
+<body>
+  <header class="material-header">
+    <a href="../../index.html">Vim Commands</a>
+    <a href="../../index.html#aulas">Voltar à trilha</a>
+  </header>
+  <main class="material-content">
+<h1>Aula 1 — Terminal e seu primeiro arquivo no Vim</h1>
+<p><strong>Duração estimada:</strong> 15 minutos</p>
+<p><strong>Nível:</strong> iniciante <strong>Pré-requisito:</strong> um terminal Linux aberto e o Vim instalado (<code>vim --version</code>).</p>
+<h2>Objetivo</h2>
+<p>Ao final desta aula, você conseguirá criar uma pasta de prática no terminal, abrir um arquivo no Vim, escrever uma frase, salvar e sair.</p>
+<h2>Parte 1 — Onde estou?</h2>
+<p>Você está no <strong>terminal</strong>. O terminal é o lugar onde digitamos comandos para o sistema operacional. Comece descobrindo em qual pasta você está:</p>
+<pre><code class="language-bash">pwd</code></pre>
+<p>O resultado será um caminho parecido com <code>/home/seu-usuario</code>. Agora veja os arquivos e pastas desse lugar:</p>
+<pre><code class="language-bash">ls</code></pre>
+<h2>Parte 2 — Criar um espaço seguro para praticar</h2>
+<p>Ainda no <strong>terminal</strong>, execute um comando por vez:</p>
+<pre><code class="language-bash">mkdir -p ~/vim-pratica
+cd ~/vim-pratica
+pwd</code></pre>
+<p>O último comando deve terminar em <code>/vim-pratica</code>. Esta é sua área de treino: você pode criar, editar e apagar arquivos nela sem mexer nos seus projetos.</p>
+<h2>Parte 3 — Abrir seu primeiro arquivo</h2>
+<p>No <strong>terminal</strong>, digite:</p>
+<pre><code class="language-bash">vim ola.txt</code></pre>
+<p>Agora você entrou no <strong>Vim</strong>. O cursor aparece na primeira linha, mas você ainda não está digitando texto. O Vim começou no modo normal.</p>
+<h2>Parte 4 — Escrever uma frase</h2>
+<p>Dentro do <strong>Vim</strong>, pressione <code>i</code>. Na parte inferior da tela, deve aparecer <code>-- INSERT --</code>. Digite a frase abaixo:</p>
+<pre><code class="language-text">Olá, Vim!</code></pre>
+<p>Em seguida, pressione <code>Esc</code>. Você voltou ao modo normal e o indicador `-- INSERT --` desaparece.</p>
+<h2>Parte 5 — Salvar e sair</h2>
+<p>Ainda dentro do <strong>Vim</strong>, digite exatamente:</p>
+<pre><code class="language-text">:wq</code></pre>
+<p>Depois, pressione <code>Enter</code>. O <code>:</code> abre a área de comandos; <code>w</code> vem de <em>write</em> (salvar) e <code>q</code> vem de <em>quit</em> (sair). Você retornará ao terminal.</p>
+<h2>Parte 6 — Conferir seu arquivo</h2>
+<p>No <strong>terminal</strong>, confirme que o arquivo foi criado:</p>
+<pre><code class="language-bash">ls</code></pre>
+<p>Você deve ver <code>ola.txt</code>. Para conferir seu conteúdo sem abri-lo no Vim, use:</p>
+<pre><code class="language-bash">cat ola.txt</code></pre>
+<p>O terminal deve mostrar:</p>
+<pre><code class="language-text">Olá, Vim!</code></pre>
+<h2>Prática guiada</h2>
+<p>Repita o processo com outro arquivo:</p>
+<ol><li>No terminal, execute <code>vim meu-nome.txt</code>.</li><li>Dentro do Vim, pressione <code>i</code>.</li><li>Digite seu nome.</li><li>Pressione <code>Esc</code>.</li><li>Digite <code>:wq</code> e pressione <code>Enter</code>.</li><li>De volta ao terminal, confirme com <code>cat meu-nome.txt</code>.</li></ol>
+<h2>Desafio</h2>
+<p>Sem consultar os passos acima, crie um arquivo chamado <code>objetivo.txt</code> e escreva uma frase sobre o que você quer aprender no Vim. Salve o arquivo e confira seu conteúdo pelo terminal.</p>
+<h2>Revisão</h2>
+<div class="table-scroll"><table><thead><tr><th scope="col">Onde?</th><th scope="col">Comando</th><th scope="col">Resultado</th></tr></thead><tbody><tr><td>Terminal</td><td><code>pwd</code></td><td>Mostra a pasta atual.</td></tr><tr><td>Terminal</td><td><code>mkdir -p ~/vim-pratica</code></td><td>Cria sua pasta de treino.</td></tr><tr><td>Terminal</td><td><code>cd ~/vim-pratica</code></td><td>Entra na pasta de treino.</td></tr><tr><td>Terminal</td><td><code>vim ola.txt</code></td><td>Abre ou cria o arquivo no Vim.</td></tr><tr><td>Vim</td><td><code>i</code></td><td>Entra no modo de inserção.</td></tr><tr><td>Vim</td><td><code>Esc</code></td><td>Volta ao modo normal.</td></tr><tr><td>Vim</td><td><code>:wq</code></td><td>Salva e fecha o arquivo.</td></tr><tr><td>Terminal</td><td><code>cat ola.txt</code></td><td>Mostra o conteúdo do arquivo.</td></tr></tbody></table></div>
+<h3>Autoavaliação</h3>
+<p>Você consegue explicar por que <code>i</code> não deve ser digitado no terminal e <code>pwd</code> não deve ser digitado dentro do Vim? Se a resposta for sim, você está pronto para a próxima aula, sobre criação e edição de texto no Vim.</p>
+  </main>
+  <footer class="material-footer"><a href="../../index.html">Vim Commands</a></footer>
+</body>
+</html>

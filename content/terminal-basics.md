@@ -7,7 +7,7 @@ arquivo seguro para praticar. Todos os comandos desta página são digitados no
 ## Comandos essenciais
 
 | Comando | O que faz | Exemplo |
-| :-- | :-- | :-- |
+| :--- | :--- | :--- |
 | `pwd` | Mostra a pasta atual. | `pwd` |
 | `ls` | Lista arquivos e pastas. | `ls` |
 | `mkdir nome` | Cria uma pasta. | `mkdir vim-pratica` |

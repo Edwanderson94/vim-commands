@@ -1,6 +1,6 @@
-import { commands } from './commands.js';
-import { createState, applyKey } from './simulator.js';
-import { challenges } from './challenges.js';
+const { commands } = globalThis.VimCommands;
+const { createState, applyKey, keyForSimulator } = globalThis.VimSimulator;
+const { challenges } = globalThis.VimChallenges;
 
 const find = (selector) => document.querySelector(selector);
 const search = find('#search');
@@ -9,7 +9,6 @@ const level = find('#level');
 const list = find('#command-list');
 const empty = find('#empty-state');
 const summary = find('#summary');
-const lessonByCategory = { início: 'Aula 2', navegação: 'Aula 3', edição: 'Aula 3', busca: 'Aula 4', arquivos: 'Aula 5' };
 const normalize = (value) => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 
 function element(tag, text, className) {
@@ -33,7 +32,7 @@ function renderCatalog() {
   list.replaceChildren(...filtered.map((command) => {
     const card = element('article', undefined, 'command-card');
     card.append(element('span', command.keys, 'key'), element('h3', command.title), element('p', command.description));
-    card.append(element('small', `${command.category} · ${command.mode} · ${command.level} · ${lessonByCategory[command.category]}`));
+    card.append(element('small', `${command.category} · modo ${command.mode} · ${command.level} · ${command.lesson}`));
     return card;
   }));
   summary.textContent = `${filtered.length} de ${commands.length} comandos exibidos.`;
@@ -50,9 +49,11 @@ function setTheme(dark) {
   document.documentElement.dataset.theme = dark ? 'dark' : 'light';
   toggle.textContent = dark ? 'Tema claro' : 'Tema escuro';
   toggle.setAttribute('aria-pressed', String(dark));
-  localStorage.setItem('vim-theme', dark ? 'dark' : 'light');
+  try { localStorage.setItem('vim-theme', dark ? 'dark' : 'light'); } catch { /* O tema continua funcional sem armazenamento local. */ }
 }
-setTheme(localStorage.getItem('vim-theme') === 'dark');
+let savedTheme = 'light';
+try { savedTheme = localStorage.getItem('vim-theme') ?? 'light'; } catch { /* Abrir por file:// pode limitar o armazenamento. */ }
+setTheme(savedTheme === 'dark');
 toggle.addEventListener('click', () => setTheme(document.documentElement.dataset.theme !== 'dark'));
 
 let simulator = createState();
@@ -87,6 +88,7 @@ function drawSimulator() {
   find('#simulator-history').textContent = simulator.keyHistory.length ? simulator.keyHistory.join(' ') : '—';
   find('#simulator-feedback').textContent = simulator.feedback;
   const challenge = challenges.find((item) => item.id === challengeSelect.value);
+  find('#restart-challenge').disabled = !challenge;
   find('#challenge-instruction').textContent = challenge ? challenge.instruction : 'Escolha um desafio para carregar um texto de prática.';
   find('#challenge-status').textContent = challenge && challenge.isComplete(simulator) ? 'Desafio concluído.' : '';
 }
@@ -113,9 +115,10 @@ find('#reset-simulator').addEventListener('click', () => {
 });
 editor.addEventListener('keydown', (event) => {
   if (!active) return;
-  if (event.ctrlKey && event.key.toLowerCase() !== 'r') return;
+  const key = keyForSimulator(event, simulator);
+  if (!key) return;
   event.preventDefault();
-  applyKey(simulator, event.ctrlKey ? 'Ctrl-r' : event.key);
+  applyKey(simulator, key);
   drawSimulator();
 });
 

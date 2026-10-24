@@ -35,7 +35,7 @@ Para ver os dois arquivos lado a lado, deixe `tarefas.txt` visível e digite:
 Pressione `Enter`. Cada área é uma janela que mostra um buffer.
 
 | Comando | Resultado |
-| :-- | :-- |
+| :--- | :--- |
 | `Ctrl-w h` | Vai para a janela à esquerda. |
 | `Ctrl-w l` | Vai para a janela à direita. |
 | `Ctrl-w q` | Fecha a janela atual. |
@@ -59,7 +59,7 @@ Abra `revisao.txt` junto de `tarefas.txt` em uma divisão vertical. Sem sair do 
 ## Revisão
 
 | Modo | Comando | Resultado |
-| :-- | :-- | :-- |
+| :--- | :--- | :--- |
 | Normal | `:e arquivo.txt` + `Enter` | Abre outro arquivo. |
 | Normal | `:ls` + `Enter` | Lista buffers abertos. |
 | Normal | `:b número` + `Enter` | Vai ao buffer indicado. |

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Material de aprendizagem de Vim em português.">
+  <title>Aula 2 — Seu primeiro arquivo no Vim — Vim Commands</title>
+  <link rel="stylesheet" href="../../materiais.css">
+</head>
+<body>
+  <header class="material-header">
+    <a href="../../index.html">Vim Commands</a>
+    <a href="../../index.html#aulas">Voltar à trilha</a>
+  </header>
+  <main class="material-content">
+<h1>Aula 2 — Seu primeiro arquivo no Vim</h1>
+<p><strong>Duração estimada:</strong> 15 minutos</p>
+<p><strong>Nível:</strong> iniciante <strong>Pré-requisito:</strong> ter concluído a <a href="01-terminal-e-arquivos.html">Aula 1</a> e estar na pasta <code>~/vim-pratica</code>.</p>
+<h2>Objetivo</h2>
+<p>Ao final desta aula, você conseguirá reconhecer os modos normal e inserção, escrever um pequeno texto e salvar o arquivo sem sair do Vim.</p>
+<h2>Conceitos</h2>
+<p>No Vim, o teclado tem funções diferentes conforme o modo atual.</p>
+<div class="table-scroll"><table><thead><tr><th scope="col">Modo</th><th scope="col">Serve para</th><th scope="col">Como entrar</th></tr></thead><tbody><tr><td>Normal</td><td>Mover o cursor e executar comandos</td><td><code>Esc</code></td></tr><tr><td>Inserção</td><td>Digitar texto comum</td><td><code>i</code>, <code>a</code> ou <code>o</code></td></tr></tbody></table></div>
+<p>O modo normal é o ponto de partida. Se algo inesperado acontecer, pressione <code>Esc</code>: isso volta ao modo normal ou cancela uma operação em andamento.</p>
+<h2>Demonstração</h2>
+<p>No <strong>terminal</strong>, abra um arquivo novo:</p>
+<pre><code class="language-bash">cd ~/vim-pratica
+vim apresentacao.txt</code></pre>
+<p>Dentro do <strong>Vim</strong>, no modo normal, pressione <code>i</code>. Quando aparecer <code>-- INSERT --</code>, digite:</p>
+<pre><code class="language-text">Estou aprendendo Vim.
+Praticar aos poucos funciona.</code></pre>
+<p>Pressione <code>Esc</code>. No modo normal, digite <code>:w</code> e pressione <code>Enter</code>. O arquivo será salvo, mas o Vim continuará aberto. Para sair, digite <code>:q</code> e pressione <code>Enter</code>.</p>
+<p><code>i</code> insere antes do cursor. <code>a</code> insere depois do cursor e <code>o</code> abre uma linha abaixo, entrando no modo de inserção.</p>
+<h2>Prática guiada</h2>
+<ol><li>No terminal, abra <code>recado.txt</code> com <code>vim recado.txt</code>.</li><li>No Vim, pressione <code>i</code> e escreva uma frase curta.</li><li>Pressione <code>Esc</code>; no modo normal, pressione <code>o</code>, escreva uma segunda frase e pressione <code>Esc</code>.</li><li>Digite <code>:w</code>, pressione <code>Enter</code> e depois use <code>:q</code> com <code>Enter</code>.</li><li>No terminal, execute <code>cat recado.txt</code>.</li></ol>
+<p>Você concluiu se o terminal mostrar as duas frases que escreveu.</p>
+<h2>Desafio</h2>
+<p>Crie <code>lembrete.txt</code> com três linhas sobre o que você quer praticar no Vim. Use <code>i</code> para a primeira linha e <code>o</code> para as duas seguintes. Salve com <code>:wq</code> e confirme o conteúdo com <code>cat lembrete.txt</code> no terminal.</p>
+<h2>Revisão</h2>
+<div class="table-scroll"><table><thead><tr><th scope="col">Onde?</th><th scope="col">Comando</th><th scope="col">Resultado</th></tr></thead><tbody><tr><td>Terminal</td><td><code>vim arquivo.txt</code></td><td>Abre ou cria um arquivo no Vim.</td></tr><tr><td>Vim, modo normal</td><td><code>i</code>, <code>a</code>, <code>o</code></td><td>Entra no modo de inserção.</td></tr><tr><td>Vim</td><td><code>Esc</code></td><td>Volta ao modo normal.</td></tr><tr><td>Vim, modo normal</td><td><code>:w</code> + <code>Enter</code></td><td>Salva sem sair.</td></tr><tr><td>Vim, modo normal</td><td><code>:q</code> + <code>Enter</code></td><td>Sai quando não há alterações pendentes.</td></tr></tbody></table></div>
+<h3>Autoavaliação</h3>
+<p>Você consegue explicar por que uma frase deve ser digitada no modo de inserção, mas <code>:w</code> deve ser digitado no modo normal?</p>
+  </main>
+  <footer class="material-footer"><a href="../../index.html">Vim Commands</a></footer>
+</body>
+</html>

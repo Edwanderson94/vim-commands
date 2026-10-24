@@ -29,7 +29,7 @@ Aprender aos poucos é suficiente.
 Agora você está no modo normal. Use estes comandos para mover o cursor:
 
 | Comando | Movimento |
-| :-- | :-- |
+| :--- | :--- |
 | `h` `j` `k` `l` | Esquerda, baixo, cima e direita. |
 | `w` / `b` | Próxima palavra / palavra anterior. |
 | `0` / `$` | Início / fim da linha atual. |
@@ -56,7 +56,7 @@ Sem usar as setas, vá até a palavra `pequenos` com `w` ou `b` e remova-a com `
 ## Revisão
 
 | Modo | Comando | Resultado |
-| :-- | :-- | :-- |
+| :--- | :--- | :--- |
 | Normal | `h` `j` `k` `l` | Move o cursor. |
 | Normal | `w` / `b`, `gg` / `G` | Move por palavras ou pelo arquivo. |
 | Normal | `x`, `dd`, `dw` | Remove caractere, linha ou palavra. |

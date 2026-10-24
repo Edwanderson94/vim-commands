@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Material de aprendizagem de Vim em português.">
+  <title>Arquivos e janelas — Vim Commands</title>
+  <link rel="stylesheet" href="../../materiais.css">
+</head>
+<body>
+  <header class="material-header">
+    <a href="../../index.html">Vim Commands</a>
+    <a href="../../index.html#aulas">Voltar à trilha</a>
+  </header>
+  <main class="material-content">
+<h1>Arquivos e janelas</h1>
+<p>Depois de dominar edição e navegação, estes comandos ajudam a trabalhar com mais de um arquivo sem sair do Vim.</p>
+<h2>Arquivos</h2>
+<div class="table-scroll"><table><thead><tr><th scope="col">Comando</th><th scope="col">Ação</th></tr></thead><tbody><tr><td><code>:e arquivo.txt</code></td><td>Abre <code>arquivo.txt</code>.</td></tr><tr><td><code>:w</code></td><td>Salva o arquivo atual.</td></tr><tr><td><code>:w novo.txt</code></td><td>Salva uma cópia como <code>novo.txt</code>.</td></tr><tr><td><code>:ls</code></td><td>Lista os buffers abertos.</td></tr><tr><td><code>:b 2</code></td><td>Vai para o buffer de número 2.</td></tr></tbody></table></div>
+<p>Um buffer é um arquivo que o Vim mantém aberto em memória. Você pode alternar entre buffers mesmo que apenas um esteja visível na tela.</p>
+<h2>Janelas divididas</h2>
+<div class="table-scroll"><table><thead><tr><th scope="col">Comando</th><th scope="col">Ação</th></tr></thead><tbody><tr><td><code>:split arquivo.txt</code></td><td>Abre o arquivo em uma divisão horizontal.</td></tr><tr><td><code>:vsplit arquivo.txt</code></td><td>Abre o arquivo em uma divisão vertical.</td></tr><tr><td><code>Ctrl-w h</code></td><td>Move para a janela à esquerda.</td></tr><tr><td><code>Ctrl-w j</code></td><td>Move para a janela abaixo.</td></tr><tr><td><code>Ctrl-w k</code></td><td>Move para a janela acima.</td></tr><tr><td><code>Ctrl-w l</code></td><td>Move para a janela à direita.</td></tr><tr><td><code>Ctrl-w q</code></td><td>Fecha a janela atual.</td></tr></tbody></table></div>
+<h2>Pratique</h2>
+<p>Abra dois arquivos pequenos, use <code>:vsplit</code> para colocá-los lado a lado e alterne entre as janelas com <code>Ctrl-w h</code> e <code>Ctrl-w l</code>.</p>
+  </main>
+  <footer class="material-footer"><a href="../../index.html">Vim Commands</a></footer>
+</body>
+</html>

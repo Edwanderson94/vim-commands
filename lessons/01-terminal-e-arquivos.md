@@ -113,7 +113,7 @@ conteúdo pelo terminal.
 ## Revisão
 
 | Onde? | Comando | Resultado |
-| :-- | :-- | :-- |
+| :--- | :--- | :--- |
 | Terminal | `pwd` | Mostra a pasta atual. |
 | Terminal | `mkdir -p ~/vim-pratica` | Cria sua pasta de treino. |
 | Terminal | `cd ~/vim-pratica` | Entra na pasta de treino. |

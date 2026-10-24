@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Material de aprendizagem de Vim em português.">
+  <title>Edição de texto — Vim Commands</title>
+  <link rel="stylesheet" href="../../materiais.css">
+</head>
+<body>
+  <header class="material-header">
+    <a href="../../index.html">Vim Commands</a>
+    <a href="../../index.html#aulas">Voltar à trilha</a>
+  </header>
+  <main class="material-content">
+<h1>Edição de texto</h1>
+<p>Os comandos desta página devem ser usados no modo normal. Pressione <code>Esc</code> antes de começar.</p>
+<h2>Inserir texto</h2>
+<div class="table-scroll"><table><thead><tr><th scope="col">Comando</th><th scope="col">Ação</th></tr></thead><tbody><tr><td><code>i</code></td><td>Insere antes do cursor.</td></tr><tr><td><code>a</code></td><td>Insere depois do cursor.</td></tr><tr><td><code>o</code></td><td>Abre uma linha abaixo e entra no modo de inserção.</td></tr></tbody></table></div>
+<h2>Remover, copiar e colar</h2>
+<div class="table-scroll"><table><thead><tr><th scope="col">Comando</th><th scope="col">Ação</th></tr></thead><tbody><tr><td><code>x</code></td><td>Remove o caractere sob o cursor.</td></tr><tr><td><code>dd</code></td><td>Remove a linha atual.</td></tr><tr><td><code>dw</code></td><td>Remove até o fim da palavra.</td></tr><tr><td><code>yy</code></td><td>Copia a linha atual.</td></tr><tr><td><code>p</code></td><td>Cola depois do cursor ou da linha atual.</td></tr><tr><td><code>u</code></td><td>Desfaz a última alteração.</td></tr><tr><td><code>Ctrl-r</code></td><td>Refaz uma alteração desfeita.</td></tr><tr><td><code>.</code></td><td>Repete a última alteração.</td></tr></tbody></table></div>
+<p>Quando você remove algo com <code>dd</code> ou <code>dw</code>, o Vim o guarda temporariamente. Por isso, <code>p</code> também pode colar texto que acabou de ser removido.</p>
+<h2>Pratique</h2>
+<p>Escreva três linhas. Copie a primeira com <code>yy</code>, vá até a última e pressione <code>p</code>. Remova uma linha com <code>dd</code>, restaure-a com <code>u</code> e depois refaça a remoção com <code>Ctrl-r</code>.</p>
+  </main>
+  <footer class="material-footer"><a href="../../index.html">Vim Commands</a></footer>
+</body>
+</html>

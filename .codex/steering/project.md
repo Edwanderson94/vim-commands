@@ -2,12 +2,12 @@
 
 ## Propósito
 
-Vim Commands é um projeto educacional gratuito, em português, para ensinar Vim no terminal a alunos e autodidatas. Ele combina explicações curtas, prática progressiva, consulta rápida e, no futuro, um simulador seguro no navegador.
+Vim Commands é um projeto educacional gratuito, em português, para ensinar Vim no terminal a alunos e autodidatas. Ele combina explicações curtas, prática progressiva, consulta rápida e um simulador seguro no navegador.
 
 ## Fonte de verdade
 
 - `specification.md` define o produto, a trilha de aprendizado, o frontend
-  estático e sua futura publicação.
+  estático e sua publicação no GitHub Pages.
 - `content/`, `lessons/` e `exercises/` são materiais didáticos em Markdown.
 - `commands.md` é a lista compacta dos 30 comandos essenciais.
 

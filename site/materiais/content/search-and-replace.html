@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Material de aprendizagem de Vim em português.">
+  <title>Busca e substituição — Vim Commands</title>
+  <link rel="stylesheet" href="../../materiais.css">
+</head>
+<body>
+  <header class="material-header">
+    <a href="../../index.html">Vim Commands</a>
+    <a href="../../index.html#aulas">Voltar à trilha</a>
+  </header>
+  <main class="material-content">
+<h1>Busca e substituição</h1>
+<p>Use estes comandos no modo normal. Eles ajudam a encontrar e alterar texto sem percorrer o arquivo manualmente.</p>
+<h2>Buscar texto</h2>
+<div class="table-scroll"><table><thead><tr><th scope="col">Comando</th><th scope="col">Ação</th></tr></thead><tbody><tr><td><code>/texto</code></td><td>Busca <code>texto</code> a partir da posição atual.</td></tr><tr><td><code>n</code></td><td>Vai para a próxima ocorrência da última busca.</td></tr><tr><td><code>N</code></td><td>Volta para a ocorrência anterior da última busca.</td></tr></tbody></table></div>
+<p>Depois de digitar <code>/texto</code>, pressione <code>Enter</code> para iniciar a busca. Para cancelar uma busca ainda sendo digitada, pressione <code>Esc</code>.</p>
+<h2>Substituir texto</h2>
+<div class="table-scroll"><table><thead><tr><th scope="col">Comando</th><th scope="col">Ação</th></tr></thead><tbody><tr><td><code>:s/antigo/novo/</code></td><td>Troca a primeira ocorrência na linha atual.</td></tr><tr><td><code>:s/antigo/novo/g</code></td><td>Troca todas as ocorrências na linha atual.</td></tr><tr><td><code>:%s/antigo/novo/g</code></td><td>Troca todas as ocorrências em todo o arquivo.</td></tr><tr><td><code>:%s/antigo/novo/gc</code></td><td>Troca todas, pedindo confirmação em cada uma.</td></tr></tbody></table></div>
+<p>O <code>g</code> significa todas as ocorrências da linha; <code>%</code> significa todas as linhas do arquivo; <code>c</code> pede confirmação. Para iniciantes, <code>:%s/antigo/novo/gc</code> é a opção mais segura porque permite revisar cada alteração.</p>
+<h2>Pratique</h2>
+<p>Escreva a palavra <code>Vim</code> três vezes em linhas diferentes. Busque com <code>/Vim</code>, use <code>n</code> e <code>N</code> para percorrer os resultados e, por fim, troque tudo por <code>Neovim</code> com <code>:%s/Vim/Neovim/gc</code>.</p>
+  </main>
+  <footer class="material-footer"><a href="../../index.html">Vim Commands</a></footer>
+</body>
+</html>

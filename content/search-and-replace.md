@@ -6,7 +6,7 @@ percorrer o arquivo manualmente.
 ## Buscar texto
 
 | Comando | Ação |
-| :-- | :-- |
+| :--- | :--- |
 | `/texto` | Busca `texto` a partir da posição atual. |
 | `n` | Vai para a próxima ocorrência da última busca. |
 | `N` | Volta para a ocorrência anterior da última busca. |
@@ -17,7 +17,7 @@ cancelar uma busca ainda sendo digitada, pressione `Esc`.
 ## Substituir texto
 
 | Comando | Ação |
-| :-- | :-- |
+| :--- | :--- |
 | `:s/antigo/novo/` | Troca a primeira ocorrência na linha atual. |
 | `:s/antigo/novo/g` | Troca todas as ocorrências na linha atual. |
 | `:%s/antigo/novo/g` | Troca todas as ocorrências em todo o arquivo. |

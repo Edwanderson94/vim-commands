@@ -6,7 +6,7 @@ edição rápida quando os comandos se tornam familiares.
 ## Os dois modos essenciais
 
 | Modo | Para que serve | Como entrar |
-| :-- | :-- | :-- |
+| :--- | :--- | :--- |
 | Normal | Mover, copiar, apagar e executar comandos | `Esc` |
 | Inserção | Digitar ou alterar texto | `i`, `a` ou `o` |
 
@@ -24,7 +24,7 @@ como esperado, pressione `Esc` uma ou duas vezes e tente novamente.
 ## Comandos de sobrevivência
 
 | Comando | O que faz |
-| :-- | :-- |
+| :--- | :--- |
 | `Esc` | Volta ao modo normal ou cancela a operação atual. |
 | `i` | Insere texto antes do cursor. |
 | `a` | Insere texto depois do cursor. |

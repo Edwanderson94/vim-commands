@@ -57,7 +57,7 @@ trocar apenas três delas por `Neovim`. Salve o arquivo.
 ## Revisão
 
 | Modo | Comando | Resultado |
-| :-- | :-- | :-- |
+| :--- | :--- | :--- |
 | Normal | `/texto` + `Enter` | Busca um texto. |
 | Normal | `n` / `N` | Vai à próxima / anterior ocorrência. |
 | Normal | `Esc` | Cancela uma busca em digitação. |

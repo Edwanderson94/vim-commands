@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Material de aprendizagem de Vim em português.">
+  <title>Aula 3 — Movimento e edição sem as setas — Vim Commands</title>
+  <link rel="stylesheet" href="../../materiais.css">
+</head>
+<body>
+  <header class="material-header">
+    <a href="../../index.html">Vim Commands</a>
+    <a href="../../index.html#aulas">Voltar à trilha</a>
+  </header>
+  <main class="material-content">
+<h1>Aula 3 — Movimento e edição sem as setas</h1>
+<p><strong>Duração estimada:</strong> 20 minutos</p>
+<p><strong>Nível:</strong> iniciante <strong>Pré-requisito:</strong> ter concluído a <a href="02-primeiro-arquivo-no-vim.html">Aula 2</a>.</p>
+<h2>Objetivo</h2>
+<p>Ao final desta aula, você conseguirá percorrer e editar um texto no modo normal com movimentos, remoção, cópia, colagem e desfazer.</p>
+<h2>Conceitos</h2>
+<p>No <strong>terminal</strong>, abra <code>treino-edicao.txt</code>:</p>
+<pre><code class="language-bash">cd ~/vim-pratica
+vim treino-edicao.txt</code></pre>
+<p>Dentro do <strong>Vim</strong>, pressione <code>i</code>, digite o texto abaixo e pressione <code>Esc</code>:</p>
+<pre><code class="language-text">Vim recompensa a prática.
+Movimentos pequenos economizam tempo.
+Aprender aos poucos é suficiente.</code></pre>
+<p>Agora você está no modo normal. Use estes comandos para mover o cursor:</p>
+<div class="table-scroll"><table><thead><tr><th scope="col">Comando</th><th scope="col">Movimento</th></tr></thead><tbody><tr><td><code>h</code> <code>j</code> <code>k</code> <code>l</code></td><td>Esquerda, baixo, cima e direita.</td></tr><tr><td><code>w</code> / <code>b</code></td><td>Próxima palavra / palavra anterior.</td></tr><tr><td><code>0</code> / <code>$</code></td><td>Início / fim da linha atual.</td></tr><tr><td><code>gg</code> / <code>G</code></td><td>Primeira / última linha do arquivo.</td></tr></tbody></table></div>
+<p>No modo normal, <code>x</code> remove um caractere, <code>dd</code> remove uma linha e <code>dw</code> remove até o fim da palavra. Use <code>u</code> para desfazer e <code>Ctrl-r</code> para refazer.</p>
+<p>Para copiar uma linha, pressione <code>yy</code>. Vá ao destino e use <code>p</code> para colar. O <code>p</code> também cola texto removido por <code>dd</code> ou <code>dw</code>.</p>
+<h2>Prática guiada</h2>
+<ol><li>Vá à primeira linha com <code>gg</code> e ao fim dela com <code>$</code>.</li><li>Apague o ponto final com <code>x</code> e use <code>u</code> para restaurá-lo.</li><li>Copie a primeira linha com <code>yy</code>, vá ao fim do arquivo com <code>G</code> e cole com <code>p</code>.</li><li>Remova a segunda linha com <code>dd</code> e use <code>u</code> para trazê-la de volta.</li><li>Salve com <code>:w</code> e pressione <code>Enter</code>.</li></ol>
+<p>Você concluiu se o arquivo tiver as três linhas originais e uma cópia da primeira no final.</p>
+<h2>Desafio</h2>
+<p>Sem usar as setas, vá até a palavra <code>pequenos</code> com <code>w</code> ou <code>b</code> e remova-a com <code>dw</code>. Use <code>u</code> para restaurá-la. Depois, duplique a última linha com <code>yy</code> e <code>p</code>.</p>
+<h2>Revisão</h2>
+<div class="table-scroll"><table><thead><tr><th scope="col">Modo</th><th scope="col">Comando</th><th scope="col">Resultado</th></tr></thead><tbody><tr><td>Normal</td><td><code>h</code> <code>j</code> <code>k</code> <code>l</code></td><td>Move o cursor.</td></tr><tr><td>Normal</td><td><code>w</code> / <code>b</code>, <code>gg</code> / <code>G</code></td><td>Move por palavras ou pelo arquivo.</td></tr><tr><td>Normal</td><td><code>x</code>, <code>dd</code>, <code>dw</code></td><td>Remove caractere, linha ou palavra.</td></tr><tr><td>Normal</td><td><code>yy</code> / <code>p</code></td><td>Copia / cola.</td></tr><tr><td>Normal</td><td><code>u</code> / <code>Ctrl-r</code></td><td>Desfaz / refaz.</td></tr></tbody></table></div>
+<h3>Autoavaliação</h3>
+<p>Você consegue duplicar uma linha sem entrar no modo de inserção?</p>
+  </main>
+  <footer class="material-footer"><a href="../../index.html">Vim Commands</a></footer>
+</body>
+</html>

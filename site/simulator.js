@@ -1,11 +1,27 @@
-export const initialLines = ['Linha para praticar.', 'Apague esta linha.', 'Bom estudo!'];
+const initialLines = ['Linha para praticar.', 'Apague esta linha.', 'Bom estudo!'];
 
-export function createState(lines = initialLines) {
+function createState(lines = initialLines) {
   return {
     mode: 'normal', lines: [...lines], cursor: { line: 0, column: 0 }, register: '',
     commandBuffer: '', searchTerm: '', undoStack: [], redoStack: [], keyHistory: [],
-    lastChange: null, insertText: '', feedback: 'Ative o simulador para começar a praticar.'
+    lastChange: null, insertText: '', insertKind: null,
+    feedback: 'Ative o simulador para começar a praticar.'
   };
+}
+
+function keyForSimulator(event, state) {
+  if (event.ctrlKey) {
+    if (state.mode === 'normal' && event.key.toLowerCase() === 'r') return 'Ctrl-r';
+    return null;
+  }
+  if (event.altKey || event.metaKey) return null;
+  if (event.key === 'Escape') return 'Escape';
+  if (event.key === 'Enter') {
+    return state.mode === 'insert' || state.commandBuffer.startsWith('/') || state.commandBuffer.startsWith(':')
+      ? 'Enter'
+      : null;
+  }
+  return event.key.length === 1 ? event.key : null;
 }
 
 function clamp(state) {
@@ -32,10 +48,11 @@ function deleteWord(line, column) {
   return { removed: rest.slice(0, count), line: line.slice(0, column) + rest.slice(count) };
 }
 
-function startInsert(state) {
+function startInsert(state, kind = 'insert') {
   save(state);
   state.mode = 'insert';
   state.insertText = '';
+  state.insertKind = kind;
 }
 
 function repeatChange(state) {
@@ -43,10 +60,16 @@ function repeatChange(state) {
   if (!change) return finish(state, 'Ainda não há alteração para repetir.');
   const line = state.lines[state.cursor.line];
   save(state);
-  if (change.type === 'insert') {
+  if (change.type === 'insert' || change.type === 'open-line-insert') {
+    if (change.type === 'open-line-insert') {
+      state.lines.splice(state.cursor.line + 1, 0, '');
+      state.cursor.line += 1;
+      state.cursor.column = 0;
+    }
+    const targetLine = state.lines[state.cursor.line];
     const parts = change.text.split('\n');
-    const before = line.slice(0, state.cursor.column);
-    const after = line.slice(state.cursor.column);
+    const before = targetLine.slice(0, state.cursor.column);
+    const after = targetLine.slice(state.cursor.column);
     state.lines[state.cursor.line] = before + parts[0] + (parts.length === 1 ? after : '');
     if (parts.length > 1) {
       state.lines.splice(state.cursor.line + 1, 0, ...parts.slice(1));
@@ -71,14 +94,56 @@ function repeatChange(state) {
   return finish(state, 'Última alteração repetida.');
 }
 
-export function applyKey(state, key) {
+function absoluteCursor(state) {
+  let position = state.cursor.column;
+  for (let line = 0; line < state.cursor.line; line += 1) position += state.lines[line].length + 1;
+  return position;
+}
+
+function setCursorFromAbsolute(state, position) {
+  let remaining = Math.max(0, position);
+  for (let line = 0; line < state.lines.length; line += 1) {
+    if (remaining <= state.lines[line].length) {
+      state.cursor = { line, column: remaining };
+      return;
+    }
+    remaining -= state.lines[line].length + 1;
+  }
+  state.cursor = { line: state.lines.length - 1, column: state.lines.at(-1).length };
+}
+
+function isWordCharacter(character) {
+  return Boolean(character && /[\p{L}\p{N}_]/u.test(character));
+}
+
+function moveWord(state, direction) {
+  const text = state.lines.join('\n');
+  let position = absoluteCursor(state);
+  if (direction === 'forward') {
+    position += 1;
+    while (position < text.length && isWordCharacter(text[position])) position += 1;
+    while (position < text.length && !isWordCharacter(text[position])) position += 1;
+  } else {
+    position -= 1;
+    while (position > 0 && !isWordCharacter(text[position])) position -= 1;
+    while (position > 0 && isWordCharacter(text[position - 1])) position -= 1;
+    if (position < 0) position = 0;
+  }
+  setCursorFromAbsolute(state, position);
+}
+
+function applyKey(state, key) {
   state.keyHistory = [...state.keyHistory.slice(-11), key];
 
   if (state.mode === 'insert') {
     if (key === 'Escape') {
       state.mode = 'normal';
-      if (state.insertText) state.lastChange = { type: 'insert', text: state.insertText };
+      if (state.insertText) state.lastChange = {
+        type: state.insertKind === 'open-line' ? 'open-line-insert' : 'insert',
+        text: state.insertText
+      };
       state.insertText = '';
+      state.insertKind = null;
       return finish(state, 'Modo normal.');
     }
     if (key === 'Enter') {
@@ -111,7 +176,18 @@ export function applyKey(state, key) {
   if (state.commandBuffer.startsWith('/')) {
     if (key === 'Enter') {
       state.searchTerm = state.commandBuffer.slice(1);
-      return finish(state, state.searchTerm ? `Busca por ${state.searchTerm}.` : 'Busca vazia cancelada.');
+      if (!state.searchTerm) return finish(state, 'Busca vazia cancelada.');
+      const currentLine = state.lines[state.cursor.line];
+      const currentMatch = currentLine.indexOf(state.searchTerm, state.cursor.column + 1);
+      if (currentMatch >= 0) state.cursor.column = currentMatch;
+      else {
+        for (let offset = 1; offset <= state.lines.length; offset += 1) {
+          const lineIndex = (state.cursor.line + offset) % state.lines.length;
+          const match = state.lines[lineIndex].indexOf(state.searchTerm);
+          if (match >= 0) { state.cursor.line = lineIndex; state.cursor.column = match; break; }
+        }
+      }
+      return finish(state, `Busca por ${state.searchTerm}.`);
     }
     if (key.length === 1) state.commandBuffer += key;
     return state;
@@ -130,15 +206,15 @@ export function applyKey(state, key) {
 
   if (command === 'i') { startInsert(state); return finish(state, 'Modo de inserção.'); }
   if (command === 'a') { state.cursor.column = Math.min(state.cursor.column + 1, line().length); startInsert(state); return finish(state, 'Modo de inserção.'); }
-  if (command === 'o') { save(state); state.lines.splice(state.cursor.line + 1, 0, ''); state.cursor.line += 1; state.cursor.column = 0; state.mode = 'insert'; state.insertText = ''; return finish(state, 'Nova linha para inserir.'); }
+  if (command === 'o') { save(state); state.lines.splice(state.cursor.line + 1, 0, ''); state.cursor.line += 1; state.cursor.column = 0; state.mode = 'insert'; state.insertText = ''; state.insertKind = 'open-line'; return finish(state, 'Nova linha para inserir.'); }
   if (command === 'h') { state.cursor.column -= 1; return finish(state, 'Cursor à esquerda.'); }
   if (command === 'l') { state.cursor.column += 1; return finish(state, 'Cursor à direita.'); }
   if (command === 'j') { state.cursor.line += 1; return finish(state, 'Cursor abaixo.'); }
   if (command === 'k') { state.cursor.line -= 1; return finish(state, 'Cursor acima.'); }
   if (command === '0') { state.cursor.column = 0; return finish(state, 'Início da linha.'); }
   if (command === '$') { state.cursor.column = line().length; return finish(state, 'Fim da linha.'); }
-  if (command === 'w') { const match = line().slice(state.cursor.column + 1).search(/\w/); state.cursor.column = match < 0 ? line().length : state.cursor.column + match + 1; return finish(state, 'Próxima palavra.'); }
-  if (command === 'b') { const match = line().slice(0, state.cursor.column).match(/\w+\W*$/); state.cursor.column = match ? state.cursor.column - match[0].length : 0; return finish(state, 'Palavra anterior.'); }
+  if (command === 'w') { moveWord(state, 'forward'); return finish(state, 'Próxima palavra.'); }
+  if (command === 'b') { moveWord(state, 'backward'); return finish(state, 'Palavra anterior.'); }
   if (command === 'gg') { state.cursor.line = 0; state.cursor.column = 0; return finish(state, 'Início do arquivo.'); }
   if (command === 'G') { state.cursor.line = state.lines.length - 1; state.cursor.column = 0; return finish(state, 'Fim do arquivo.'); }
   if (command === '.') return repeatChange(state);
@@ -163,6 +239,10 @@ export function applyKey(state, key) {
     state.lines = [...previous.lines]; state.cursor = { ...previous.cursor }; state.register = previous.register;
     return finish(state, 'Alteração desfeita.');
   }
-  if (command.length > 2) return finish(state, 'Comando ainda não implementado.');
+  if (command.length > 1) return finish(state, 'Comando ainda não implementado.');
   return state;
 }
+
+const VimSimulator = { initialLines, createState, keyForSimulator, applyKey };
+if (typeof module !== 'undefined' && module.exports) module.exports = VimSimulator;
+globalThis.VimSimulator = VimSimulator;

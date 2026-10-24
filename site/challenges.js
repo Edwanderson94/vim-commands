@@ -1,4 +1,4 @@
-export const challenges = [
+const challenges = [
   {
     id: 'insert-text',
     title: 'Sobreviva ao Vim',
@@ -35,3 +35,7 @@ export const challenges = [
     isComplete: (state) => state.searchTerm === 'Vim'
   }
 ];
+
+const VimChallenges = { challenges };
+if (typeof module !== 'undefined' && module.exports) module.exports = VimChallenges;
+globalThis.VimChallenges = VimChallenges;

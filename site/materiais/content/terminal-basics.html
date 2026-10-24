@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Material de aprendizagem de Vim em português.">
+  <title>Terminal básico para começar no Vim — Vim Commands</title>
+  <link rel="stylesheet" href="../../materiais.css">
+</head>
+<body>
+  <header class="material-header">
+    <a href="../../index.html">Vim Commands</a>
+    <a href="../../index.html#aulas">Voltar à trilha</a>
+  </header>
+  <main class="material-content">
+<h1>Terminal básico para começar no Vim</h1>
+<p>Antes de abrir o Vim, você precisa saber localizar-se no terminal e criar um arquivo seguro para praticar. Todos os comandos desta página são digitados no <strong>terminal</strong>, não dentro do Vim.</p>
+<h2>Comandos essenciais</h2>
+<div class="table-scroll"><table><thead><tr><th scope="col">Comando</th><th scope="col">O que faz</th><th scope="col">Exemplo</th></tr></thead><tbody><tr><td><code>pwd</code></td><td>Mostra a pasta atual.</td><td><code>pwd</code></td></tr><tr><td><code>ls</code></td><td>Lista arquivos e pastas.</td><td><code>ls</code></td></tr><tr><td><code>mkdir nome</code></td><td>Cria uma pasta.</td><td><code>mkdir vim-pratica</code></td></tr><tr><td><code>cd nome</code></td><td>Entra em uma pasta.</td><td><code>cd vim-pratica</code></td></tr><tr><td><code>cd ..</code></td><td>Volta uma pasta.</td><td><code>cd ..</code></td></tr><tr><td><code>touch nome</code></td><td>Cria um arquivo vazio.</td><td><code>touch notas.txt</code></td></tr><tr><td><code>vim nome</code></td><td>Abre um arquivo no Vim.</td><td><code>vim notas.txt</code></td></tr></tbody></table></div>
+<h2>Segurança para praticar</h2>
+<p>Crie uma pasta só para seus exercícios. Assim, você pratica sem risco de alterar arquivos importantes:</p>
+<pre><code class="language-bash">mkdir -p ~/vim-pratica
+cd ~/vim-pratica</code></pre>
+<p>O <code>~</code> representa sua pasta pessoal. O <code>-p</code> evita erro caso a pasta já exista.</p>
+<h2>Fluxo mais comum</h2>
+<pre><code class="language-text"># No terminal
+$ cd ~/vim-pratica
+$ vim anotacoes.txt
+
+# Agora você está dentro do Vim</code></pre>
+<p>Para voltar ao terminal depois de abrir o Vim, saia com <code>:q</code> ou <code>:wq</code>, sempre no modo normal.</p>
+  </main>
+  <footer class="material-footer"><a href="../../index.html">Vim Commands</a></footer>
+</body>
+</html>

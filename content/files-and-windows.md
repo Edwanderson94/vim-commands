@@ -6,7 +6,7 @@ mais de um arquivo sem sair do Vim.
 ## Arquivos
 
 | Comando | Ação |
-| :-- | :-- |
+| :--- | :--- |
 | `:e arquivo.txt` | Abre `arquivo.txt`. |
 | `:w` | Salva o arquivo atual. |
 | `:w novo.txt` | Salva uma cópia como `novo.txt`. |
@@ -19,7 +19,7 @@ entre buffers mesmo que apenas um esteja visível na tela.
 ## Janelas divididas
 
 | Comando | Ação |
-| :-- | :-- |
+| :--- | :--- |
 | `:split arquivo.txt` | Abre o arquivo em uma divisão horizontal. |
 | `:vsplit arquivo.txt` | Abre o arquivo em uma divisão vertical. |
 | `Ctrl-w h` | Move para a janela à esquerda. |

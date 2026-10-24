@@ -1,8 +1,8 @@
 # Vim Commands
 
 Um guia prático, em português, para aprender Vim passo a passo. O conteúdo é
-organizado em Markdown para leitura no GitHub e servirá de base para um futuro
-simulador interativo no navegador.
+mantido em Markdown para leitura no GitHub e apresentado em páginas estáticas
+no site, que também oferece catálogo, simulador e desafios interativos.
 
 ## Acesse o site
 
