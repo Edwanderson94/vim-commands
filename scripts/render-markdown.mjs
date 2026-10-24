@@ -108,12 +108,14 @@ async function renderFile(sourcePath, group, filename) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Material de aprendizagem de Vim em português.">
   <title>${escapeHtml(title)} — Vim Commands</title>
-  <link rel="stylesheet" href="../../materiais.css">
+  <script src="../../materiais-theme.js?v=theme-1"></script>
+  <link rel="stylesheet" href="../../materiais.css?v=theme-1">
 </head>
 <body>
   <header class="material-header">
     <a href="../../index.html">Vim Commands</a>
     <a href="../../index.html#aulas">Voltar à trilha</a>
+    <button id="theme-toggle" type="button" aria-pressed="false">Tema escuro</button>
   </header>
   <main class="material-content">
 ${renderMarkdown(markdown)}

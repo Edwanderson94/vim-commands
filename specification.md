@@ -71,7 +71,9 @@ O site usa HTML5 semântico, CSS3 e JavaScript puro em arquivos separados, sem f
 As aulas, módulos e exercícios continuam mantidos em Markdown. O script
 `scripts/render-markdown.mjs` gera páginas HTML locais, sem dependências
 externas, para que os links da trilha sejam formatados no navegador e também
-funcionem offline. O workflow de publicação executa o mesmo gerador.
+funcionem offline. O tema claro/escuro é compartilhado entre a página inicial e
+todas as páginas de materiais; cada subpágina oferece um botão para alterná-lo.
+O workflow de publicação executa o mesmo gerador.
 
 A página contém cabeçalho com âncoras e botão de tema; apresentação com botão “Começar a aprender” e aviso sobre `Esc`; trilha com aulas renderizadas; catálogo; prática por terminal simulado com desafio sempre visível; e rodapé.
 

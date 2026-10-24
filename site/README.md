@@ -13,6 +13,8 @@ virtual, por exemplo `cat teste.txt` após `:wq`. O seletor prepara o texto de u
 instrução do desafio permanecem visíveis durante a edição, e a seleção fica
 bloqueada até o Vim ser fechado. O cursor pode ser navegado com `h`, `j`, `k`,
 `l`, setas, `Home` e `End`. Terminal e arquivos existem somente em memória.
+O tema escolhido é compartilhado entre a página inicial e todas as subpáginas
+de materiais, que também têm um controle para alterná-lo.
 
 ## Estado da release 1.0.1
 

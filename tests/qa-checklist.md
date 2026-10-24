@@ -84,6 +84,11 @@ observado.
 - [ ] Recarregar a página.
 - **Esperado:** cores e rótulo do botão refletem o tema escolhido, que permanece
   após recarregar.
+- [ ] Abrir uma aula, um exercício, um módulo e a referência de comandos com o
+  tema escuro selecionado; alternar o tema em uma subpágina e voltar à página
+  inicial.
+- **Esperado:** todas as páginas usam o tema persistido, incluindo superfícies,
+  texto, links, código e tabelas.
 
 ### QA-07 — Tela pequena
 

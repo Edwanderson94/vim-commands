@@ -164,6 +164,17 @@ if actual_materials != expected_materials:
     errors.append('páginas HTML derivadas não correspondem às fontes Markdown')
 
 audits = {page.relative_to(ROOT): audit_page(page) for page in html_pages if page.exists()}
+for material_path in expected_materials:
+    material = audits.get(material_path.relative_to(ROOT))
+    if not material:
+        continue
+    if not any(Path(urlsplit(source).path).name == 'materiais-theme.js' for source in material.script_sources):
+        errors.append(f'{material_path.relative_to(ROOT)}: subpágina deve carregar o tema compartilhado')
+    if 'theme-toggle' not in material.ids:
+        errors.append(f'{material_path.relative_to(ROOT)}: subpágina deve oferecer controle de tema')
+    if not any(Path(urlsplit(link).path).name == 'materiais.css' for link in material.links):
+        errors.append(f'{material_path.relative_to(ROOT)}: subpágina deve carregar o CSS de materiais')
+
 home = audits.get(Path('site/index.html'))
 if home:
     if home.lang != 'pt-BR':
@@ -230,6 +241,10 @@ for css_file in SITE.glob('*.css'):
 css = (SITE / 'styles.css').read_text(encoding='utf-8')
 if ':focus-visible' not in css or 'prefers-reduced-motion' not in css:
     errors.append('site/styles.css deve oferecer foco visível e respeitar movimento reduzido')
+
+materials_css = (SITE / 'materiais.css').read_text(encoding='utf-8')
+if 'html[data-theme="dark"]' not in materials_css or 'var(--page)' not in materials_css:
+    errors.append('site/materiais.css deve aplicar o tema escuro às páginas de materiais')
 
 if errors:
     print('\n'.join(f'ERRO: {error}' for error in errors), file=sys.stderr)

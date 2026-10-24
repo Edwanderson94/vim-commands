@@ -315,6 +315,13 @@ o JavaScript local estava em cache. A URL do `terminal.js` agora inclui uma
 versão associada à implementação de `cat` para forçar o download após atualizar
 a página.
 
+**Tema nas subpáginas:** as páginas derivadas dos materiais agora leem a mesma
+preferência `vim-theme` da página inicial, aplicam cores escuras antes de
+carregar o CSS e oferecem um botão próprio para alternar o tema. O gerador
+Markdown produz a mesma estrutura para aulas, exercícios, módulos e referência.
+As URLs do tema e do CSS levam um identificador de versão para não reutilizar
+uma folha de estilos antiga do cache do navegador.
+
 ## Auditoria de promoção da 1.0.0
 
 **Estado do goal:** os quatro resultados descritos em `GOALS.md` estão
