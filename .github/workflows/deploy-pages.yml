@@ -30,6 +30,7 @@ jobs:
           node scripts/render-markdown.mjs
           node tests/simulator.test.mjs
           python3 tests/site-validation.py
+          python3 tests/chrome-smoke.py
       - name: Preparar artefato estático
         run: |
           mkdir -p .pages/site

@@ -19,4 +19,7 @@ python3 tests/site-validation.py
 ```
 
 O workflow executa as mesmas verificações antes de preparar o site para
-publicação.
+publicação. No runner do GitHub Actions, também executa
+`tests/chrome-smoke.py` com Chrome e ChromeDriver pré-instalados para conferir
+layout móvel, controles, simulador e desafios. Esse teste de navegador não
+exige dependências adicionais na máquina local.

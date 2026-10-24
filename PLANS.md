@@ -126,9 +126,15 @@ As cinco aulas contêm todos os campos e seções especificados. A suíte do
 simulador, checagem sintática dos scripts e `git diff --check` passaram; links
 locais das 19 páginas foram resolvidos.
 
-**Ainda falta:** validação em Chrome e ouvir a leitura completa com Orca. Não
-há Chrome/Chromium instalado nem em cache neste ambiente; Firefox 158 é o
-navegador disponível.
+**Ainda falta:** ouvir a leitura completa com Orca. Chrome/Chromium não está
+instalado nem em cache na máquina local; Firefox 158 é o navegador local.
+
+**Chrome em CI:** a imagem `ubuntu-latest` do GitHub Actions inclui Google
+Chrome e ChromeDriver. O workflow agora executa `tests/chrome-smoke.py` com os
+binários já presentes no runner, sem instalar dependências. O teste valida o
+layout móvel, busca, filtros, retorno do foco, tema, papel e nome acessíveis do
+simulador, entrada de teclado e conclusão dos cinco desafios. A evidência de
+execução fica pendente até o próximo workflow concluir.
 
 **Árvore de acessibilidade:** no Firefox gráfico, AT-SPI expôs os links e
 controles com nomes e funções. A busca aparece como campo “Buscar comando”, os
@@ -158,7 +164,7 @@ autorização explícita.
 
 ## Sequência imediata
 
-1. Validar Chrome e leitor de tela, registrando nome, função, estado e ordem de
-   foco dos controles; a inspeção AT-SPI do Firefox já cobre nome, função,
-   estado e foco por Tab. Falta confirmar em Chrome e ouvir a saída do Orca.
+1. Confirmar a execução do smoke test em Chrome no GitHub Actions e ouvir a
+   leitura completa com Orca; a inspeção AT-SPI do Firefox já cobre nome,
+   função, estado e foco por Tab.
 2. Corrigir regressões encontradas e registrar os resultados.
