@@ -157,9 +157,11 @@ centralizados em uma região `role="status"`, `aria-live="polite"` e
 `aria-atomic="true"`. Os textos visíveis correspondentes ficam fora da árvore
 assistiva para evitar anúncios duplicados; a área do simulador aponta para
 instruções estáticas. A validação estática e o teste Chrome verificam a função
-e o texto da região. Orca ainda não confirmou a apresentação dessas mensagens:
-na última tentativa, a automação não conectou ao Firefox isolado e o leitor
-apresentou apenas o shell da área de trabalho.
+e o texto da região. O primeiro render mantém a região vazia para não
+substituir uma mensagem pelo feedback inicial antes de qualquer ação. O smoke
+test verifica esse estado e o workflow `40101978849` (commit `b3987d7`) passou.
+Orca ainda não confirmou a apresentação das mensagens: a tentativa de
+automação continuou sem foco no Firefox isolado e apresentou apenas o shell.
 
 **Validação desta rodada:** Firefox abriu a cópia local e a publicação atual
 em GitHub Pages; ambas montaram 30 comandos e recursos sem erro. Busca por
