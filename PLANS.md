@@ -211,6 +211,70 @@ Chrome agora também percorre terminal → Vim → terminal e verifica o arquivo
 Chrome não está instalado localmente; o resultado de navegador será confirmado
 pelo workflow após a publicação desta alteração.
 
+**Ajuste de experiência após validação com a pessoa responsável:** reduzir a
+prática a uma janela visual de terminal com prompt e entrada de comando na
+mesma linha. O diretório inicial é `/home/aluno` e contém `teste.txt`; o fluxo
+principal é `vim teste.txt`. Ao abrir o arquivo, o editor ocupa a mesma área do
+terminal; o nome do arquivo e o modo aparecem na barra de status. Clicar na
+janela ativa a linha de comando. Desafios e detalhes técnicos ficam recolhidos.
+A página não foca nem rola até a entrada do terminal ao carregar.
+
+**Goal da release 1.0.1:** a solicitação registrada em `GOALS.md` deixa explícito
+que a linha editável precisa fazer parte da janela de terminal, eliminando o
+campo de comando separado visto na página publicada. O próximo fluxo a validar é
+`ls` → `vim teste.txt` → edição no Vim → `:wq` → prompt do terminal.
+
+**Verificação local dessa mudança:** Firefox/WebDriver percorreu o comando
+`vim arquivo.txt` por `Enter`, inserção, `:wq` e leitura de volta com `cat`; o
+terminal e o Vim alternaram na mesma área. Os testes locais de lógica e auditoria
+estática passaram. Chrome/ChromeDriver não estão instalados localmente; a
+regressão Chrome foi atualizada no smoke test e precisa passar no workflow antes
+da próxima publicação.
+
+**Correção de edição:** a tecla `Backspace` não chegava ao simulador. No modo de
+inserção, ela agora apaga o caractere anterior; no início de uma linha, une as
+linhas. `u` desfaz a sessão inteira e `.` repete também a sequência de
+Backspace. A cobertura inclui início do arquivo, união de linhas, undo e
+repetição; o smoke test Chrome verifica a interação de teclado.
+
+**Refino solicitado para a 1.0.1:** a experiência principal deve parecer uma
+sessão Linux simples: sem botão de execução, formulário ou caixa de comando
+separada. Na camada Linux, somente `pwd`, `ls` e `vim arquivo` funcionam. O
+diretório fica fixo em `/home/aluno` e `teste.txt` começa criado. A saída dos
+comandos `:wq`, `:q` e `:q!` controla o retorno do Vim; não há botão externo para
+fechar o editor. Comandos de administração e consulta como `mkdir`, `cd`,
+`touch`, `cat`, `clear` e `help` ficam fora da camada Linux desta prática.
+Depois de salvar, a pessoa pode reabrir o arquivo com `vim teste.txt` e conferir
+o conteúdo dentro do editor.
+
+**Verificação exigida:** testar digitação por teclado diretamente após o prompt,
+rejeição de comandos fora da lista, edição com `Backspace`, recusa de `:q` com
+alterações pendentes, salvamento com `:wq` e reabertura do arquivo salvo.
+
+**Verificação local concluída:** Firefox/WebDriver digitou os comandos por
+eventos de teclado na linha do prompt, confirmou a ausência do formulário e do
+botão de execução, verificou `pwd` e `ls`, a recusa de `cat`, edição com
+`Backspace`, bloqueio de `:q` com alterações pendentes, salvamento com `:wq` e
+reabertura do conteúdo. Testes unitários e validação do site também passaram.
+
+**Simplificação solicitada da prática:** manter somente a janela de terminal e
+um seletor opcional de desafio. A escolha prepara o conteúdo inicial de
+`teste.txt`; o aluno abre o arquivo com `vim teste.txt`. Foram removidos os
+botões “Ativar simulador”, “Restaurar texto” e “Reiniciar desafio”, além dos
+detalhes técnicos recolhidos do editor. Para reiniciar, escolha “Praticar sem
+desafio” e selecione o desafio novamente.
+
+**Verificação:** Firefox/WebDriver percorreu os cinco desafios: escolheu cada
+um no seletor, abriu `teste.txt` digitando `vim teste.txt`, concluiu a tarefa e
+voltou ao terminal com `:q!`. Também confirmou que selecionar novamente um
+desafio prepara seu texto inicial e que não há botões de ativação, restauração
+ou reinício. Os testes unitários, validação estática, links relativos e
+`git diff --check` passaram.
+
+**Publicação da 1.0.1:** o workflow do GitHub Pages agora é acionado por push em
+`release/1.0.1`, já que `release/1.0.0` foi encerrada. O push desta versão deve
+passar pela validação Chrome do workflow antes de atualizar o site público.
+
 ## Auditoria de promoção da 1.0.0
 
 **Estado do goal:** os quatro resultados descritos em `GOALS.md` estão
@@ -231,17 +295,14 @@ fluxos publicados. A fala do Orca e a repetição manual de toda a matriz QA nã
 foram verificadas nesta auditoria; não são bloqueios documentados para o
 aceite, mas devem continuar explícitas nos registros.
 
-**Itens mapeados para a próxima release:**
+**Itens mapeados para releases futuras:**
 
-1. Generalizar o gatilho do workflow de Pages: hoje o push automático atende
-   somente `release/1.0.0`. Antes de abrir outra branch de release, ajustar o
-   gatilho ou documentar uma execução manual aprovada.
-2. Definir uma etapa de prévia para candidatos futuros. O workflow atual publica
-   diretamente no Pages quando há push em `release/1.0.0`, então QA nessa branch
+1. Definir uma etapa de prévia para candidatos futuros. O workflow publica
+   diretamente no Pages em pushes para `release/1.0.1`, então QA nessa branch
    altera o site público de validação.
-3. Completar a matriz manual com o terminal simulado no Firefox, testar a saída
+2. Completar a matriz manual com o terminal simulado no Firefox, testar a saída
    falada do Orca e, se disponíveis, Safari e dispositivos móveis reais.
-4. Ampliar os testes de integração para erros de terminal, `:q` com e sem
+3. Ampliar os testes de integração para erros de terminal, `:q` com e sem
    alterações, `:q!`, arquivos vazios e caminhos de arquivo aninhados. O smoke
    test atual cobre o percurso principal e recusa comandos não permitidos.
 

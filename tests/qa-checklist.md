@@ -110,51 +110,73 @@ observado.
 
 ### QA-10 — Jornada terminal → Vim → terminal
 
-- [ ] No terminal virtual, executar `mkdir -p ~/vim-pratica`.
-- [ ] Entrar com `cd ~/vim-pratica`.
-- [ ] Abrir `vim ola.txt`.
+- [ ] Confirmar o prompt `aluno@vim:/home/aluno$` e o arquivo `teste.txt` com
+  `ls`.
+- [ ] Confirmar que não há botão “Executar comando simulado”, formulário ou
+  campo de comando separado da janela.
+- [ ] No mesmo terminal, digitar `vim teste.txt` e pressionar `Enter`.
+- [ ] Clicar em outro ponto da tela do terminal e começar a digitar.
+- [ ] Confirmar que o editor substitui a tela do terminal e mostra `teste.txt`.
 - [ ] No Vim, inserir `Olá, Vim!`, sair do modo de inserção com `Esc` e salvar com
   `:wq`.
-- [ ] No terminal, executar `ls` e depois `cat ola.txt`.
-- [ ] Abrir `vim rascunho.txt`, inserir texto, sair com `Esc` e tentar “Voltar ao
-  terminal” antes de salvar.
-- **Esperado:** o arquivo aparece na listagem e `cat` mostra o texto salvo.
-  Com alterações pendentes, o botão de retorno mantém o editor aberto e explica
-  como salvar ou descartar.
+- [ ] No terminal retornado, reabrir `vim teste.txt` e conferir o texto salvo.
+- [ ] Com alteração pendente, tentar `:q`, confirmar que o Vim permanece aberto
+  e sair com `:q!`; testar `:wq` para salvar e voltar.
+- **Esperado:** existe uma janela de terminal com a entrada de comando dentro
+  dela e sem botão de execução ou campo separado; `teste.txt` já existe em
+  `/home/aluno`. `:wq` salva e retorna; o arquivo reabre com o conteúdo salvo.
+  `:q` mantém alterações pendentes no editor e `:q!` descarta as alterações.
+
+### QA-10a — Escolher um desafio
+
+- [ ] Escolher um desafio no seletor e confirmar que o terminal permanece visível
+  com a instrução do desafio.
+- [ ] Digitar `vim teste.txt` e resolver o desafio no arquivo preparado.
+- [ ] Selecionar “Praticar sem desafio” e escolher o mesmo desafio para reiniciá-lo.
+- **Esperado:** o seletor prepara o conteúdo inicial de `teste.txt`; o aluno abre
+  o editor pelo comando Vim normal. Não há botão para ativar o simulador,
+  restaurar texto ou reiniciar o desafio.
 
 ### QA-11 — Comandos permitidos e limites do terminal
 
-- [ ] Executar `help`, `pwd`, `ls`, `touch`, `cat` e `clear`.
-- [ ] Tentar um comando não permitido, por exemplo `rm -rf /`.
-- [ ] Tentar caminhos fora da pasta virtual, por exemplo `cd ../../..`.
+- [ ] Executar `pwd`, `ls` e `vim teste.txt`.
+- [ ] Tentar comandos que não pertencem ao terminal mínimo: `help`, `cat teste.txt`,
+  `touch outro.txt`, `cd /tmp` e `clear`.
+- [ ] Tentar abrir caminho fora da pasta virtual com `vim ../fora.txt`.
 - [ ] Tentar encadear comandos, por exemplo `pwd; ls`.
-- **Esperado:** comandos documentados funcionam; comandos não permitidos,
-  caminhos fora do ambiente e operadores de shell são recusados. Nenhum comando
-  real do sistema é executado.
+- **Esperado:** apenas `pwd`, `ls` e `vim arquivo` são aceitos; comandos fora
+  dessa lista, caminhos e operadores de shell são recusados. Nenhum comando real
+  do sistema é executado.
 
 ### QA-12 — Foco e captura de teclas
 
-- [ ] Antes de ativar o simulador, pressionar letras e `Tab`.
-- [ ] Ativar o simulador e pressionar `i`, digitar texto e pressionar `Esc`.
+- [ ] Antes de abrir o Vim, pressionar letras e `Tab` fora da linha de comando.
+- [ ] Abrir `vim teste.txt` pelo terminal, pressionar `i`, digitar texto e
+  pressionar `Esc`.
 - [ ] Usar `Tab` para sair da área e seguir para o próximo controle.
-- **Esperado:** o simulador só captura teclas quando ativado e focado; `Tab`
-  continua navegando a página.
+- **Esperado:** o Vim só captura teclas depois de ser aberto pelo terminal e
+  enquanto está focado; `Tab` continua navegando a página.
 
 ### QA-13 — Edição e recuperação
 
+- [ ] No modo de inserção, digitar texto e usar `Backspace` para remover o
+  caractere anterior.
+- [ ] Posicionar o cursor no início de uma linha e usar `Backspace` para uni-la
+  à linha anterior; em seguida, desfazer com `u`.
 - [ ] Experimentar `dd`, `yy`, `p`, `u` e `Ctrl-r` em linhas de prática.
-- [ ] Acionar “Restaurar texto”.
-- **Esperado:** comandos alteram apenas o texto em memória; desfazer/refazer
-  atualizam o conteúdo e restaurar retorna ao texto inicial.
+- **Esperado:** comandos alteram apenas o texto em memória e desfazer/refazer
+  atualizam o conteúdo. Para restaurar um desafio, selecione “Praticar sem
+  desafio” e escolha o desafio novamente.
 
 ### QA-14 — Desafios
 
 - [ ] Completar cada um dos cinco desafios usando as instruções exibidas.
 - [ ] No desafio de apagar uma linha, remover uma linha errada antes de tentar
   novamente.
-- [ ] Reiniciar um desafio.
+- [ ] Reiniciar um desafio pelo seletor, escolhendo “Praticar sem desafio” e
+  depois o desafio novamente.
 - **Esperado:** cada desafio correto mostra conclusão; uma ação incorreta não é
-  aceita como sucesso; reiniciar restaura o estado inicial.
+  aceita como sucesso; selecionar novamente restaura o texto inicial.
 
 ## Acessibilidade exploratória
 

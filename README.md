@@ -7,16 +7,18 @@ no site, que também oferece catálogo, simulador e desafios interativos.
 ## Acesse o site
 
 Abra [Vim Commands — site estático](https://edwanderson94.github.io/vim-commands/site/)
-no navegador para usar a trilha, consultar os comandos e praticar no
-terminal e no Vim simulados. A página é publicada a partir da `release/1.0.0`
-para validação.
+no navegador para usar a trilha, consultar os comandos e praticar. Na área de
+prática há um único terminal simulado em `/home/aluno`: digite `vim teste.txt`
+diretamente após o prompt e pressione `Enter`. A camada Linux aceita somente
+`pwd`, `ls` e `vim`; o arquivo é editado no Vim simulado.
+O seletor opcional de desafio prepara `teste.txt` com o texto e a instrução da
+atividade escolhida.
 
-## Estado da release 1.0.0
+## Estado da release 1.0.1
 
-As fases 1 a 4 e os critérios de aceite da primeira versão estão concluídos.
-O site publicado passou pelas validações automatizadas e manuais descritas em
-[`PLANS.md`](PLANS.md). O Orca confirmou anúncios pela saída braille; a saída
-falada não foi testada.
+Esta versão simplifica a área de prática para um terminal integrado e um seletor
+opcional de desafio. O aluno escolhe o desafio e abre o arquivo com
+`vim teste.txt`. O histórico de validações está em [`PLANS.md`](PLANS.md).
 
 ## Comece aqui
 

@@ -73,7 +73,7 @@ As aulas, módulos e exercícios continuam mantidos em Markdown. O script
 externas, para que os links da trilha sejam formatados no navegador e também
 funcionem offline. O workflow de publicação executa o mesmo gerador.
 
-A página contém cabeçalho com âncoras e botão de tema; apresentação com botão “Começar a aprender” e aviso sobre `Esc`; trilha com aulas renderizadas; catálogo; terminal simulado ligado ao editor Vim; desafios; e rodapé.
+A página contém cabeçalho com âncoras e botão de tema; apresentação com botão “Começar a aprender” e aviso sobre `Esc`; trilha com aulas renderizadas; catálogo; prática por terminal simulado com seletor opcional de desafio; e rodapé.
 
 O catálogo mostra tecla, título, descrição, categoria, nível, modo e aula. A busca verifica tecla, título, descrição, categoria e modo. Os filtros de categoria e nível atuam juntos. Sem resultado, há mensagem clara e botão para limpar filtros.
 
@@ -99,18 +99,30 @@ Use `header`, `main`, `nav`, `section`, `article` e `footer`; associe campos a `
 
 ## 4. Terminal e simulador educacionais
 
-A área de prática começa num terminal simulado em `/home/aluno`. Ele aceita
-somente `help`, `pwd`, `ls`, `mkdir [-p]`, `cd [pasta]`, `touch arquivo`,
-`vim arquivo`, `cat arquivo` e `clear`. Não interpreta operadores, encadeamento,
-redirecionamento, substituição, scripts nem comandos arbitrários. Pastas e
-arquivos existem apenas em memória e são descartados ao recarregar a página.
-`~` representa `/home/aluno`; caminhos não podem sair da árvore virtual. `vim`
-abre o editor em memória. `:w` salva no sistema virtual, `:wq` salva e retorna
-ao terminal, `:q` retorna se não houver alterações desde o último salvamento e
-`:q!` retorna descartando alterações. O formulário do terminal e o editor têm
-foco próprios; teclas do terminal não são capturadas pelo editor. O botão
-“Voltar ao terminal” não fecha um arquivo com alterações pendentes; ele explica
-como salvar ou descartar explicitamente.
+A área de prática contém uma única janela visual de terminal, com prompt em
+linha (`aluno@vim:/home/aluno$`) e entrada editável dentro da própria janela,
+sem formulário, campo ou botão separado para executar comandos. A pessoa digita
+diretamente após o prompt e pressiona `Enter`. O diretório inicial é
+`/home/aluno` e já contém o arquivo vazio `teste.txt`. A camada de terminal
+aceita somente `pwd`, `ls` e `vim arquivo`; não oferece comandos para criar
+pastas, navegar entre diretórios, listar opções, ler arquivos ou limpar a tela.
+Comandos e argumentos fora desse escopo são recusados. Não interpreta
+operadores, encadeamento, redirecionamento, substituição, scripts nem comandos
+arbitrários. Os arquivos existem apenas em memória e são descartados ao
+recarregar a página. `vim` abre ou cria um arquivo virtual diretamente em
+`/home/aluno`; `:w` salva no sistema virtual, `:wq` salva e retorna ao terminal,
+`:q` retorna se não houver alterações desde o último salvamento e `:q!` retorna
+descartando alterações. Não há botão para sair do Vim: a pessoa usa os comandos
+Ex como no fluxo normal do Vim. A página não move o foco nem rola até o terminal
+ao carregar; clicar em qualquer ponto da janela ativa a linha de comando. Um
+seletor simples permite escolher um desafio ou praticar livremente. Ao escolher
+um desafio, o texto inicial é carregado em `teste.txt` e a instrução aparece
+junto ao seletor; o aluno abre o arquivo pelo fluxo normal com `vim teste.txt`.
+Selecionar outro desafio prepara seu texto inicial. Para repetir o mesmo desafio,
+escolha “Praticar sem desafio” e selecione-o novamente. O editor só aparece
+depois de abrir um arquivo com `vim`; não existem botões para ativar o editor,
+reiniciar desafios ou restaurar texto. Teclas do terminal não são capturadas
+pelo editor.
 
 O simulador não é um editor completo. Começa no modo normal e mantém apenas estado em memória:
 
@@ -131,20 +143,25 @@ O simulador não é um editor completo. Começa no modo normal e mantém apenas 
 | Grupo | Comandos |
 | :--- | :--- |
 | Modos | `Esc`, `i`, `a`, `o` |
+| Inserção | Digitação de texto, `Enter`, `Backspace` |
 | Movimento | `h`, `j`, `k`, `l`, `w`, `b`, `0`, `$`, `gg`, `G` |
 | Edição | `x`, `dd`, `dw`, `yy`, `p`, `u`, `Ctrl-r`, `.` |
 | Busca | `/texto`, `n`, `N` |
 | Ex simulado | `:w`, `:q`, `:q!`, `:wq` |
 
-`:w`, `:wq`, `:q` e `:q!` controlam o ciclo do arquivo no ambiente virtual; em
-desafios sem arquivo aberto, explicam a simulação. O `.` repete a última
-alteração suportada.
+`:w`, `:wq`, `:q` e `:q!` controlam o ciclo do arquivo no ambiente virtual. O
+`.` repete a última alteração suportada.
 
-Há botões “Ativar simulador” e “Restaurar texto”, cursor e linha atual visíveis, modo (`NORMAL` ou `INSERT`), comando em formação, histórico de teclas e feedback em `aria-live`. Teclas só são capturadas quando o simulador está ativado e focado; atalhos fora dele nunca são bloqueados. A interpretação de comandos fica separada da renderização.
+No Vim, a tela mostra o nome do arquivo e o modo (`NORMAL` ou `INSERT`) numa barra de status. O editor só captura teclas depois que `vim arquivo` o abre e enquanto ele está focado; atalhos fora dele nunca são bloqueados. A interpretação de comandos fica separada da renderização.
+
+No modo de inserção, `Backspace` apaga o caractere anterior ao cursor. No início
+de uma linha, une essa linha à anterior; no início do arquivo, não altera o
+texto. A sessão continua sendo uma única alteração para `u`, e `.` repete a
+sequência de inserção e Backspace.
 
 ## 5. Desafios interativos
 
-Cada desafio define `id`, título, linhas iniciais, instrução e `isComplete(state)`. O site oferece os cinco desafios definidos acima, resultado textual e reinício. Progresso pode usar somente `localStorage` e deve haver opção para apagá-lo.
+Cada desafio define `id`, título, linhas iniciais, instrução e `isComplete(state)`. O seletor oferece os cinco desafios; escolher um prepara `teste.txt` no terminal virtual e mostra a instrução e o resultado. Não há botão de ativação ou reinício: para começar de novo, selecione “Praticar sem desafio” e escolha o desafio novamente. Progresso pode usar somente `localStorage` e deve haver opção para apagá-lo.
 
 ## 6. Fases
 
@@ -158,11 +175,11 @@ Criar `index.html`, `styles.css`, `app.js`, `commands.js`, favicon e README do s
 
 ### Fase 3 — Simulador e desafios
 
-Criar `simulator.js` e `challenges.js`. Implementar todos os comandos declarados, restauração, histórico, feedback, desafios e validação.
+Criar `simulator.js` e `challenges.js`. Implementar os comandos declarados, desfazer/refazer, histórico, feedback e desafios integrados ao fluxo `vim teste.txt`.
 
 ### Fase 4 — Qualidade e publicação
 
-Validar HTML e links; testar tema, teclado, desktop, celular, Chrome, Firefox e leitor de tela; testar os comandos e garantir que atalhos externos não sejam bloqueados; adicionar testes unitários. O GitHub Pages é publicado por workflow a partir da branch `release/1.0.0`, com o frontend em `/site` e os materiais HTML derivados ao lado.
+Validar HTML e links; testar tema, teclado, desktop, celular, Chrome, Firefox e leitor de tela; testar os comandos e garantir que atalhos externos não sejam bloqueados; adicionar testes unitários. O GitHub Pages da versão 1.0.1 é publicado pelo workflow quando há push em `release/1.0.1`, com o frontend em `/site` e os materiais HTML derivados ao lado.
 
 ### Fase 5 — Evoluções
 
@@ -176,7 +193,7 @@ Gerar dados a partir do Markdown, disponibilizar inglês, adicionar modo visual,
 - Os 30 comandos são consultáveis por categoria.
 - Terminal e simulador executam somente os comandos declarados, mantêm arquivos
   em memória e permitem o fluxo terminal → Vim → terminal.
-- Os cinco desafios podem ser concluídos e reiniciados.
+- Os cinco desafios podem ser concluídos e iniciados novamente pelo seletor.
 - Caminhos relativos permitem publicação no GitHub Pages.
 
 ## 8. Decisões em aberto

@@ -50,36 +50,30 @@
       <div id="empty-state" hidden><p>Nenhum comando encontrado.</p><button id="clear-filters" type="button">Limpar filtros</button></div>
     </section>
     <section id="praticar" class="practice" aria-labelledby="titulo-praticar">
-      <h2 id="titulo-praticar">Pratique com segurança</h2>
-      <p id="simulator-instructions">Use primeiro o terminal simulado. Os comandos e arquivos ficam apenas nesta página; nada é executado no computador. No Vim, use o teclado somente dentro da área de prática. A tecla Tab continua movendo o foco pelos controles.</p>
-      <h3>Terminal simulado</h3>
-      <p>Digite <code>help</code> para ver os comandos. Exemplo: <code>mkdir -p ~/vim-pratica</code>, <code>cd ~/vim-pratica</code>, <code>vim ola.txt</code>.</p>
-      <div id="terminal-output" class="terminal-output" role="log" aria-label="Saída do terminal simulado" aria-live="off"></div>
-      <form id="terminal-form" class="terminal-form">
-        <label for="terminal-input"><span id="terminal-prompt">/home/aluno $</span> Comando do terminal</label>
-        <input id="terminal-input" autocomplete="off" spellcheck="false" aria-describedby="simulator-instructions">
-        <button type="submit">Executar comando simulado</button>
-      </form>
-      <p>O editor abaixo simula o Vim; os comandos digitados nele são diferentes dos comandos do terminal.</p>
-      <button id="activate-simulator" type="button">Ativar simulador</button>
-      <button id="reset-simulator" type="button">Restaurar texto</button>
-      <label for="challenge-select">Desafio</label>
-      <select id="challenge-select"><option value="">Escolha um desafio</option></select>
-      <button id="restart-challenge" type="button">Reiniciar desafio</button>
-      <p id="challenge-instruction"></p>
-      <p id="challenge-status" aria-hidden="true"></p>
-      <div id="vim-workspace" hidden>
-      <button id="back-to-terminal" type="button">Voltar ao terminal</button>
-      <p>Modo: <strong id="simulator-mode">NORMAL</strong></p>
-      <p>O Vim simulado cobre inserção (<code>i</code>, <code>a</code>, <code>o</code>, <kbd>Esc</kbd>), navegação, edição, busca e os comandos Ex <code>:w</code>, <code>:q</code>, <code>:q!</code> e <code>:wq</code>.</p>
-      <div id="simulator-editor" role="textbox" aria-multiline="true" aria-disabled="true" tabindex="0" aria-label="Área de prática do simulador" aria-describedby="simulator-instructions"></div>
-      <dl class="simulator-meta">
-        <div><dt>Comando</dt><dd id="simulator-command">—</dd></div>
-        <div><dt>Histórico</dt><dd id="simulator-history">—</dd></div>
-      </dl>
-      <p id="simulator-feedback" aria-hidden="true"></p>
+      <h2 id="titulo-praticar">Pratique no terminal</h2>
+      <p id="simulator-instructions">Você está em <code>/home/aluno</code>. No terminal, use apenas <code>pwd</code>, <code>ls</code> e <code>vim</code>. Digite <code>vim teste.txt</code> nesta janela e pressione <kbd>Enter</kbd>. No Vim, use <code>:wq</code> para salvar e voltar. O arquivo fica somente nesta página.</p>
+      <div id="challenge-picker" class="challenge-picker">
+        <label for="challenge-select">Desafio opcional</label>
+        <select id="challenge-select"><option value="">Praticar sem desafio</option></select>
+        <p id="challenge-instruction">Escolha um desafio ou digite <code>vim teste.txt</code> para praticar livremente.</p>
+        <p id="challenge-status" aria-hidden="true" hidden></p>
       </div>
-      <a href="materiais/exercises/modos-e-insercao.html">Abrir primeiro exercício</a>
+      <div id="terminal-view" class="terminal-view">
+        <div class="terminal-screen" role="region" aria-label="Terminal Linux simulado">
+          <div id="terminal-output" class="terminal-output" role="log" aria-label="Histórico do terminal" aria-live="off"></div>
+          <div class="terminal-current-line">
+            <span id="terminal-prompt" aria-hidden="true">aluno@vim:/home/aluno$</span>
+            <span id="terminal-input" class="terminal-command-input" contenteditable="plaintext-only" role="textbox" aria-multiline="false" aria-label="Linha de comando do terminal simulado" aria-describedby="simulator-instructions challenge-instruction" aria-keyshortcuts="Enter" spellcheck="false"></span>
+          </div>
+        </div>
+      </div>
+      <div id="vim-workspace" class="vim-workspace" hidden>
+        <div class="vim-titlebar">
+          <span>VIM</span>
+        </div>
+        <div id="simulator-editor" role="textbox" aria-multiline="true" aria-disabled="true" tabindex="0" aria-label="Área de prática do simulador" aria-describedby="simulator-instructions challenge-instruction"></div>
+        <div class="vim-statusline"><strong id="simulator-mode">NORMAL</strong><span id="vim-filename">sem título</span></div>
+      </div>
     </section>
   </main>
   <footer><a href="../LICENSE">Licença MIT</a> · <a href="materiais/reference/commands.html">Referência completa dos comandos</a></footer>

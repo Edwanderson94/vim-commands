@@ -60,61 +60,74 @@ try { savedTheme = localStorage.getItem('vim-theme') ?? 'light'; } catch { /* Ab
 setTheme(savedTheme === 'dark');
 toggle.addEventListener('click', () => setTheme(document.documentElement.dataset.theme !== 'dark'));
 
-let simulator = createState();
+let simulator = createState(['']);
 let active = false;
 let currentFile = null;
 let savedLines = null;
+let activeChallenge = false;
 const editor = find('#simulator-editor');
 const workspace = find('#vim-workspace');
+const terminalView = find('#terminal-view');
+const challengePicker = find('#challenge-picker');
 const challengeSelect = find('#challenge-select');
-const terminalForm = find('#terminal-form');
+const challengeInstruction = find('#challenge-instruction');
+const challengeStatus = find('#challenge-status');
 const terminalInput = find('#terminal-input');
 const terminalOutput = find('#terminal-output');
 const terminalPrompt = find('#terminal-prompt');
+find('.terminal-screen').addEventListener('click', () => terminalInput.focus());
 
 function writeTerminal(command, output) {
-  if (command === 'clear') terminalOutput.replaceChildren();
-  else {
-    const entry = element('p', undefined, 'terminal-entry');
-    entry.append(element('span', `${terminalPrompt.textContent} ${command}`, 'terminal-command'));
-    if (output) entry.append(element('span', output, 'terminal-result'));
-    terminalOutput.append(entry);
-    terminalOutput.scrollTop = terminalOutput.scrollHeight;
-  }
+  const entry = element('p', undefined, 'terminal-entry');
+  entry.append(element('span', `${terminalPrompt.textContent} ${command}`, 'terminal-command'));
+  if (output) entry.append(element('span', output, 'terminal-result'));
+  terminalOutput.append(entry);
+  terminalOutput.scrollTop = terminalOutput.scrollHeight;
   if (output) statusAnnouncer.textContent = output;
 }
 
-terminalForm.addEventListener('submit', (event) => {
-  event.preventDefault();
-  const command = terminalInput.value;
+function runTerminalCommand(command) {
   const result = terminal.execute(command);
   writeTerminal(command, result.output);
-  terminalInput.value = '';
-  terminalPrompt.textContent = `${terminal.execute('pwd').output} $`;
+  terminalInput.replaceChildren();
+  terminalPrompt.textContent = terminal.prompt();
   if (result.action?.type === 'vim') {
     currentFile = result.action.path;
     savedLines = [...result.action.lines];
     simulator = createState(result.action.lines);
-    challengeSelect.value = '';
+    activeChallenge = challengeSelect.value !== '' && currentFile === `${terminal.root}/teste.txt`;
     active = true;
+    terminalView.hidden = true;
+    challengePicker.hidden = true;
     workspace.hidden = false;
     drawSimulator(false);
     simulator.feedback = `Arquivo virtual ${currentFile}. Use i para inserir e :wq para salvar e voltar.`;
-    editor.focus();
+    editor.focus({ preventScroll: true });
     drawSimulator();
   } else terminalInput.focus();
+}
+
+terminalInput.addEventListener('keydown', (event) => {
+  if (event.key !== 'Enter') return;
+  event.preventDefault();
+  runTerminalCommand(terminalInput.textContent.trim());
 });
 
 function closeVim(saveChanges) {
   if (saveChanges && currentFile) {
     terminal.save(currentFile, simulator.lines);
     savedLines = [...simulator.lines];
+  } else if (currentFile && savedLines) {
+    simulator = createState(savedLines);
   }
   currentFile = null;
   savedLines = null;
   workspace.hidden = true;
+  terminalView.hidden = false;
+  challengePicker.hidden = false;
   active = false;
   terminalInput.focus();
+  drawSimulator(false);
   statusAnnouncer.textContent = saveChanges ? 'Arquivo salvo. Voltou ao terminal simulado.' : 'Saiu do Vim sem salvar. Voltou ao terminal simulado.';
 }
 for (const challenge of challenges) {
@@ -139,7 +152,7 @@ function renderEditor() {
 }
 
 function drawSimulator(announce = true) {
-  const challenge = challenges.find((item) => item.id === challengeSelect.value);
+  const challenge = activeChallenge ? challenges.find((item) => item.id === challengeSelect.value) : null;
   const challengeComplete = Boolean(challenge && challenge.isComplete(simulator));
   const feedback = challengeComplete
     ? `Desafio concluído. ${simulator.feedback}`
@@ -147,58 +160,41 @@ function drawSimulator(announce = true) {
   renderEditor();
   editor.setAttribute('aria-disabled', String(!active));
   find('#simulator-mode').textContent = simulator.mode.toUpperCase();
-  find('#simulator-command').textContent = simulator.commandBuffer || '—';
-  find('#simulator-history').textContent = simulator.keyHistory.length ? simulator.keyHistory.join(' ') : '—';
-  find('#simulator-feedback').textContent = feedback;
+  find('#vim-filename').textContent = currentFile ? currentFile.split('/').at(-1) : 'teste.txt';
   if (announce) statusAnnouncer.textContent = feedback;
-  find('#restart-challenge').disabled = !challenge;
-  find('#challenge-instruction').textContent = challenge ? challenge.instruction : 'Escolha um desafio para carregar um texto de prática.';
-  find('#challenge-status').textContent = challengeComplete ? 'Desafio concluído.' : '';
+  challengeInstruction.textContent = challengeSelect.value
+    ? challenges.find((item) => item.id === challengeSelect.value)?.instruction || ''
+    : 'Escolha um desafio ou digite vim teste.txt para praticar livremente.';
+  challengeStatus.textContent = challengeComplete ? 'Desafio concluído.' : '';
+  challengeStatus.hidden = !challengeComplete;
 }
 
-function loadChallenge() {
+function chooseChallenge() {
   const challenge = challenges.find((item) => item.id === challengeSelect.value);
-  if (!challenge) return;
-  simulator = createState(challenge.initialLines);
-  simulator.feedback = challenge.instruction;
+  activeChallenge = false;
   active = false;
-  currentFile = null;
-  savedLines = null;
-  workspace.hidden = false;
-  drawSimulator();
+  challengeStatus.textContent = '';
+  if (challenge) {
+    terminal.save(`${terminal.root}/teste.txt`, challenge.initialLines);
+    simulator = createState(challenge.initialLines);
+    simulator.feedback = challenge.instruction;
+    statusAnnouncer.textContent = `Desafio carregado. Digite vim teste.txt para começar. ${challenge.instruction}`;
+  } else {
+    simulator = createState(['']);
+    statusAnnouncer.textContent = 'Prática livre. O arquivo atual foi mantido.';
+  }
+  drawSimulator(false);
+  terminalInput.focus();
 }
 
-challengeSelect.addEventListener('change', loadChallenge);
-find('#restart-challenge').addEventListener('click', loadChallenge);
-find('#activate-simulator').addEventListener('click', () => {
-  active = true;
-  workspace.hidden = false;
-  simulator.feedback = 'Simulador ativado. Use o teclado nesta área.';
-  editor.focus();
-  drawSimulator();
-});
-find('#reset-simulator').addEventListener('click', () => {
-  simulator = createState(); challengeSelect.value = ''; active = false; currentFile = null; savedLines = null; workspace.hidden = true; drawSimulator();
-});
-find('#back-to-terminal').addEventListener('click', () => {
-  if (currentFile && JSON.stringify(simulator.lines) !== JSON.stringify(savedLines)) {
-    simulator.feedback = 'Há alterações não salvas. Use :wq para salvar ou :q! para descartar.';
-    editor.focus();
-    drawSimulator();
-    return;
-  }
-  if (currentFile) closeVim(false);
-  else {
-    workspace.hidden = true;
-    active = false;
-    terminalInput.focus();
-    statusAnnouncer.textContent = 'Voltando ao terminal simulado.';
-  }
-});
+challengeSelect.addEventListener('change', chooseChallenge);
 editor.addEventListener('keydown', (event) => {
   if (!active) return;
   const key = keyForSimulator(event, simulator);
-  if (!key) return;
+  if (!key) {
+    if (event.key === 'Backspace') event.preventDefault();
+    return;
+  }
   event.preventDefault();
   const exCommand = key === 'Enter' && simulator.commandBuffer.startsWith(':') ? simulator.commandBuffer : '';
   applyKey(simulator, key);
@@ -218,5 +214,4 @@ editor.addEventListener('keydown', (event) => {
 
 renderCatalog(false);
 drawSimulator(false);
-terminalInput.focus();
 })();

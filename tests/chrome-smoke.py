@@ -78,61 +78,75 @@ def main():
         def execute(script):
             return command('/execute/sync', {'script': script, 'args': []})['value']
 
+        def run_terminal(value):
+            execute("document.querySelector('.terminal-screen').click()")
+            actions = []
+            for key in (*value, '\ue007'):
+                actions.extend([{'type': 'keyDown', 'value': key}, {'type': 'keyUp', 'value': key}])
+            command('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': actions}]})
+
         command('/url', {'url': (ROOT / 'site' / 'index.html').as_uri()})
         browser = created['capabilities']['browserVersion']
         assert execute("return document.readyState") == 'complete'
         assert execute("return document.querySelectorAll('.command-card').length") == 30
         assert execute("return Boolean(document.querySelector('link[href=\"styles.css\"]')?.sheet)")
         assert execute("return document.querySelector('#status-announcer').textContent") == ''
+        assert execute("return document.activeElement.id") != 'terminal-input', 'o terminal não deve roubar o foco ao carregar a página'
+        assert execute("return !document.querySelector('#terminal-form') && ![...document.querySelectorAll('button')].some((button) => button.textContent.includes('Executar comando simulado'))"), 'não deve existir formulário separado nem botão para executar comandos'
+        assert execute("return ['#activate-simulator', '#reset-simulator', '#restart-challenge'].every((selector) => !document.querySelector(selector))"), 'a prática não deve depender de botões de ativação, restauração ou reinício'
+        assert execute("return Boolean(document.querySelector('#terminal-input').closest('.terminal-screen'))"), 'a linha de comando deve estar dentro do único terminal visual'
+        assert execute("return document.querySelector('#terminal-input').getAttribute('contenteditable')") == 'plaintext-only'
+        execute("document.querySelector('.terminal-screen').click()")
+        assert execute("return document.activeElement.id") == 'terminal-input', 'clicar no terminal deve ativar a linha de comando'
+        run_terminal('ls')
+        assert 'teste.txt' in execute("return document.querySelector('#terminal-output').textContent"), 'teste.txt deve existir no diretório inicial'
 
+        run_terminal('vim teste.txt')
         terminal_flow = execute("""
-          const run = (value) => {
-            const input = document.querySelector('#terminal-input');
-            input.value = value;
-            document.querySelector('#terminal-form').dispatchEvent(new Event('submit', {bubbles: true, cancelable: true}));
-          };
-          run('mkdir -p ~/vim-pratica');
-          run('cd ~/vim-pratica');
-          run('vim ola.txt');
-          return {visible: !document.querySelector('#vim-workspace').hidden,
+          return {terminalHidden: document.querySelector('#terminal-view').hidden,
+                  vimVisible: !document.querySelector('#vim-workspace').hidden,
                   focused: document.activeElement.id,
-                  path: document.querySelector('#terminal-prompt').textContent};
+                  filename: document.querySelector('#vim-filename').textContent};
         """)
-        assert terminal_flow['visible'] and terminal_flow['focused'] == 'simulator-editor', terminal_flow
-        assert terminal_flow['path'] == '/home/aluno/vim-pratica $', terminal_flow
+        assert terminal_flow['terminalHidden'] and terminal_flow['vimVisible'] and terminal_flow['focused'] == 'simulator-editor', terminal_flow
+        assert terminal_flow['filename'] == 'teste.txt', terminal_flow
         actions = []
-        for key in ('i', 'O', 'K', '\ue00c'):
+        for key in ('i', 'O', 'K', '\ue003', '!', '\ue00c'):
             actions.extend([{'type': 'keyDown', 'value': key}, {'type': 'keyUp', 'value': key}])
         command('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': actions}]})
-        unsaved_back = execute("""
-          document.querySelector('#back-to-terminal').click();
-          return {visible: !document.querySelector('#vim-workspace').hidden,
-                  focused: document.activeElement.id,
-                  feedback: document.querySelector('#status-announcer').textContent};
-        """)
-        assert unsaved_back['visible'] and unsaved_back['focused'] == 'simulator-editor', unsaved_back
-        assert 'alterações não salvas' in unsaved_back['feedback'], unsaved_back
+        actions = []
+        for key in (':', 'q', '\ue007'):
+            actions.extend([{'type': 'keyDown', 'value': key}, {'type': 'keyUp', 'value': key}])
+        command('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': actions}]})
+        unsaved_quit = execute("return {visible: !document.querySelector('#vim-workspace').hidden, feedback: document.querySelector('#status-announcer').textContent}")
+        assert unsaved_quit['visible'] and 'alterações não salvas' in unsaved_quit['feedback'], unsaved_quit
         actions = []
         for key in (':', 'w', 'q', '\ue007'):
             actions.extend([{'type': 'keyDown', 'value': key}, {'type': 'keyUp', 'value': key}])
         command('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': actions}]})
         saved_flow = execute("""
-          const input = document.querySelector('#terminal-input');
-          input.value = 'cat ola.txt';
-          document.querySelector('#terminal-form').dispatchEvent(new Event('submit', {bubbles: true, cancelable: true}));
-          return {hidden: document.querySelector('#vim-workspace').hidden,
+          return {terminalVisible: !document.querySelector('#terminal-view').hidden,
+                  vimHidden: document.querySelector('#vim-workspace').hidden,
+                  prompt: document.querySelector('#terminal-prompt').textContent,
                   output: document.querySelector('#terminal-output').textContent};
         """)
-        assert saved_flow['hidden'] and 'OK' in saved_flow['output'], saved_flow
-        rejected = execute("""
-          const input = document.querySelector('#terminal-input');
-          input.value = 'rm -rf /';
-          document.querySelector('#terminal-form').dispatchEvent(new Event('submit', {bubbles: true, cancelable: true}));
-          return document.querySelector('#terminal-output').textContent;
-        """)
+        assert saved_flow['terminalVisible'] and saved_flow['vimHidden'] and saved_flow['prompt'] == 'aluno@vim:/home/aluno$', saved_flow
+        run_terminal('vim teste.txt')
+        reopened = execute("return {visible: !document.querySelector('#vim-workspace').hidden, text: document.querySelector('#simulator-editor').textContent}")
+        assert reopened['visible'] and 'O!' in reopened['text'], reopened
+        actions = []
+        for key in (':', 'q', '\ue007'):
+            actions.extend([{'type': 'keyDown', 'value': key}, {'type': 'keyUp', 'value': key}])
+        command('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': actions}]})
+        run_terminal('cat teste.txt')
+        rejected = execute("return document.querySelector('#terminal-output').textContent")
+        assert 'Comando não disponível: cat' in rejected, rejected
+        run_terminal('rm -rf /')
+        rejected = execute("return document.querySelector('#terminal-output').textContent")
         assert 'Comando não disponível' in rejected, rejected
-        execute("document.querySelector('#terminal-input').value = 'clear'; document.querySelector('#terminal-form').dispatchEvent(new Event('submit', {bubbles: true, cancelable: true}))")
-        execute("document.querySelector('#reset-simulator').click()")
+        run_terminal('ls -la')
+        rejected = execute("return document.querySelector('#terminal-output').textContent")
+        assert 'Uso: ls' in rejected, rejected
 
         command('/window/rect', {'width': 320, 'height': 800})
         mobile = execute("return {width: innerWidth, page: document.documentElement.scrollWidth}")
@@ -189,31 +203,6 @@ def main():
         """)
         assert theme == ['dark', 'true'], f'estado do tema inesperado: {theme}'
 
-        execute("document.querySelector('#activate-simulator').click()")
-        actions = []
-        for key in ('i', 'O', 'K', '\ue00c'):
-            actions.extend([{'type': 'keyDown', 'value': key}, {'type': 'keyUp', 'value': key}])
-        command('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': actions}]})
-        inserted = execute("return {mode: document.querySelector('#simulator-mode').textContent, text: document.querySelector('#simulator-editor').textContent}")
-        assert inserted['mode'] == 'NORMAL' and 'OKLinha para praticar.' in inserted['text'], inserted
-        element_ref = command('/element', {'using': 'css selector', 'value': '#simulator-editor'})['value']
-        element_key = 'element-6066-11e4-a52e-4f735466cecf'
-        editor_id = element_ref.get(element_key, element_ref.get('ELEMENT'))
-        assert editor_id, f'referência WebDriver do simulador ausente: {element_ref}'
-        editor_role = command(f'/element/{editor_id}/computedrole')['value']
-        editor_name = command(f'/element/{editor_id}/computedlabel')['value']
-        assert editor_role == 'textbox', f'papel acessível do simulador: {editor_role}'
-        assert editor_name == 'Área de prática do simulador', f'nome acessível do simulador: {editor_name}'
-        live_ref = command('/element', {'using': 'css selector', 'value': '#status-announcer'})['value']
-        live_id = live_ref.get(element_key, live_ref.get('ELEMENT'))
-        role = command(f'/element/{live_id}/computedrole')['value']
-        assert role == 'status', f'papel acessível do anunciador: {role}'
-        command('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': [
-            {'type': 'keyDown', 'value': '\ue004'}, {'type': 'keyUp', 'value': '\ue004'}
-        ]}]})
-        next_focus = execute("return document.activeElement.getAttribute('href')")
-        assert next_focus == 'materiais/exercises/modos-e-insercao.html', f'foco após Tab no simulador: {next_focus!r}'
-
         scenarios = {
             'insert-text': ('i', 'O', 'K', '\ue00c'),
             'last-line': ('G',),
@@ -226,19 +215,49 @@ def main():
               const select = document.querySelector('#challenge-select');
               select.value = '{challenge}';
               select.dispatchEvent(new Event('change', {{bubbles: true}}));
-              document.querySelector('#activate-simulator').click();
-              document.querySelector('#simulator-editor').focus();
+              if (document.querySelector('#terminal-view').hidden || !document.querySelector('#vim-workspace').hidden) throw new Error('escolher desafio deve manter o terminal pronto');
             """)
+            assert execute("return document.querySelector('#challenge-instruction').textContent"), 'a escolha deve mostrar a instrução do desafio'
+            run_terminal('vim teste.txt')
             actions = []
             for key in keys:
                 actions.extend([{'type': 'keyDown', 'value': key}, {'type': 'keyUp', 'value': key}])
             command('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': actions}]})
+            if challenge == 'insert-text':
+                inserted = execute("return {mode: document.querySelector('#simulator-mode').textContent, text: document.querySelector('#simulator-editor').textContent}")
+                assert inserted['mode'] == 'NORMAL' and 'OKLinha inicial.' in inserted['text'], inserted
+                element_ref = command('/element', {'using': 'css selector', 'value': '#simulator-editor'})['value']
+                element_key = 'element-6066-11e4-a52e-4f735466cecf'
+                editor_id = element_ref.get(element_key, element_ref.get('ELEMENT'))
+                assert editor_id, f'referência WebDriver do simulador ausente: {element_ref}'
+                editor_role = command(f'/element/{editor_id}/computedrole')['value']
+                editor_name = command(f'/element/{editor_id}/computedlabel')['value']
+                assert editor_role == 'textbox', f'papel acessível do simulador: {editor_role}'
+                assert editor_name == 'Área de prática do simulador', f'nome acessível do simulador: {editor_name}'
+                live_ref = command('/element', {'using': 'css selector', 'value': '#status-announcer'})['value']
+                live_id = live_ref.get(element_key, live_ref.get('ELEMENT'))
+                role = command(f'/element/{live_id}/computedrole')['value']
+                assert role == 'status', f'papel acessível do anunciador: {role}'
             status = execute("return document.querySelector('#challenge-status').textContent")
             assert status == 'Desafio concluído.', f'{challenge} não foi concluído: {status!r}'
             feedback = execute("return document.querySelector('#status-announcer').textContent")
             assert feedback.startswith('Desafio concluído.'), f'{challenge} não foi anunciado: {feedback!r}'
+            if challenge == 'insert-text':
+                command('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': [
+                    {'type': 'keyDown', 'value': '\ue004'}, {'type': 'keyUp', 'value': '\ue004'}
+                ]}]})
+                next_focus = execute("return document.activeElement.textContent")
+                assert next_focus == 'Licença MIT', f'foco após Vim: {next_focus!r}'
+                execute("document.querySelector('#simulator-editor').focus()")
+            command('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': [
+                {'type': 'keyDown', 'value': ':'}, {'type': 'keyUp', 'value': ':'},
+                {'type': 'keyDown', 'value': 'q'}, {'type': 'keyUp', 'value': 'q'},
+                {'type': 'keyDown', 'value': '!'}, {'type': 'keyUp', 'value': '!'},
+                {'type': 'keyDown', 'value': '\ue007'}, {'type': 'keyUp', 'value': '\ue007'}
+            ]}]})
+            assert execute("return !document.querySelector('#terminal-view').hidden && document.querySelector('#vim-workspace').hidden"), 'sair do Vim deve retornar à mesma janela do terminal'
 
-        print(f'Chrome {browser}: site, terminal simulado, salvar/retornar ao Vim, viewport móvel, busca/filtros, foco, tema, simulador e cinco desafios passaram.')
+        print(f'Chrome {browser}: site, digitação direta no terminal, Vim/salvar/reabrir, viewport móvel, busca/filtros, foco, tema, simulador e cinco desafios passaram.')
     finally:
         if session_id:
             try:

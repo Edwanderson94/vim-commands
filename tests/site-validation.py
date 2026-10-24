@@ -178,13 +178,18 @@ if home:
             errors.append(f'site/index.html: #{live_id} deve ser uma região status atômica')
     if home.aria_hidden.get('challenge-status') != 'true':
         errors.append('site/index.html: #challenge-status duplicado deve ficar fora da árvore assistiva')
-    if home.aria_hidden.get('simulator-feedback') != 'true':
-        errors.append('site/index.html: #simulator-feedback visual deve ficar fora da árvore assistiva')
+    for removed_control in ('activate-simulator', 'reset-simulator', 'restart-challenge', 'practice-extras'):
+        if removed_control in home.ids:
+            errors.append(f'site/index.html: controle obsoleto #{removed_control} ainda existe')
+    if 'challenge-select' not in home.ids or 'challenge-picker' not in home.ids:
+        errors.append('site/index.html: seletor opcional de desafio deve estar disponível junto à prática')
     if not home.editor_attrs or not (
         home.editor_attrs.get('role') == 'textbox'
         and home.editor_attrs.get('aria-multiline') == 'true'
         and home.editor_attrs.get('aria-label')
-        and home.editor_attrs.get('aria-describedby') == 'simulator-instructions'
+        and {'simulator-instructions', 'challenge-instruction'}.issubset(
+            set(home.editor_attrs.get('aria-describedby', '').split())
+        )
     ):
         errors.append('site/index.html: simulador deve expor caixa de texto multilinha nomeada e descrita')
 
