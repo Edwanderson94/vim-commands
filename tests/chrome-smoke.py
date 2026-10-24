@@ -274,10 +274,21 @@ def main():
             0 <= touch_point['x'] < mobile['width']
             and 0 <= touch_point['y'] < touch_point['viewport']['height']
         ), f"coordenada de toque fora da viewport: {touch_point}"
-        command('/actions', {'actions': [{'type': 'pointer', 'id': 'touch', 'parameters': {'pointerType': 'touch'}, 'actions': [
-            {'type': 'pointerMove', 'x': touch_point['x'], 'y': touch_point['y'], 'duration': 0},
-            {'type': 'pointerDown', 'button': 0}, {'type': 'pointerUp', 'button': 0}
-        ]}]})
+        command('/goog/cdp/execute', {
+            'cmd': 'Emulation.setTouchEmulationEnabled',
+            'params': {'enabled': True, 'maxTouchPoints': 1},
+        })
+        command('/goog/cdp/execute', {
+            'cmd': 'Input.dispatchTouchEvent',
+            'params': {
+                'type': 'touchStart',
+                'touchPoints': [{'x': touch_point['x'], 'y': touch_point['y'], 'id': 1}],
+            },
+        })
+        command('/goog/cdp/execute', {
+            'cmd': 'Input.dispatchTouchEvent',
+            'params': {'type': 'touchEnd', 'touchPoints': []},
+        })
         touch_result = command('/execute/sync', {
             'script': """
               const target = document.elementFromPoint(arguments[0], arguments[1]);

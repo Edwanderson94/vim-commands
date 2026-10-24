@@ -21,8 +21,11 @@ viewport desktop. No workflow `40139803427`, o erro de coordenadas foi removido,
 mas o toque não focou a linha de comando: o log mostrou que, após o movimento de
 50 ms, o ponto passou a atingir um cartão de comando. O smoke agora usa duração
 zero para posicionar o ponteiro antes do toque e confirma o alvo e o foco.
-`40140038307` passou no Chrome, inclusive no toque móvel e no foco de
-`terminal-input`.
+`40140038307` passou na branch, mas o run posterior em `master`
+`40140176786` repetiu a falha: o ponteiro deslocou a página e o toque terminou
+sobre um cartão. A correção local substitui pointer actions por eventos
+`touchStart`/`touchEnd` do Chrome DevTools, sem movimento intermediário. Essa
+versão precisa de nova validação remota.
 
 O workflow agora separa validação e publicação: valida pushes em `release/**`
 sem exigir o ambiente `github-pages`, e publica somente após uma validação
@@ -33,9 +36,11 @@ As verificações locais `python3 -m py_compile tests/chrome-smoke.py`,
 `node scripts/render-markdown.mjs`, `node tests/simulator.test.mjs`,
 `python3 tests/site-validation.py` e `git diff --check` passaram. O workflow
 `40139686095` foi bloqueado pelas regras do ambiente `github-pages` antes da
-validação; `40139803427` revelou a falha de foco; `40140038307` passou depois da
-correção. A branch `release/1.0.2` está validada. O deploy será executado pelo
-workflow após o merge em `master`.
+validação. A validação de branch `40140038307` passou, mas o run posterior em
+`master`, `40140176786`, falhou no foco móvel. A correção baseada em eventos de
+toque está local na `release/1.0.2` e ainda precisa passar. A tag `1.0.2` já
+aponta para o merge atual; a branch de release foi mantida para concluir o
+ajuste e alinhar a tag à versão validada.
 
 ## Histórico — release/1.0.1
 
