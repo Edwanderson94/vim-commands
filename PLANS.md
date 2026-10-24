@@ -3,7 +3,7 @@
 Status revisado em 2026-10-24. As páginas Markdown também são renderizadas em
 HTML estático local para leitura formatada no navegador.
 
-## Estado atual — release/1.0.2
+## Release 1.0.2 — concluída
 
 A branch `release/1.0.2` parte da `master` no commit `bd32474`. A investigação do
 workflow `40138061252` encontrou a causa precisa: renderização Markdown, testes
@@ -33,10 +33,11 @@ atual posiciona `.terminal-screen` com comportamento instantâneo e escolhe um
 ponto visível cujo elemento-alvo pertence ao terminal, evitando o seletor fixo.
 O workflow `40140814346` passou na branch, porém a integração em `master`
 `40140870261` reproduziu rolagem automática durante o gesto CDP e deixou o foco
-no seletor de desafio. Para tornar a verificação estável, a revisão dispara no
-ponto visível um evento `click` borbulhante e confirma o comportamento usado
-pela interface para focar a linha de comando. Isso ainda precisa ser validado
-no Chrome do workflow.
+no seletor de desafio. A revisão final dispara no ponto visível um evento
+`click` borbulhante e confirma o comportamento usado pela interface para focar
+a linha de comando, sem depender da rolagem variável do gesto. A release passou
+no Chrome em `40140974661` e a integração, validação e publicação no GitHub Pages
+passaram em `40141037661`.
 
 O workflow agora separa validação e publicação: valida pushes em `release/**`
 sem exigir o ambiente `github-pages`, e publica somente após uma validação
@@ -47,14 +48,10 @@ As verificações locais `python3 -m py_compile tests/chrome-smoke.py`,
 `node scripts/render-markdown.mjs`, `node tests/simulator.test.mjs`,
 `python3 tests/site-validation.py` e `git diff --check` passaram. O workflow
 `40139686095` foi bloqueado pelas regras do ambiente `github-pages` antes da
-validação. O run de `master` `40140176786` falhou no foco móvel; o smoke passou em
-`40140400539`, mas `40140579171` revelou outra mudança de alvo após emulação de
-toque. `40140687645` também detectou que o campo de comando fica sem largura em
-viewport estreita. A revisão seguinte passou na release mas falhou na master
-(`40140870261`) por rolagem automática durante o gesto CDP. A revisão atual
-valida o evento de clique no ponto visível; aguardar novo resultado antes de
-realinhar a tag `1.0.2`, que permanece no merge anterior `2fa7f96`. O deploy de
-Pages deverá ser confirmado no workflow de `master`.
+validação. Runs seguintes identificaram animação de rolagem, mudança de alvo e
+largura zero na linha de comando em viewport móvel; esses casos foram
+diagnosticados e ajustados. A tag `1.0.2` foi alinhada ao merge validado e
+publicado em `master`; a branch `release/1.0.2` foi removida após a integração.
 
 ## Histórico — release/1.0.1
 

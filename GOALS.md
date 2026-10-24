@@ -1,6 +1,6 @@
 # Objetivos do Vim Commands
 
-## Goal ativo — estabilizar o smoke test móvel na release 1.0.2
+## Goal concluído — estabilizar a validação móvel na release 1.0.2
 
 **Objetivo:** corrigir a falha de automação no toque móvel, validar novamente o
 fluxo de publicação e manter o simulador restrito e seguro.
@@ -23,17 +23,12 @@ em português do Brasil.
 - O resultado do workflow e a situação de publicação ficam registrados em
   `PLANS.md`.
 
-**Estado atual:** renderização, testes unitários e auditoria HTML passam
-localmente. As execuções móveis mostraram que a linha de comando pode ficar sem
-largura útil em viewport estreita e que o seletor fixo pode cobrir pontos do
-terminal. O teste agora rola a área visível do terminal com comportamento
-instantâneo e escolhe um ponto realmente atingido
-por ela, evitando o seletor. O workflow `40140814346` passou na branch, mas a
-execução da integração em `master` (`40140870261`) mostrou que os eventos CDP de
-toque ainda provocam rolagem variável. A revisão atual mantém o cálculo do ponto
-visível e valida o evento `click` que a interface usa para focar a linha de
-comando, sem depender da rolagem automática do navegador durante o gesto.
-Precisa passar novamente no workflow da release e da master.
+**Resultado:** a revisão final mantém a viewport móvel, encontra um ponto visível
+na área do terminal e verifica que o evento `click` foca a linha de comando sem
+depender da rolagem variável dos gestos CDP. Passou localmente e nos workflows
+da release (`40140974661`) e da `master` (`40141037661`), incluindo publicação
+no GitHub Pages. A tag `1.0.2` aponta para o merge final em `master` e a branch
+`release/1.0.2` foi removida.
 
 **Branch de trabalho:** `release/1.0.2`, criada a partir da `master` no commit
 `bd32474`.
