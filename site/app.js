@@ -25,7 +25,7 @@ for (const value of [...new Set(commands.map((command) => command.category))]) {
   category.lastElementChild.value = value;
 }
 
-function renderCatalog() {
+function renderCatalog(announce = true) {
   const term = normalize(search.value);
   const filtered = commands.filter((command) => {
     const text = normalize([command.keys, command.title, command.description, command.category, command.mode].join(' '));
@@ -38,7 +38,7 @@ function renderCatalog() {
     return card;
   }));
   summary.textContent = `${filtered.length} de ${commands.length} comandos exibidos.`;
-  statusAnnouncer.textContent = summary.textContent;
+  if (announce) statusAnnouncer.textContent = summary.textContent;
   empty.hidden = filtered.length !== 0;
 }
 
@@ -84,7 +84,7 @@ function renderEditor() {
   editor.replaceChildren(fragment);
 }
 
-function drawSimulator() {
+function drawSimulator(announce = true) {
   const challenge = challenges.find((item) => item.id === challengeSelect.value);
   const challengeComplete = Boolean(challenge && challenge.isComplete(simulator));
   const feedback = challengeComplete
@@ -96,7 +96,7 @@ function drawSimulator() {
   find('#simulator-command').textContent = simulator.commandBuffer || '—';
   find('#simulator-history').textContent = simulator.keyHistory.length ? simulator.keyHistory.join(' ') : '—';
   find('#simulator-feedback').textContent = feedback;
-  statusAnnouncer.textContent = feedback;
+  if (announce) statusAnnouncer.textContent = feedback;
   find('#restart-challenge').disabled = !challenge;
   find('#challenge-instruction').textContent = challenge ? challenge.instruction : 'Escolha um desafio para carregar um texto de prática.';
   find('#challenge-status').textContent = challengeComplete ? 'Desafio concluído.' : '';
@@ -131,6 +131,6 @@ editor.addEventListener('keydown', (event) => {
   drawSimulator();
 });
 
-renderCatalog();
-drawSimulator();
+renderCatalog(false);
+drawSimulator(false);
 })();

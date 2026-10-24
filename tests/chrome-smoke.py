@@ -83,6 +83,7 @@ def main():
         assert execute("return document.readyState") == 'complete'
         assert execute("return document.querySelectorAll('.command-card').length") == 30
         assert execute("return Boolean(document.querySelector('link[href=\"styles.css\"]')?.sheet)")
+        assert execute("return document.querySelector('#status-announcer').textContent") == ''
 
         command('/window/rect', {'width': 320, 'height': 800})
         mobile = execute("return {width: innerWidth, page: document.documentElement.scrollWidth}")
