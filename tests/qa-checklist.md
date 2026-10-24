@@ -182,6 +182,8 @@ observado.
 ### QA-12 — Foco e captura de teclas
 
 - [ ] Antes de abrir o Vim, pressionar letras e `Tab` fora da linha de comando.
+- [ ] Digitar um comando com um caractere errado, mover o cursor com `←`,
+  corrigi-lo com `Backspace` e executar a forma corrigida com `Enter`.
 - [ ] Abrir `vim teste.txt` pelo terminal, pressionar `i`, digitar texto e
   pressionar `Esc`.
 - [ ] Usar `Tab` para sair da área e seguir para o próximo controle.

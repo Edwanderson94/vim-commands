@@ -36,8 +36,8 @@ release 1.0.1.
 
 A fila priorizada com dez melhorias, critérios resumidos e status está em
 [`GOALS.md`](GOALS.md), na seção “Dez melhorias identificadas”. Os itens 1–4
-foram implementados e validados; os itens 5–10 permanecem planejados. O smoke
-test Chrome do item 4 cobre a lista de
+foram implementados e validados; os itens 5–10 estão em andamento ou planejados.
+O smoke test Chrome do item 4 cobre a lista de
 comandos, rejeições, argumentos inválidos, caminhos externos, operadores,
 `clear` com argumento e persistência do arquivo. O workflow `40136235605` passou.
 

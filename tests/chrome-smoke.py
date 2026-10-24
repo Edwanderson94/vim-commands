@@ -146,6 +146,9 @@ def main():
         assert execute("return document.querySelector('#terminal-input').getAttribute('contenteditable')") == 'plaintext-only'
         execute("document.querySelector('.terminal-screen').click()")
         assert execute("return document.activeElement.id") == 'terminal-input', 'clicar no terminal deve ativar a linha de comando'
+        run_terminal('pwXd\ue012\ue003')
+        corrected = execute("return document.querySelector('#terminal-output').textContent")
+        assert 'aluno@vim:/home/aluno$ pwd' in corrected and '/home/aluno' in corrected, f'a linha deve permitir mover o cursor e corrigir o comando antes de Enter: {corrected}'
         run_terminal('pwd')
         assert '/home/aluno' in execute("return document.querySelector('#terminal-output').textContent"), 'pwd deve mostrar o diretório virtual fixo'
         run_terminal('ls')
