@@ -6,8 +6,9 @@ simulador interativo no navegador.
 
 ## Acesse o site
 
-Abra [Vim Commands — site estático](site/index.html) no navegador para usar a
-trilha, consultar os comandos e praticar no simulador.
+Abra [Vim Commands — site estático](https://edwanderson94.github.io/vim-commands/)
+no navegador para usar a trilha, consultar os comandos e praticar no
+simulador. A página é publicada a partir da `release/1.0.0` para validação.
 
 ## Comece aqui
 
