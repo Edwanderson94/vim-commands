@@ -51,7 +51,7 @@
     </section>
     <section id="praticar" class="practice" aria-labelledby="titulo-praticar">
       <h2 id="titulo-praticar">Pratique no terminal</h2>
-      <p id="simulator-instructions">Você está em <code>/home/aluno</code>. No terminal, use apenas <code>pwd</code>, <code>ls</code> e <code>vim</code>. Digite <code>vim teste.txt</code> nesta janela e pressione <kbd>Enter</kbd>. No Vim, use <code>:wq</code> para salvar e voltar. O arquivo fica somente nesta página.</p>
+      <p id="simulator-instructions">Você está em <code>/home/aluno</code>. No terminal, use apenas <code>pwd</code>, <code>ls</code> e <code>vim</code>. Digite <code>vim teste.txt</code> nesta janela e pressione <kbd>Enter</kbd>. No Vim, pressione <kbd>i</kbd> para inserir texto e <kbd>Esc</kbd> para voltar ao modo normal. Use <code>:q</code> e <kbd>Enter</kbd> para sair sem alterações pendentes, <code>:wq</code> para salvar e sair ou <code>:q!</code> para descartar alterações. O arquivo fica somente nesta página.</p>
       <div id="challenge-picker" class="challenge-picker">
         <label for="challenge-select">Desafio</label>
         <select id="challenge-select"><option value="">Praticar sem desafio</option></select>
@@ -73,6 +73,8 @@
         </div>
         <div id="simulator-editor" role="textbox" aria-multiline="true" aria-disabled="true" tabindex="0" aria-label="Área de prática do simulador" aria-describedby="simulator-instructions challenge-instruction"></div>
         <div class="vim-statusline"><strong id="simulator-mode">NORMAL</strong><span id="vim-filename">sem título</span></div>
+        <div id="vim-command-line" class="vim-command-line" aria-live="off"></div>
+        <div id="vim-feedback" class="vim-feedback" aria-hidden="true"></div>
       </div>
     </section>
   </main>

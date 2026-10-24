@@ -59,6 +59,7 @@ do desafio permanece visível com o Vim aberto, e o aluno abre o arquivo com
 - [Arquivos e janelas](content/files-and-windows.md)
 - [Cheatsheet — cola rápida](content/cheatsheet.md)
 - [Lista original de 30 comandos](commands.md)
+- [Fontes e referências](FONTES.md)
 
 ## Projeto
 

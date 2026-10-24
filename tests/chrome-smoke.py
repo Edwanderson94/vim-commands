@@ -110,16 +110,20 @@ def main():
         """)
         assert terminal_flow['terminalHidden'] and terminal_flow['vimVisible'] and terminal_flow['focused'] == 'simulator-editor', terminal_flow
         assert terminal_flow['filename'] == 'teste.txt', terminal_flow
+        assert execute("return document.querySelector('#vim-command-line') && document.querySelector('#vim-feedback')"), 'o editor deve mostrar a linha Ex e o feedback visual'
         actions = []
         for key in ('i', 'O', 'K', '\ue003', '!', '\ue00c'):
             actions.extend([{'type': 'keyDown', 'value': key}, {'type': 'keyUp', 'value': key}])
         command('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': actions}]})
         actions = []
-        for key in (':', 'q', '\ue007'):
+        for key in (':', 'q'):
             actions.extend([{'type': 'keyDown', 'value': key}, {'type': 'keyUp', 'value': key}])
         command('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': actions}]})
-        unsaved_quit = execute("return {visible: !document.querySelector('#vim-workspace').hidden, feedback: document.querySelector('#status-announcer').textContent}")
+        assert execute("return document.querySelector('#vim-command-line').textContent.trim()") == ':q', 'comando Ex deve aparecer enquanto é digitado'
+        command('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': [{'type': 'keyDown', 'value': '\ue007'}, {'type': 'keyUp', 'value': '\ue007'}]}]})
+        unsaved_quit = execute("return {visible: !document.querySelector('#vim-workspace').hidden, feedback: document.querySelector('#status-announcer').textContent, visibleFeedback: document.querySelector('#vim-feedback').textContent}")
         assert unsaved_quit['visible'] and 'alterações não salvas' in unsaved_quit['feedback'], unsaved_quit
+        assert 'alterações não salvas' in unsaved_quit['visibleFeedback'], unsaved_quit
         actions = []
         for key in (':', 'w', 'q', '\ue007'):
             actions.extend([{'type': 'keyDown', 'value': key}, {'type': 'keyUp', 'value': key}])

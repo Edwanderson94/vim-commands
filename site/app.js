@@ -178,6 +178,8 @@ function drawSimulator(announce = true) {
   editor.setAttribute('aria-disabled', String(!active));
   find('#simulator-mode').textContent = simulator.mode.toUpperCase();
   find('#vim-filename').textContent = currentFile ? currentFile.split('/').at(-1) : 'teste.txt';
+  find('#vim-command-line').textContent = simulator.commandBuffer || '\u00a0';
+  find('#vim-feedback').textContent = feedback;
   if (announce) statusAnnouncer.textContent = feedback;
   challengeInstruction.textContent = challengeSelect.value
     ? challenges.find((item) => item.id === challengeSelect.value)?.instruction || ''

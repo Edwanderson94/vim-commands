@@ -289,6 +289,20 @@ durante a edição; setas, `Home` e `End` movem o cursor tanto no modo normal
 quanto no modo de inserção; a rolagem interna mantém o cursor visível. QA manual
 de teclado, seleção e rolagem deve ser registrado antes da próxima publicação.
 
+**Melhoria de interação Vim:** teste manual reproduziu que `i` entrava em
+`INSERT`, porém o comando Ex não aparecia visualmente enquanto era digitado; ao
+editar o arquivo, `:q` bloqueava a saída por haver alterações sem salvar e a
+mensagem só era anunciada por leitor de tela. A área de prática agora explica
+`i`, `Esc`, `:q`, `:wq` e `:q!`, e uma linha visível exibe `:q` antes de
+pressionar Enter. Mantém-se a regra do Vim: `:q` sai sem alterações pendentes;
+para salvar usa-se `:wq`, e para descartar usa-se `:q!`.
+O resultado dos comandos Ex e os avisos, inclusive a recusa de `:q` com
+alterações, também ficam visíveis na janela e não dependem de leitor de tela.
+
+**Fonte adicionada:** `FONTES.md` registra o Gist “Comandos VIM” indicado pela
+pessoa responsável e delimita que a lista ampla ali reunida não amplia os
+comandos aceitos pelo simulador.
+
 ## Auditoria de promoção da 1.0.0
 
 **Estado do goal:** os quatro resultados descritos em `GOALS.md` estão

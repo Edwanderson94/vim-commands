@@ -172,6 +172,12 @@ observado.
 
 - [ ] Completar cada um dos cinco desafios usando as instruções exibidas.
 - [ ] Abrir `vim teste.txt` com um desafio selecionado.
+- [ ] Digitar `i` e confirmar que o modo exibido muda para `INSERT`; digitar
+  texto, pressionar `Esc` e confirmar o retorno a `NORMAL`.
+- [ ] Digitar `:q` e confirmar que o comando aparece na linha Ex antes de
+  pressionar `Enter`.
+- [ ] Com arquivo sem alterações, usar `:q` e confirmar retorno ao terminal;
+  com alterações, confirmar o aviso e testar `:wq` e `:q!`.
 - [ ] Confirmar que o título e a instrução do desafio continuam visíveis e que
   a seleção fica bloqueada enquanto o Vim está aberto.
 - [ ] Percorrer um arquivo com mais linhas que a janela do Vim e mover o cursor

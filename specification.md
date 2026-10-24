@@ -161,6 +161,14 @@ a inserção de texto.
 
 No Vim, a tela mostra o nome do arquivo e o modo (`NORMAL` ou `INSERT`) numa barra de status. O editor só captura teclas depois que `vim arquivo` o abre e enquanto ele está focado; atalhos fora dele nunca são bloqueados. A interpretação de comandos fica separada da renderização.
 
+O campo de comando Ex aparece abaixo da barra de status e mostra o buffer
+enquanto a pessoa digita `:` e o comando, antes de pressionar `Enter`. `i` muda
+o estado visível para `INSERT`; `Esc` retorna a `NORMAL`. `:q` volta ao terminal
+se não houver alterações pendentes; com alterações, informa que é necessário
+usar `:wq` para salvar e sair ou `:q!` para descartar e sair.
+Mensagens importantes do simulador, inclusive o aviso de alterações pendentes,
+também aparecem visualmente dentro da janela do Vim.
+
 No modo de inserção, `Backspace` apaga o caractere anterior ao cursor. No início
 de uma linha, une essa linha à anterior; no início do arquivo, não altera o
 texto. A sessão continua sendo uma única alteração para `u`, e `.` repete a
