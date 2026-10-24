@@ -234,6 +234,10 @@ def main():
         mobile = execute("return {width: innerWidth, page: document.documentElement.scrollWidth}")
         assert 300 <= mobile['width'] <= 360, f"viewport móvel inesperada: {mobile}"
         assert mobile['page'] <= mobile['width'], f"transbordamento móvel: {mobile}"
+        command('/goog/cdp/execute', {
+            'cmd': 'Emulation.setTouchEmulationEnabled',
+            'params': {'enabled': True, 'maxTouchPoints': 1},
+        })
         execute("""
           document.documentElement.style.scrollBehavior = 'auto';
           document.querySelector('.terminal-screen').scrollIntoView({block: 'center', behavior: 'instant'});
@@ -249,8 +253,8 @@ def main():
             bottom: Math.min(viewport.height, rect.bottom)
           };
           let point = null;
-          for (const yRatio of [0.25, 0.5, 0.75]) {
-            for (const xRatio of [0.25, 0.5, 0.75]) {
+          for (const yRatio of [0.75, 0.5, 0.25]) {
+            for (const xRatio of [0.5, 0.25, 0.75]) {
               const x = Math.floor(visible.left + (visible.right - visible.left) * xRatio);
               const y = Math.floor(visible.top + (visible.bottom - visible.top) * yRatio);
               if (screen.contains(document.elementFromPoint(x, y))) {
@@ -274,10 +278,6 @@ def main():
             0 <= touch_point['x'] < mobile['width']
             and 0 <= touch_point['y'] < touch_point['viewport']['height']
         ), f"coordenada de toque fora da viewport: {touch_point}"
-        command('/goog/cdp/execute', {
-            'cmd': 'Emulation.setTouchEmulationEnabled',
-            'params': {'enabled': True, 'maxTouchPoints': 1},
-        })
         command('/goog/cdp/execute', {
             'cmd': 'Input.dispatchTouchEvent',
             'params': {

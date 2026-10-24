@@ -23,14 +23,12 @@ em português do Brasil.
 - O resultado do workflow e a situação de publicação ficam registrados em
   `PLANS.md`.
 
-**Estado atual:** a investigação dos workflows confirmou que renderização,
-testes unitários e auditoria HTML passam. O smoke falhava primeiro por medir
-durante a rolagem suave; depois, o run `40140176786` mostrou que a ação de
-ponteiro ainda deslocava a página e o toque terminava sobre um cartão. O teste
-agora usa `scrollIntoView` instantâneo e eventos de toque do Chrome DevTools sem
-ação de movimento. O workflow `40140400539` passou no Chrome, inclusive no foco
-da linha de comando em viewport móvel. A correção está validada na branch; resta
-integrá-la ao `master`, alinhar a tag e confirmar a publicação.
+**Estado atual:** renderização, testes unitários e auditoria HTML passam
+localmente. As execuções móveis mostraram que a linha de comando pode ficar sem
+largura útil em viewport estreita e que o seletor fixo pode cobrir pontos do
+terminal. O teste agora ativa emulação primeiro, rola a área visível do
+terminal com comportamento instantâneo e escolhe um ponto realmente atingido
+por ela, evitando o seletor. A revisão local passou; falta a validação remota.
 
 **Branch de trabalho:** `release/1.0.2`, criada a partir da `master` no commit
 `bd32474`.
