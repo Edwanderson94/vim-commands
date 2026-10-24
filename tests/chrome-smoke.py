@@ -236,7 +236,7 @@ def main():
         assert mobile['page'] <= mobile['width'], f"transbordamento móvel: {mobile}"
         execute("""
           document.documentElement.style.scrollBehavior = 'auto';
-          document.querySelector('.terminal-screen').scrollIntoView({block: 'center', behavior: 'auto'});
+          document.querySelector('.terminal-screen').scrollIntoView({block: 'center', behavior: 'instant'});
         """)
         touch_point = execute("""
           const screen = document.querySelector('.terminal-screen');
