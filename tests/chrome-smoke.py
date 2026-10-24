@@ -275,13 +275,16 @@ def main():
             and 0 <= touch_point['y'] < touch_point['viewport']['height']
         ), f"coordenada de toque fora da viewport: {touch_point}"
         command('/actions', {'actions': [{'type': 'pointer', 'id': 'touch', 'parameters': {'pointerType': 'touch'}, 'actions': [
-            {'type': 'pointerMove', 'x': touch_point['x'], 'y': touch_point['y'], 'duration': 50},
+            {'type': 'pointerMove', 'x': touch_point['x'], 'y': touch_point['y'], 'duration': 0},
             {'type': 'pointerDown', 'button': 0}, {'type': 'pointerUp', 'button': 0}
         ]}]})
         touch_result = command('/execute/sync', {
             'script': """
               const target = document.elementFromPoint(arguments[0], arguments[1]);
+              const rect = document.querySelector('.terminal-screen').getBoundingClientRect();
               return {focused: document.activeElement.id,
+                      scrollY,
+                      terminalRect: {left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom},
                       hit: target && {id: target.id, className: target.className,
                                       insideTerminal: Boolean(target.closest('.terminal-screen'))}};
             """,
