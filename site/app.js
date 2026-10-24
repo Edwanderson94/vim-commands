@@ -9,29 +9,41 @@ const level = find('#level');
 const list = find('#command-list');
 const empty = find('#empty-state');
 const summary = find('#summary');
-
-for (const value of [...new Set(commands.map((command) => command.category))]) {
-  category.insertAdjacentHTML('beforeend', '<option value="' + value + '">' + value + '</option>');
-}
-
+const lessonByCategory = { início: 'Aula 2', navegação: 'Aula 3', edição: 'Aula 3', busca: 'Aula 4', arquivos: 'Aula 5' };
 const normalize = (value) => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 
-function render() {
+function element(tag, text, className) {
+  const node = document.createElement(tag);
+  if (text !== undefined) node.textContent = text;
+  if (className) node.className = className;
+  return node;
+}
+
+for (const value of [...new Set(commands.map((command) => command.category))]) {
+  category.append(element('option', value));
+  category.lastElementChild.value = value;
+}
+
+function renderCatalog() {
   const term = normalize(search.value);
   const filtered = commands.filter((command) => {
     const text = normalize([command.keys, command.title, command.description, command.category, command.mode].join(' '));
     return (!term || text.includes(term)) && (!category.value || command.category === category.value) && (!level.value || command.level === level.value);
   });
-
-  list.innerHTML = filtered.map((command) =>
-    '<article class="command-card"><span class="key">' + command.keys + '</span><h3>' + command.title + '</h3><p>' + command.description + '</p><small>' + command.category + ' · ' + command.mode + ' · ' + command.level + '</small></article>'
-  ).join('');
-  summary.textContent = filtered.length + ' de ' + commands.length + ' comandos exibidos.';
+  list.replaceChildren(...filtered.map((command) => {
+    const card = element('article', undefined, 'command-card');
+    card.append(element('span', command.keys, 'key'), element('h3', command.title), element('p', command.description));
+    card.append(element('small', `${command.category} · ${command.mode} · ${command.level} · ${lessonByCategory[command.category]}`));
+    return card;
+  }));
+  summary.textContent = `${filtered.length} de ${commands.length} comandos exibidos.`;
   empty.hidden = filtered.length !== 0;
 }
 
-[search, category, level].forEach((element) => element.addEventListener('input', render));
-find('#clear-filters').addEventListener('click', () => { search.value = ''; category.value = ''; level.value = ''; render(); search.focus(); });
+[search, category, level].forEach((control) => control.addEventListener('input', renderCatalog));
+find('#clear-filters').addEventListener('click', () => {
+  search.value = ''; category.value = ''; level.value = ''; renderCatalog(); search.focus();
+});
 
 const toggle = find('#theme-toggle');
 function setTheme(dark) {
@@ -42,21 +54,70 @@ function setTheme(dark) {
 }
 setTheme(localStorage.getItem('vim-theme') === 'dark');
 toggle.addEventListener('click', () => setTheme(document.documentElement.dataset.theme !== 'dark'));
-render();
+
 let simulator = createState();
 let active = false;
 const editor = find('#simulator-editor');
 const challengeSelect = find('#challenge-select');
-for (const challenge of challenges) challengeSelect.insertAdjacentHTML('beforeend', '<option value="' + challenge.id + '">' + challenge.title + '</option>');
+for (const challenge of challenges) {
+  const option = element('option', challenge.title);
+  option.value = challenge.id;
+  challengeSelect.append(option);
+}
+
+function renderEditor() {
+  const fragment = document.createDocumentFragment();
+  simulator.lines.forEach((line, lineIndex) => {
+    const row = element('div', undefined, `editor-line${lineIndex === simulator.cursor.line ? ' is-current' : ''}`);
+    row.append(element('span', String(lineIndex + 1), 'line-number'));
+    const content = element('span', undefined, 'line-content');
+    for (let index = 0; index <= line.length; index += 1) {
+      if (lineIndex === simulator.cursor.line && index === simulator.cursor.column) content.append(element('span', index < line.length ? line[index] : ' ', 'cursor'));
+      else if (index < line.length) content.append(document.createTextNode(line[index]));
+    }
+    row.append(content); fragment.append(row);
+  });
+  editor.replaceChildren(fragment);
+}
+
 function drawSimulator() {
-  editor.textContent = simulator.lines.map((line, index) => (index + 1) + '  ' + line).join('\n');
+  renderEditor();
   find('#simulator-mode').textContent = simulator.mode.toUpperCase();
+  find('#simulator-command').textContent = simulator.commandBuffer || '—';
+  find('#simulator-history').textContent = simulator.keyHistory.length ? simulator.keyHistory.join(' ') : '—';
   find('#simulator-feedback').textContent = simulator.feedback;
   const challenge = challenges.find((item) => item.id === challengeSelect.value);
+  find('#challenge-instruction').textContent = challenge ? challenge.instruction : 'Escolha um desafio para carregar um texto de prática.';
   find('#challenge-status').textContent = challenge && challenge.isComplete(simulator) ? 'Desafio concluído.' : '';
 }
-challengeSelect.addEventListener('input', () => { const challenge = challenges.find((item) => item.id === challengeSelect.value); if (challenge) { simulator = createState(challenge.initialLines); simulator.feedback = challenge.instruction; drawSimulator(); } });
-find('#activate-simulator').addEventListener('click', () => { active = true; editor.focus(); simulator.feedback = 'Simulador ativado.'; drawSimulator(); });
-find('#reset-simulator').addEventListener('click', () => { simulator = createState(); drawSimulator(); });
-editor.addEventListener('keydown', (event) => { if (!active) return; if (event.ctrlKey && event.key !== 'r') return; event.preventDefault(); applyKey(simulator, event.ctrlKey ? 'Ctrl-r' : event.key); drawSimulator(); });
+
+function loadChallenge() {
+  const challenge = challenges.find((item) => item.id === challengeSelect.value);
+  if (!challenge) return;
+  simulator = createState(challenge.initialLines);
+  simulator.feedback = challenge.instruction;
+  active = false;
+  drawSimulator();
+}
+
+challengeSelect.addEventListener('change', loadChallenge);
+find('#restart-challenge').addEventListener('click', loadChallenge);
+find('#activate-simulator').addEventListener('click', () => {
+  active = true;
+  simulator.feedback = 'Simulador ativado. Use o teclado nesta área.';
+  editor.focus();
+  drawSimulator();
+});
+find('#reset-simulator').addEventListener('click', () => {
+  simulator = createState(); challengeSelect.value = ''; active = false; drawSimulator();
+});
+editor.addEventListener('keydown', (event) => {
+  if (!active) return;
+  if (event.ctrlKey && event.key.toLowerCase() !== 'r') return;
+  event.preventDefault();
+  applyKey(simulator, event.ctrlKey ? 'Ctrl-r' : event.key);
+  drawSimulator();
+});
+
+renderCatalog();
 drawSimulator();

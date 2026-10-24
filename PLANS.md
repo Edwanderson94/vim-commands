@@ -59,13 +59,16 @@ e navegadores; adicionar testes unitários para estado e interpretador.
 
 **Lacunas registradas em 2026-10-23:**
 
-- O `u` desfaz cada caractere inserido separadamente; deve desfazer uma sessão
-  de inserção como uma única alteração. A repetição com `.` também não cobre
-  inserções.
-- Ao publicar somente `site/`, os links `../content/`, `../lessons/` e
-  `../exercises/` não fazem parte do artefato publicado e retornam 404.
-- Ainda faltam testes unitários do interpretador e validação manual de
-  responsividade, teclado, leitores de tela, Chrome e Firefox.
+**Correções em validação:**
+
+- O simulador agora registra uma sessão de inserção como uma alteração e `.`
+  a repete; os testes em `tests/simulator.test.mjs` cobrem inserir, desfazer,
+  refazer, repetir, remover, copiar, buscar e comandos Ex simulados.
+- O artefato do GitHub Pages preserva `site/` e os materiais Markdown na raiz,
+  mantendo os links relativos usados pelo site local e publicado.
+
+**Ainda falta:** validação manual de responsividade, teclado, leitores de tela,
+Chrome e Firefox.
 
 **Publicação de validação:** o workflow do GitHub Pages publica `site/` a
 partir da branch `release/1.0.0`. Ela permite validar o catálogo, tema,
@@ -77,8 +80,6 @@ autorização explícita.
 
 ## Sequência imediata
 
-1. Validar a página publicada e registrar resultados.
-2. Corrigir transação de inserção/desfazer e repetição com `.`.
-3. Definir uma estratégia para publicar também o conteúdo Markdown ou adaptar
-   os links do site.
-4. Adicionar testes e executar as verificações de qualidade da Fase 4.
+1. Publicar estas correções e validar a página publicada.
+2. Testar manualmente responsividade, teclado, leitor de tela, Chrome e Firefox.
+3. Registrar os resultados e corrigir eventuais regressões encontradas.

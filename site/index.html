@@ -19,7 +19,7 @@
     <button id="theme-toggle" type="button" aria-pressed="false">Tema escuro</button>
   </header>
   <main>
-    <section id="inicio" aria-labelledby="titulo">
+    <section id="inicio" class="hero" aria-labelledby="titulo">
       <p>VIM NO TERMINAL, SEM PRESSA</p>
       <h1 id="titulo">Aprenda comandos que ficam na memória.</h1>
       <p>Uma trilha curta, exemplos seguros e uma referência rápida para praticar Vim com confiança.</p>
@@ -29,7 +29,7 @@
     </section>
     <section id="aulas" aria-labelledby="titulo-aulas">
       <h2 id="titulo-aulas">Trilha inicial</h2>
-      <ol>
+      <ol class="lessons">
         <li><a href="../lessons/01-terminal-e-arquivos.md">Terminal e arquivos</a></li>
         <li><a href="../lessons/02-primeiro-arquivo-no-vim.md">Primeiro arquivo no Vim</a></li>
         <li><a href="../lessons/03-movimento-e-edicao.md">Movimento e edição</a></li>
@@ -39,17 +39,16 @@
     </section>
     <section id="comandos" aria-labelledby="titulo-comandos">
       <h2 id="titulo-comandos">30 comandos essenciais</h2>
-      <label for="search">Buscar comando</label>
-      <input id="search" type="search" placeholder="Ex.: dd, apagar, normal">
-      <label for="category">Categoria</label>
-      <select id="category"><option value="">Todas</option></select>
-      <label for="level">Nível</label>
-      <select id="level"><option value="">Todos</option><option value="iniciante">Iniciante</option></select>
+      <div class="filters">
+        <label for="search">Buscar comando<input id="search" type="search" placeholder="Ex.: dd, apagar, normal"></label>
+        <label for="category">Categoria<select id="category"><option value="">Todas</option></select></label>
+        <label for="level">Nível<select id="level"><option value="">Todos</option><option value="iniciante">Iniciante</option></select></label>
+      </div>
       <p id="summary" aria-live="polite"></p>
       <div id="command-list"></div>
       <div id="empty-state" hidden><p>Nenhum comando encontrado.</p><button id="clear-filters" type="button">Limpar filtros</button></div>
     </section>
-    <section id="praticar" aria-labelledby="titulo-praticar">
+    <section id="praticar" class="practice" aria-labelledby="titulo-praticar">
       <h2 id="titulo-praticar">Pratique com segurança</h2>
       <p>Ative o simulador e use o teclado somente dentro da área de prática.</p>
       <button id="activate-simulator" type="button">Ativar simulador</button>
@@ -57,8 +56,14 @@
       <p>Modo: <strong id="simulator-mode">NORMAL</strong></p>
       <label for="challenge-select">Desafio</label>
       <select id="challenge-select"><option value="">Escolha um desafio</option></select>
+      <button id="restart-challenge" type="button">Reiniciar desafio</button>
+      <p id="challenge-instruction"></p>
       <p id="challenge-status" aria-live="polite"></p>
       <div id="simulator-editor" tabindex="0" aria-label="Área de prática do simulador" aria-describedby="simulator-feedback"></div>
+      <dl class="simulator-meta">
+        <div><dt>Comando</dt><dd id="simulator-command">—</dd></div>
+        <div><dt>Histórico</dt><dd id="simulator-history">—</dd></div>
+      </dl>
       <p id="simulator-feedback" aria-live="polite"></p>
       <a href="../exercises/modos-e-insercao.md">Abrir primeiro exercício</a>
     </section>
