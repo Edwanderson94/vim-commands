@@ -20,14 +20,19 @@ mensagem diagnóstica. Firefox WebDriver confirmou que o toque foca
 `terminal-input`; a geometria em Chrome ainda precisa ser confirmada pelo
 workflow, pois ChromeDriver não está disponível localmente.
 
-O workflow também passou a observar `release/**`, para validar e publicar a
-nova branch `release/1.0.2` e as próximas branches de release sem depender de
-um nome de versão fixo.
+O workflow agora separa validação e publicação: valida pushes em `release/**`
+sem exigir o ambiente `github-pages`, e publica somente após uma validação
+verde em `master`. Isso permite que a branch de release execute o Chrome smoke
+sem ser bloqueada pelas regras de deploy do ambiente.
 
 As verificações locais `python3 -m py_compile tests/chrome-smoke.py`,
 `node scripts/render-markdown.mjs`, `node tests/simulator.test.mjs`,
 `python3 tests/site-validation.py` e `git diff --check` passaram. A correção está
-local na `release/1.0.2`; ainda não foi enviada nem publicada.
+no commit `6c1f984` da `release/1.0.2`. A execução `40139686095` foi bloqueada
+antes da validação porque as regras do ambiente `github-pages` não permitem
+deploy direto dessa branch. A separação entre validação e deploy está em revisão
+local; após o push, o workflow poderá validar a release e só publicar depois da
+promoção validada para `master`.
 
 ## Histórico — release/1.0.1
 
