@@ -27,8 +27,10 @@ em português do Brasil.
 testes unitários e auditoria HTML passam. O smoke falhava primeiro por medir
 durante a rolagem suave; depois, o run `40140176786` mostrou que a ação de
 ponteiro ainda deslocava a página e o toque terminava sobre um cartão. O teste
-agora usa eventos de toque do Chrome DevTools sem ação de movimento. Essa última
-correção ainda precisa passar no workflow antes de concluir a release.
+agora usa `scrollIntoView` instantâneo e eventos de toque do Chrome DevTools sem
+ação de movimento. O workflow `40140400539` passou no Chrome, inclusive no foco
+da linha de comando em viewport móvel. A correção está validada na branch; resta
+integrá-la ao `master`, alinhar a tag e confirmar a publicação.
 
 **Branch de trabalho:** `release/1.0.2`, criada a partir da `master` no commit
 `bd32474`.
