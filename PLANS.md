@@ -21,8 +21,12 @@ viewport desktop. No workflow `40139803427`, o erro de coordenadas foi removido,
 mas o toque não focou a linha de comando: o log mostrou que, após o movimento de
 50 ms, o ponto passou a atingir um cartão de comando. O smoke agora usa duração
 zero para posicionar o ponteiro antes do toque e confirma o alvo e o foco.
-`40140038307` passou no Chrome, inclusive no toque móvel e no foco de
-`terminal-input`.
+`40140038307` passou na branch, mas o run posterior em `master`
+`40140176786` repetiu a falha: o ponteiro deslocou a página e o toque terminou
+sobre um cartão. O teste agora usa `scrollIntoView` com `behavior: 'instant'` e
+eventos `touchStart`/`touchEnd` do Chrome DevTools, sem movimento intermediário.
+O workflow `40140400539` passou no Chrome e confirmou o foco de
+`terminal-input` em viewport móvel.
 
 O workflow agora separa validação e publicação: valida pushes em `release/**`
 sem exigir o ambiente `github-pages`, e publica somente após uma validação
@@ -33,9 +37,11 @@ As verificações locais `python3 -m py_compile tests/chrome-smoke.py`,
 `node scripts/render-markdown.mjs`, `node tests/simulator.test.mjs`,
 `python3 tests/site-validation.py` e `git diff --check` passaram. O workflow
 `40139686095` foi bloqueado pelas regras do ambiente `github-pages` antes da
-validação; `40139803427` revelou a falha de foco; `40140038307` passou depois da
-correção. A branch `release/1.0.2` está validada. O deploy será executado pelo
-workflow após o merge em `master`.
+validação. O run de `master` `40140176786` falhou no foco móvel; a branch de
+release foi corrigida e o workflow `40140400539` passou em Chrome. A tag `1.0.2`
+foi criada antes dessa correção, no merge `2fa7f96`; ao promover o commit
+validado, alinhar a tag ao novo merge e remover a branch de release. O deploy de
+Pages deve ser confirmado pelo workflow executado em `master`.
 
 ## Histórico — release/1.0.1
 

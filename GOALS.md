@@ -23,14 +23,14 @@ em português do Brasil.
 - O resultado do workflow e a situação de publicação ficam registrados em
   `PLANS.md`.
 
-**Estado atual:** a investigação do workflow `40138061252` confirmou que as etapas
-de renderização, testes unitários e auditoria HTML passaram. O smoke test falhava
-porque calculava o toque antes de a rolagem suave terminar. Depois de tornar a
-rolagem instantânea, o workflow `40139803427` mostrou que o movimento do ponteiro
-de 50 ms deslocava a página antes do toque. O teste agora usa movimento de
-duração zero e escolhe um ponto visível dentro do terminal. O workflow
-`40140038307` passou no Chrome e validou o fluxo; o deploy está configurado para
-acontecer após o merge em `master`.
+**Estado atual:** a investigação dos workflows confirmou que renderização,
+testes unitários e auditoria HTML passam. O smoke falhava primeiro por medir
+durante a rolagem suave; depois, o run `40140176786` mostrou que a ação de
+ponteiro ainda deslocava a página e o toque terminava sobre um cartão. O teste
+agora usa `scrollIntoView` instantâneo e eventos de toque do Chrome DevTools sem
+ação de movimento. O workflow `40140400539` passou no Chrome, inclusive no foco
+da linha de comando em viewport móvel. A correção está validada na branch; resta
+integrá-la ao `master`, alinhar a tag e confirmar a publicação.
 
 **Branch de trabalho:** `release/1.0.2`, criada a partir da `master` no commit
 `bd32474`.
