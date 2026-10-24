@@ -139,14 +139,19 @@ observado.
 
 ### QA-11 — Comandos permitidos e limites do terminal
 
-- [ ] Executar `pwd`, `ls` e `vim teste.txt`.
-- [ ] Tentar comandos que não pertencem ao terminal mínimo: `help`, `cat teste.txt`,
+- [ ] Executar `pwd`, `ls`, `cat teste.txt` e `vim teste.txt`.
+- [ ] Salvar algum texto no Vim com `:wq` e confirmar que `cat teste.txt`
+  mostra o conteúdo salvo.
+- [ ] Tentar comandos que não pertencem ao terminal mínimo: `help`,
   `touch outro.txt`, `cd /tmp` e `clear`.
 - [ ] Tentar abrir caminho fora da pasta virtual com `vim ../fora.txt`.
+- [ ] Tentar ler caminho fora da pasta e opção não suportada com `cat ../fora.txt`
+  e `cat -n teste.txt`.
 - [ ] Tentar encadear comandos, por exemplo `pwd; ls`.
-- **Esperado:** apenas `pwd`, `ls` e `vim arquivo` são aceitos; comandos fora
-  dessa lista, caminhos e operadores de shell são recusados. Nenhum comando real
-  do sistema é executado.
+- **Esperado:** `pwd`, `ls`, `cat arquivo` e `vim arquivo` são aceitos; `cat`
+  só lê arquivos virtuais existentes em `/home/aluno`. Outros comandos,
+  caminhos fora da pasta e operadores de shell são recusados. Nenhum comando
+  real do sistema é executado.
 
 ### QA-12 — Foco e captura de teclas
 

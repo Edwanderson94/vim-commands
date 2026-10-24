@@ -303,6 +303,12 @@ alterações, também ficam visíveis na janela e não dependem de leitor de tel
 pessoa responsável e delimita que a lista ampla ali reunida não amplia os
 comandos aceitos pelo simulador.
 
+**Comando de terminal adicionado:** a solicitação para usar `cat teste.txt`
+agora é atendida por um `cat arquivo` restrito ao sistema de arquivos virtual
+em `/home/aluno`. O conteúdo salvo com `:wq` pode ser lido pelo terminal; nomes
+inexistentes, opções, caminhos externos e operadores são recusados. A
+especificação, os guias, a checklist e os testes foram atualizados.
+
 ## Auditoria de promoção da 1.0.0
 
 **Estado do goal:** os quatro resultados descritos em `GOALS.md` estão

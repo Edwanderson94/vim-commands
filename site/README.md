@@ -7,7 +7,8 @@ e páginas HTML derivadas dos materiais Markdown. Na área de prática, uma úni
 janela de terminal em `/home/aluno` já contém `teste.txt`; não há botão de
 execução ou campo de comando separado. Digite `vim teste.txt` diretamente no
 prompt para abrir o arquivo no Vim simulado. A camada Linux aceita somente
-`pwd`, `ls` e `vim`. O seletor prepara o texto de um desafio no mesmo arquivo
+`pwd`, `ls`, `cat arquivo` e `vim arquivo`; `cat` lê arquivos salvos na pasta
+virtual, por exemplo `cat teste.txt` após `:wq`. O seletor prepara o texto de um desafio no mesmo arquivo
 `teste.txt`; o aluno o abre pelo terminal com `vim teste.txt`. O painel e a
 instrução do desafio permanecem visíveis durante a edição, e a seleção fica
 bloqueada até o Vim ser fechado. O cursor pode ser navegado com `h`, `j`, `k`,

@@ -9,8 +9,9 @@ no site, que também oferece catálogo, simulador e desafios interativos.
 Abra [Vim Commands — site estático](https://edwanderson94.github.io/vim-commands/site/)
 no navegador para usar a trilha, consultar os comandos e praticar. Na área de
 prática há um único terminal simulado em `/home/aluno`: digite `vim teste.txt`
-diretamente após o prompt e pressione `Enter`. A camada Linux aceita somente
-`pwd`, `ls` e `vim`; o arquivo é editado no Vim simulado.
+diretamente após o prompt e pressione `Enter`. A camada Linux aceita `pwd`,
+`ls`, `cat arquivo` e `vim arquivo`; `cat teste.txt` exibe o conteúdo salvo e o
+arquivo pode ser editado no Vim simulado.
 O painel do desafio permanece visível quando o Vim abre. Escolha uma atividade
 antes de editar; a seleção fica bloqueada enquanto o arquivo estiver aberto.
 

@@ -104,8 +104,9 @@ linha (`aluno@vim:/home/aluno$`) e entrada editável dentro da própria janela,
 sem formulário, campo ou botão separado para executar comandos. A pessoa digita
 diretamente após o prompt e pressiona `Enter`. O diretório inicial é
 `/home/aluno` e já contém o arquivo vazio `teste.txt`. A camada de terminal
-aceita somente `pwd`, `ls` e `vim arquivo`; não oferece comandos para criar
-pastas, navegar entre diretórios, listar opções, ler arquivos ou limpar a tela.
+aceita `pwd`, `ls`, `cat arquivo` e `vim arquivo`; `cat` mostra somente o
+conteúdo de arquivos existentes no sistema virtual. Não oferece comandos para
+criar pastas, navegar entre diretórios, listar opções ou limpar a tela.
 Comandos e argumentos fora desse escopo são recusados. Não interpreta
 operadores, encadeamento, redirecionamento, substituição, scripts nem comandos
 arbitrários. Os arquivos existem apenas em memória e são descartados ao

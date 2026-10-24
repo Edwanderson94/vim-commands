@@ -24,6 +24,14 @@
       const names = [...files.keys()].map((path) => path.slice(root.length + 1)).sort();
       return { output: names.join('  ') || '(diretório vazio)', action: null };
     }
+    if (command === 'cat') {
+      if (args.length !== 1 || !/^[\p{L}\p{N}_.-]+$/u.test(args[0]) || args[0] === '.' || args[0] === '..' || args[0].startsWith('-')) {
+        return { output: 'Uso: cat nome-do-arquivo', action: null };
+      }
+      const path = `${root}/${args[0]}`;
+      if (!files.has(path)) return { output: `cat: ${args[0]}: arquivo não encontrado.`, action: null };
+      return { output: files.get(path), action: null };
+    }
     if (command === 'vim') {
       if (args.length !== 1 || !/^[\p{L}\p{N}_.-]+$/u.test(args[0]) || args[0] === '.' || args[0] === '..' || args[0].startsWith('-')) {
         return { output: 'Uso: vim nome-do-arquivo', action: null };
@@ -36,7 +44,7 @@
       };
     }
     return {
-      output: `Comando não disponível: ${command}. Comandos disponíveis: pwd, ls, vim.`,
+      output: `Comando não disponível: ${command}. Comandos disponíveis: pwd, ls, cat, vim.`,
       action: null
     };
   }

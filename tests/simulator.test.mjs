@@ -12,13 +12,18 @@ assert.equal(terminal.execute('pwd').output, '/home/aluno');
 assert.equal(terminal.prompt(), 'aluno@vim:/home/aluno$');
 assert.equal(terminal.execute('ls').output, 'teste.txt', 'teste.txt já existe no diretório inicial');
 assert.deepEqual(terminal.execute('vim teste.txt').action.lines, [''], 'vim abre o arquivo inicial existente');
+assert.equal(terminal.execute('cat teste.txt').output, '', 'cat lê o arquivo virtual vazio');
 assert.equal(terminal.execute('pwd').output, '/home/aluno');
 const opened = terminal.execute('vim rascunho.txt');
 assert.equal(opened.action.type, 'vim');
 terminal.save(opened.action.path, ['Olá, Vim!']);
+assert.equal(terminal.execute('cat rascunho.txt').output, 'Olá, Vim!', 'cat mostra o conteúdo virtual salvo pelo Vim');
 assert.deepEqual(terminal.execute('vim rascunho.txt').action.lines, ['Olá, Vim!'], 'vim reabre o conteúdo salvo em memória');
-assert.match(terminal.execute('help').output, /Comandos disponíveis: pwd, ls, vim/);
-for (const command of ['cat teste.txt', 'touch outro.txt', 'mkdir pasta', 'cd /tmp', 'clear']) {
+assert.match(terminal.execute('cat inexistente.txt').output, /arquivo não encontrado/);
+assert.match(terminal.execute('cat ../fora.txt').output, /Uso: cat/);
+assert.match(terminal.execute('cat -n teste.txt').output, /Uso: cat/);
+assert.match(terminal.execute('help').output, /Comandos disponíveis: pwd, ls, cat, vim/);
+for (const command of ['touch outro.txt', 'mkdir pasta', 'cd /tmp', 'clear', 'help']) {
   assert.match(terminal.execute(command).output, /Comando não disponível/,
     `${command} não pertence à camada de terminal permitida`);
 }

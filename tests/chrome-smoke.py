@@ -143,8 +143,11 @@ def main():
             actions.extend([{'type': 'keyDown', 'value': key}, {'type': 'keyUp', 'value': key}])
         command('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': actions}]})
         run_terminal('cat teste.txt')
+        displayed = execute("return document.querySelector('#terminal-output').textContent")
+        assert 'O!' in displayed, displayed
+        run_terminal('cat ../fora.txt')
         rejected = execute("return document.querySelector('#terminal-output').textContent")
-        assert 'Comando não disponível: cat' in rejected, rejected
+        assert 'Uso: cat' in rejected, rejected
         run_terminal('rm -rf /')
         rejected = execute("return document.querySelector('#terminal-output').textContent")
         assert 'Comando não disponível' in rejected, rejected
