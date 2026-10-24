@@ -24,13 +24,13 @@ em português do Brasil.
   `PLANS.md`.
 
 **Estado atual:** a investigação do workflow `40138061252` confirmou que as etapas
-de renderização, testes unitários e auditoria HTML passaram. O smoke test falhou
-ao enviar um toque fora dos limites porque media o retângulo durante a rolagem
-suave. A correção removeu esse erro; no workflow `40139803427`, o toque deixou de
-falhar por coordenadas, mas a linha de comando não recebeu foco. A branch agora
-faz a seleção de um ponto realmente visível dentro do terminal e registra o
-elemento atingido para diagnosticar essa segunda falha. Firefox confirmou a
-interação em viewport desktop; a confirmação em Chrome móvel continua pendente.
+de renderização, testes unitários e auditoria HTML passaram. O smoke test falhava
+porque calculava o toque antes de a rolagem suave terminar. Depois de tornar a
+rolagem instantânea, o workflow `40139803427` mostrou que o movimento do ponteiro
+de 50 ms deslocava a página antes do toque. O teste agora usa movimento de
+duração zero e escolhe um ponto visível dentro do terminal. O workflow
+`40140038307` passou no Chrome e validou o fluxo; o deploy está configurado para
+acontecer após o merge em `master`.
 
 **Branch de trabalho:** `release/1.0.2`, criada a partir da `master` no commit
 `bd32474`.
