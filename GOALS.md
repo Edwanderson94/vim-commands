@@ -17,8 +17,8 @@ em português do Brasil.
 **Critérios para concluir a correção:**
 
 - O teste evita a animação global de rolagem antes de medir a posição do terminal.
-- O ponto de toque está dentro da interseção visível e o toque ainda foca a linha
-  de comando.
+- O ponto testado está na área visível do terminal em viewport móvel e o evento
+  de clique foca a linha de comando.
 - Sintaxe, testes do simulador, auditoria do site e smoke test de navegador passam.
 - O resultado do workflow e a situação de publicação ficam registrados em
   `PLANS.md`.
@@ -26,9 +26,14 @@ em português do Brasil.
 **Estado atual:** renderização, testes unitários e auditoria HTML passam
 localmente. As execuções móveis mostraram que a linha de comando pode ficar sem
 largura útil em viewport estreita e que o seletor fixo pode cobrir pontos do
-terminal. O teste agora ativa emulação primeiro, rola a área visível do
-terminal com comportamento instantâneo e escolhe um ponto realmente atingido
-por ela, evitando o seletor. A revisão local passou; falta a validação remota.
+terminal. O teste agora rola a área visível do terminal com comportamento
+instantâneo e escolhe um ponto realmente atingido
+por ela, evitando o seletor. O workflow `40140814346` passou na branch, mas a
+execução da integração em `master` (`40140870261`) mostrou que os eventos CDP de
+toque ainda provocam rolagem variável. A revisão atual mantém o cálculo do ponto
+visível e valida o evento `click` que a interface usa para focar a linha de
+comando, sem depender da rolagem automática do navegador durante o gesto.
+Precisa passar novamente no workflow da release e da master.
 
 **Branch de trabalho:** `release/1.0.2`, criada a partir da `master` no commit
 `bd32474`.
