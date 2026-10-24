@@ -2,10 +2,23 @@ import assert from 'node:assert/strict';
 import simulator from '../site/simulator.js';
 import challengeData from '../site/challenges.js';
 import commandData from '../site/commands.js';
+import terminal from '../site/terminal.js';
 
 const { applyKey, createState, keyForSimulator } = simulator;
 const { challenges } = challengeData;
 const { commands } = commandData;
+
+assert.equal(terminal.execute('pwd').output, '/home/aluno');
+assert.equal(terminal.execute('mkdir -p ~/vim-pratica').output, '');
+assert.equal(terminal.execute('cd ~/vim-pratica').output, '');
+assert.equal(terminal.execute('pwd').output, '/home/aluno/vim-pratica');
+const opened = terminal.execute('vim ola.txt');
+assert.equal(opened.action.type, 'vim');
+terminal.save(opened.action.path, ['Olá, Vim!']);
+assert.equal(terminal.execute('cat ola.txt').output, 'Olá, Vim!');
+assert.match(terminal.execute('rm -rf /').output, /Comando não disponível/);
+assert.match(terminal.execute('pwd; cat ola.txt').output, /operadores/);
+assert.match(terminal.execute('cd ../../..').output, /somente dentro/);
 
 const press = (state, keys) => { keys.forEach((key) => applyKey(state, key)); return state; };
 
@@ -86,6 +99,8 @@ state = press(createState(['texto']), [':', 'q', 'Enter']);
 assert.match(state.feedback, /sairia/);
 state = press(createState(['texto']), [':', 'q', '!', 'Enter']);
 assert.match(state.feedback, /sairia/);
+state = press(createState(['texto']), [':', 'w', 'q', 'Enter']);
+assert.match(state.feedback, /salvo e editor fechado/);
 
 const challengeSteps = {
   'insert-text': ['i', 'x', 'Escape'],

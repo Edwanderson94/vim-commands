@@ -2,6 +2,7 @@
 const { commands } = globalThis.VimCommands;
 const { createState, applyKey, keyForSimulator } = globalThis.VimSimulator;
 const { challenges } = globalThis.VimChallenges;
+const terminal = globalThis.VimTerminal;
 
 const find = (selector) => document.querySelector(selector);
 const search = find('#search');
@@ -61,8 +62,61 @@ toggle.addEventListener('click', () => setTheme(document.documentElement.dataset
 
 let simulator = createState();
 let active = false;
+let currentFile = null;
+let savedLines = null;
 const editor = find('#simulator-editor');
+const workspace = find('#vim-workspace');
 const challengeSelect = find('#challenge-select');
+const terminalForm = find('#terminal-form');
+const terminalInput = find('#terminal-input');
+const terminalOutput = find('#terminal-output');
+const terminalPrompt = find('#terminal-prompt');
+
+function writeTerminal(command, output) {
+  if (command === 'clear') terminalOutput.replaceChildren();
+  else {
+    const entry = element('p', undefined, 'terminal-entry');
+    entry.append(element('span', `${terminalPrompt.textContent} ${command}`, 'terminal-command'));
+    if (output) entry.append(element('span', output, 'terminal-result'));
+    terminalOutput.append(entry);
+    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+  }
+  if (output) statusAnnouncer.textContent = output;
+}
+
+terminalForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const command = terminalInput.value;
+  const result = terminal.execute(command);
+  writeTerminal(command, result.output);
+  terminalInput.value = '';
+  terminalPrompt.textContent = `${terminal.execute('pwd').output} $`;
+  if (result.action?.type === 'vim') {
+    currentFile = result.action.path;
+    savedLines = [...result.action.lines];
+    simulator = createState(result.action.lines);
+    challengeSelect.value = '';
+    active = true;
+    workspace.hidden = false;
+    drawSimulator(false);
+    simulator.feedback = `Arquivo virtual ${currentFile}. Use i para inserir e :wq para salvar e voltar.`;
+    editor.focus();
+    drawSimulator();
+  } else terminalInput.focus();
+});
+
+function closeVim(saveChanges) {
+  if (saveChanges && currentFile) {
+    terminal.save(currentFile, simulator.lines);
+    savedLines = [...simulator.lines];
+  }
+  currentFile = null;
+  savedLines = null;
+  workspace.hidden = true;
+  active = false;
+  terminalInput.focus();
+  statusAnnouncer.textContent = saveChanges ? 'Arquivo salvo. Voltou ao terminal simulado.' : 'Saiu do Vim sem salvar. Voltou ao terminal simulado.';
+}
 for (const challenge of challenges) {
   const option = element('option', challenge.title);
   option.value = challenge.id;
@@ -108,6 +162,9 @@ function loadChallenge() {
   simulator = createState(challenge.initialLines);
   simulator.feedback = challenge.instruction;
   active = false;
+  currentFile = null;
+  savedLines = null;
+  workspace.hidden = false;
   drawSimulator();
 }
 
@@ -115,22 +172,37 @@ challengeSelect.addEventListener('change', loadChallenge);
 find('#restart-challenge').addEventListener('click', loadChallenge);
 find('#activate-simulator').addEventListener('click', () => {
   active = true;
+  workspace.hidden = false;
   simulator.feedback = 'Simulador ativado. Use o teclado nesta área.';
   editor.focus();
   drawSimulator();
 });
 find('#reset-simulator').addEventListener('click', () => {
-  simulator = createState(); challengeSelect.value = ''; active = false; drawSimulator();
+  simulator = createState(); challengeSelect.value = ''; active = false; currentFile = null; savedLines = null; workspace.hidden = true; drawSimulator();
 });
+find('#back-to-terminal').addEventListener('click', () => closeVim(false));
 editor.addEventListener('keydown', (event) => {
   if (!active) return;
   const key = keyForSimulator(event, simulator);
   if (!key) return;
   event.preventDefault();
+  const exCommand = key === 'Enter' && simulator.commandBuffer.startsWith(':') ? simulator.commandBuffer : '';
   applyKey(simulator, key);
+  if (currentFile && exCommand === ':w') {
+    terminal.save(currentFile, simulator.lines);
+    savedLines = [...simulator.lines];
+    simulator.feedback = 'Arquivo virtual salvo (:w).';
+  }
+  if (currentFile && exCommand === ':wq') { terminal.save(currentFile, simulator.lines); closeVim(true); return; }
+  if (currentFile && exCommand === ':q!') { closeVim(false); return; }
+  if (currentFile && exCommand === ':q') {
+    if (JSON.stringify(simulator.lines) === JSON.stringify(savedLines)) { closeVim(false); return; }
+    simulator.feedback = 'Há alterações não salvas. Use :wq para salvar ou :q! para descartar.';
+  }
   drawSimulator();
 });
 
 renderCatalog(false);
 drawSimulator(false);
+terminalInput.focus();
 })();

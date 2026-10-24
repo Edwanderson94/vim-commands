@@ -186,6 +186,38 @@ kbd, .key {
 .practice label { display: block; margin-top: 1rem; font-weight: 700; }
 .practice #challenge-select { max-width: 32rem; background: #ffffff; color: #172033; }
 
+.practice .terminal-output {
+  min-height: 7rem;
+  max-height: 14rem;
+  overflow: auto;
+  margin-block: 1rem .5rem;
+  padding: .75rem 1rem;
+  border: 1px solid #53627a;
+  border-radius: .5rem;
+  background: #08111f;
+  color: #e5eef8;
+  font: 14px/1.6 ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
+.terminal-entry { margin: 0 0 .5rem; white-space: pre-wrap; overflow-wrap: anywhere; }
+.terminal-command, .terminal-result { display: block; }
+.terminal-command { color: #8ce0d6; }
+.terminal-result { padding-left: 1rem; }
+.practice .terminal-form { display: grid; grid-template-columns: minmax(0, 1fr); gap: .5rem; }
+.practice .terminal-form label { margin: 0; }
+.practice #terminal-input {
+  width: 100%;
+  min-width: 0;
+  padding: .65rem .75rem;
+  border: 1px solid #53627a;
+  border-radius: .4rem;
+  background: #08111f;
+  color: #ffffff;
+  font: 15px ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+.practice #vim-workspace { margin-top: 1.5rem; padding-top: .5rem; border-top: 1px solid #53627a; }
+[hidden] { display: none !important; }
+
 .practice #simulator-editor {
   min-height: 9rem;
   margin-top: 1rem;
@@ -221,6 +253,7 @@ select:focus-visible, #simulator-editor:focus-visible {
   .filters { grid-template-columns: 2fr 1fr 1fr; }
   #command-list, .lessons { grid-template-columns: repeat(2, 1fr); }
   .simulator-meta { grid-template-columns: 1fr 2fr; }
+  .practice .terminal-form { grid-template-columns: minmax(0, 1fr) auto; align-items: end; }
 }
 
 @media (min-width: 1000px) {

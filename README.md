@@ -8,7 +8,8 @@ no site, que também oferece catálogo, simulador e desafios interativos.
 
 Abra [Vim Commands — site estático](https://edwanderson94.github.io/vim-commands/site/)
 no navegador para usar a trilha, consultar os comandos e praticar no
-simulador. A página é publicada a partir da `release/1.0.0` para validação.
+terminal e no Vim simulados. A página é publicada a partir da `release/1.0.0`
+para validação.
 
 ## Estado da release 1.0.0
 

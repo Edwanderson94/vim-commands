@@ -51,22 +51,34 @@
     </section>
     <section id="praticar" class="practice" aria-labelledby="titulo-praticar">
       <h2 id="titulo-praticar">Pratique com segurança</h2>
-      <p id="simulator-instructions">Ative o simulador e use o teclado somente dentro da área de prática. A tecla Tab continua movendo o foco pelos controles.</p>
-      <p>O simulador cobre inserção (<code>i</code>, <code>a</code>, <code>o</code>, <kbd>Esc</kbd>), navegação, edição, busca e os comandos Ex <code>:w</code>, <code>:q</code> e <code>:q!</code>. Os demais comandos do catálogo são referências para praticar no Vim instalado.</p>
+      <p id="simulator-instructions">Use primeiro o terminal simulado. Os comandos e arquivos ficam apenas nesta página; nada é executado no computador. No Vim, use o teclado somente dentro da área de prática. A tecla Tab continua movendo o foco pelos controles.</p>
+      <h3>Terminal simulado</h3>
+      <p>Digite <code>help</code> para ver os comandos. Exemplo: <code>mkdir -p ~/vim-pratica</code>, <code>cd ~/vim-pratica</code>, <code>vim ola.txt</code>.</p>
+      <div id="terminal-output" class="terminal-output" role="log" aria-label="Saída do terminal simulado" aria-live="off"></div>
+      <form id="terminal-form" class="terminal-form">
+        <label for="terminal-input"><span id="terminal-prompt">/home/aluno $</span> Comando do terminal</label>
+        <input id="terminal-input" autocomplete="off" spellcheck="false" aria-describedby="simulator-instructions">
+        <button type="submit">Executar comando simulado</button>
+      </form>
+      <p>O editor abaixo simula o Vim; os comandos digitados nele são diferentes dos comandos do terminal.</p>
       <button id="activate-simulator" type="button">Ativar simulador</button>
       <button id="reset-simulator" type="button">Restaurar texto</button>
-      <p>Modo: <strong id="simulator-mode">NORMAL</strong></p>
       <label for="challenge-select">Desafio</label>
       <select id="challenge-select"><option value="">Escolha um desafio</option></select>
       <button id="restart-challenge" type="button">Reiniciar desafio</button>
       <p id="challenge-instruction"></p>
       <p id="challenge-status" aria-hidden="true"></p>
+      <div id="vim-workspace" hidden>
+      <button id="back-to-terminal" type="button">Voltar ao terminal</button>
+      <p>Modo: <strong id="simulator-mode">NORMAL</strong></p>
+      <p>O Vim simulado cobre inserção (<code>i</code>, <code>a</code>, <code>o</code>, <kbd>Esc</kbd>), navegação, edição, busca e os comandos Ex <code>:w</code>, <code>:q</code>, <code>:q!</code> e <code>:wq</code>.</p>
       <div id="simulator-editor" role="textbox" aria-multiline="true" aria-disabled="true" tabindex="0" aria-label="Área de prática do simulador" aria-describedby="simulator-instructions"></div>
       <dl class="simulator-meta">
         <div><dt>Comando</dt><dd id="simulator-command">—</dd></div>
         <div><dt>Histórico</dt><dd id="simulator-history">—</dd></div>
       </dl>
       <p id="simulator-feedback" aria-hidden="true"></p>
+      </div>
       <a href="materiais/exercises/modos-e-insercao.html">Abrir primeiro exercício</a>
     </section>
   </main>
@@ -74,6 +86,7 @@
   <script src="commands.js"></script>
   <script src="simulator.js"></script>
   <script src="challenges.js"></script>
+  <script src="terminal.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

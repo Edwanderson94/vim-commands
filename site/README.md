@@ -3,7 +3,9 @@
 Interface estática, offline e sem dependências externas. Abra `index.html` em
 um navegador moderno ou sirva a raiz do projeto. O site oferece trilha,
 catálogo pesquisável dos 30 comandos, filtros, tema, simulador, cinco desafios
-e páginas HTML derivadas dos materiais Markdown.
+e páginas HTML derivadas dos materiais Markdown. A área de prática inclui um
+terminal virtual com comandos permitidos e arquivos temporários em memória,
+conectado ao editor Vim simulado.
 
 ## Estado da release 1.0.0
 

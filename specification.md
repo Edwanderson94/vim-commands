@@ -32,6 +32,7 @@ vim-commands/
     ├── commands.js
     ├── simulator.js
     ├── challenges.js
+    ├── terminal.js
     ├── assets/favicon.svg
     ├── materiais.css
     ├── materiais/ (HTML derivado, gerado pelo script)
@@ -64,6 +65,7 @@ O site usa HTML5 semântico, CSS3 e JavaScript puro em arquivos separados, sem f
 | `commands.js` | Dados dos 30 comandos. |
 | `simulator.js` | Estado, teclas e renderização. |
 | `challenges.js` | Dados e validação dos desafios. |
+| `terminal.js` | Interpretador permitido e sistema de arquivos virtual em memória. |
 | `materiais.css` | Estilo das páginas HTML derivadas do Markdown. |
 
 As aulas, módulos e exercícios continuam mantidos em Markdown. O script
@@ -71,7 +73,7 @@ As aulas, módulos e exercícios continuam mantidos em Markdown. O script
 externas, para que os links da trilha sejam formatados no navegador e também
 funcionem offline. O workflow de publicação executa o mesmo gerador.
 
-A página contém cabeçalho com âncoras e botão de tema; apresentação com botão “Começar a aprender” e aviso sobre `Esc`; trilha com aulas renderizadas; catálogo; simulador; desafios; e rodapé.
+A página contém cabeçalho com âncoras e botão de tema; apresentação com botão “Começar a aprender” e aviso sobre `Esc`; trilha com aulas renderizadas; catálogo; terminal simulado ligado ao editor Vim; desafios; e rodapé.
 
 O catálogo mostra tecla, título, descrição, categoria, nível, modo e aula. A busca verifica tecla, título, descrição, categoria e modo. Os filtros de categoria e nível atuam juntos. Sem resultado, há mensagem clara e botão para limpar filtros.
 
@@ -95,7 +97,18 @@ O tema escuro usa `data-theme="dark"` em `html` e a preferência fica em `localS
 
 Use `header`, `main`, `nav`, `section`, `article` e `footer`; associe campos a `label`; mantenha contraste WCAG AA e foco visível; não dependa apenas de hover ou cor; respeite `prefers-reduced-motion`; e permita navegação por `Tab`.
 
-## 4. Simulador educacional
+## 4. Terminal e simulador educacionais
+
+A área de prática começa num terminal simulado em `/home/aluno`. Ele aceita
+somente `help`, `pwd`, `ls`, `mkdir [-p]`, `cd [pasta]`, `touch arquivo`,
+`vim arquivo`, `cat arquivo` e `clear`. Não interpreta operadores, encadeamento,
+redirecionamento, substituição, scripts nem comandos arbitrários. Pastas e
+arquivos existem apenas em memória e são descartados ao recarregar a página.
+`~` representa `/home/aluno`; caminhos não podem sair da árvore virtual. `vim`
+abre o editor em memória. `:w` salva no sistema virtual, `:wq` salva e retorna
+ao terminal, `:q` retorna se não houver alterações desde o último salvamento e
+`:q!` retorna descartando alterações. O formulário do terminal e o editor têm
+foco próprios; teclas do terminal não são capturadas pelo editor.
 
 O simulador não é um editor completo. Começa no modo normal e mantém apenas estado em memória:
 
@@ -119,9 +132,11 @@ O simulador não é um editor completo. Começa no modo normal e mantém apenas 
 | Movimento | `h`, `j`, `k`, `l`, `w`, `b`, `0`, `$`, `gg`, `G` |
 | Edição | `x`, `dd`, `dw`, `yy`, `p`, `u`, `Ctrl-r`, `.` |
 | Busca | `/texto`, `n`, `N` |
-| Ex simulado | `:w`, `:q`, `:q!` |
+| Ex simulado | `:w`, `:q`, `:q!`, `:wq` |
 
-`:w` informa “Arquivo salvo (simulação)”; `:q` e `:q!` apenas explicam o que ocorreria no Vim. O `.` repete a última alteração suportada.
+`:w`, `:wq`, `:q` e `:q!` controlam o ciclo do arquivo no ambiente virtual; em
+desafios sem arquivo aberto, explicam a simulação. O `.` repete a última
+alteração suportada.
 
 Há botões “Ativar simulador” e “Restaurar texto”, cursor e linha atual visíveis, modo (`NORMAL` ou `INSERT`), comando em formação, histórico de teclas e feedback em `aria-live`. Teclas só são capturadas quando o simulador está ativado e focado; atalhos fora dele nunca são bloqueados. A interpretação de comandos fica separada da renderização.
 
@@ -157,7 +172,8 @@ Gerar dados a partir do Markdown, disponibilizar inglês, adicionar modo visual,
 - Site e materiais offline, responsivos, acessíveis e sem acesso a dados pessoais ou arquivos locais.
 - Tema, busca e filtros funcionam sem recarregar.
 - Os 30 comandos são consultáveis por categoria.
-- Simulador executa os comandos declarados e restaura o texto.
+- Terminal e simulador executam somente os comandos declarados, mantêm arquivos
+  em memória e permitem o fluxo terminal → Vim → terminal.
 - Os cinco desafios podem ser concluídos e reiniciados.
 - Caminhos relativos permitem publicação no GitHub Pages.
 

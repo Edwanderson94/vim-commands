@@ -85,6 +85,43 @@ def main():
         assert execute("return Boolean(document.querySelector('link[href=\"styles.css\"]')?.sheet)")
         assert execute("return document.querySelector('#status-announcer').textContent") == ''
 
+        terminal_flow = execute("""
+          const run = (value) => {
+            const input = document.querySelector('#terminal-input');
+            input.value = value;
+            document.querySelector('#terminal-form').dispatchEvent(new Event('submit', {bubbles: true, cancelable: true}));
+          };
+          run('mkdir -p ~/vim-pratica');
+          run('cd ~/vim-pratica');
+          run('vim ola.txt');
+          return {visible: !document.querySelector('#vim-workspace').hidden,
+                  focused: document.activeElement.id,
+                  path: document.querySelector('#terminal-prompt').textContent};
+        """)
+        assert terminal_flow['visible'] and terminal_flow['focused'] == 'simulator-editor', terminal_flow
+        assert terminal_flow['path'] == '/home/aluno/vim-pratica $', terminal_flow
+        actions = []
+        for key in ('i', 'O', 'K', '\ue00c', ':', 'w', 'q', '\ue007'):
+            actions.extend([{'type': 'keyDown', 'value': key}, {'type': 'keyUp', 'value': key}])
+        command('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': actions}]})
+        saved_flow = execute("""
+          const input = document.querySelector('#terminal-input');
+          input.value = 'cat ola.txt';
+          document.querySelector('#terminal-form').dispatchEvent(new Event('submit', {bubbles: true, cancelable: true}));
+          return {hidden: document.querySelector('#vim-workspace').hidden,
+                  output: document.querySelector('#terminal-output').textContent};
+        """)
+        assert saved_flow['hidden'] and 'OK' in saved_flow['output'], saved_flow
+        rejected = execute("""
+          const input = document.querySelector('#terminal-input');
+          input.value = 'rm -rf /';
+          document.querySelector('#terminal-form').dispatchEvent(new Event('submit', {bubbles: true, cancelable: true}));
+          return document.querySelector('#terminal-output').textContent;
+        """)
+        assert 'Comando não disponível' in rejected, rejected
+        execute("document.querySelector('#terminal-input').value = 'clear'; document.querySelector('#terminal-form').dispatchEvent(new Event('submit', {bubbles: true, cancelable: true}))")
+        execute("document.querySelector('#reset-simulator').click()")
+
         command('/window/rect', {'width': 320, 'height': 800})
         mobile = execute("return {width: innerWidth, page: document.documentElement.scrollWidth}")
         assert 300 <= mobile['width'] <= 360, f"viewport móvel inesperada: {mobile}"
@@ -189,7 +226,7 @@ def main():
             feedback = execute("return document.querySelector('#status-announcer').textContent")
             assert feedback.startswith('Desafio concluído.'), f'{challenge} não foi anunciado: {feedback!r}'
 
-        print(f'Chrome {browser}: site, viewport móvel, busca/filtros, foco, tema, simulador e cinco desafios passaram.')
+        print(f'Chrome {browser}: site, terminal simulado, salvar/retornar ao Vim, viewport móvel, busca/filtros, foco, tema, simulador e cinco desafios passaram.')
     finally:
         if session_id:
             try:

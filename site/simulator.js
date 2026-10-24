@@ -223,6 +223,7 @@ function applyKey(state, key) {
   if (state.commandBuffer.startsWith(':')) {
     if (key !== 'Enter') { if (key.length === 1) state.commandBuffer += key; return state; }
     if (state.commandBuffer === ':w') return finish(state, 'Arquivo salvo (simulação).');
+    if (state.commandBuffer === ':wq') return finish(state, 'Arquivo salvo e editor fechado (simulação).');
     if (state.commandBuffer === ':q' || state.commandBuffer === ':q!') return finish(state, 'No Vim real, este comando sairia do editor.');
     return finish(state, 'Comando Ex ainda não implementado no simulador.');
   }

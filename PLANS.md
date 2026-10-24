@@ -191,6 +191,26 @@ workflow `40101978849`; o Pages responde com HTTP 200 e serve o anunciador
 **Restrição:** GitHub Pages, commits, push e alterações externas exigem
 autorização explícita.
 
+## Ajuste de prática após a 1.0.0 — terminal simulado
+
+**Motivo:** a área de prática anterior começava diretamente no editor Vim e não
+permitia experimentar os comandos de terminal das Aulas 1 e 2.
+
+**Implementado:** o site agora inicia com um terminal didático em memória que
+aceita `help`, `pwd`, `ls`, `mkdir`, `cd`, `touch`, `vim`, `cat` e `clear`.
+`vim arquivo` abre o editor conectado ao mesmo sistema virtual; `:w` salva,
+`:wq` salva e retorna, e `:q`/`:q!` respeitam as alterações. Comandos fora da
+lista e operadores de shell são recusados. Nenhum comando real ou arquivo do
+computador é acessado. A especificação documenta os limites e o novo `:wq`.
+
+**Verificações locais:** testes do interpretador cobrem a sequência da Aula 1,
+leitura do arquivo salvo e rejeição de comandos e caminhos fora do ambiente;
+testes do Vim cobrem `:wq`. A auditoria dos 19 documentos, sintaxe JavaScript,
+checagem sintática do smoke test e `git diff --check` passaram. O smoke test
+Chrome agora também percorre terminal → Vim → terminal e verifica o arquivo.
+Chrome não está instalado localmente; o resultado de navegador será confirmado
+pelo workflow após a publicação desta alteração.
+
 ## Estado de aceite
 
 Os critérios das Fases 1 a 4 estão verificados por inspeção do conteúdo,
