@@ -92,8 +92,11 @@ def main():
         assert execute("return Boolean(document.querySelector('link[href=\"styles.css\"]')?.sheet)")
         assert execute("return document.querySelector('#status-announcer').textContent") == ''
         assert execute("return document.querySelector('h1').textContent") == 'Aprenda comandos que ficam na memória.'
-        carousel = execute("return {count: document.querySelectorAll('#vim-carousel .vim-slide').length, interval: document.querySelector('#vim-carousel').dataset.interval, visible: [...document.querySelectorAll('#vim-carousel .vim-slide')].findIndex((slide) => slide.getAttribute('aria-hidden') !== 'true'), label: document.querySelector('#vim-carousel-position').textContent, enabled: document.querySelector('#vim-carousel-autoplay').getAttribute('aria-pressed')}")
-        assert carousel == {'count': 4, 'interval': '10000', 'visible': 0, 'label': '1 de 4', 'enabled': 'true'}, carousel
+        carousel = execute("return {count: document.querySelectorAll('#vim-carousel .vim-slide').length, interval: document.querySelector('#vim-carousel').dataset.interval, visible: [...document.querySelectorAll('#vim-carousel .vim-slide')].findIndex((slide) => slide.getAttribute('aria-hidden') !== 'true'), label: document.querySelector('#vim-carousel-position').textContent, enabled: document.querySelector('#vim-carousel-autoplay').getAttribute('aria-pressed'), reducedMotion: matchMedia('(prefers-reduced-motion: reduce)').matches}")
+        assert carousel == {'count': 4, 'interval': '10000', 'visible': 0, 'label': '1 de 4', 'enabled': str(not carousel['reducedMotion']).lower(), 'reducedMotion': carousel['reducedMotion']}, carousel
+        if carousel['reducedMotion']:
+            execute("document.querySelector('#vim-carousel-autoplay').click()")
+            assert execute("return document.querySelector('#vim-carousel-autoplay').getAttribute('aria-pressed')") == 'true', 'a pessoa deve poder ativar a rotação explicitamente'
         assert execute("return Boolean(document.querySelector('a[href=\"#aulas\"]') && document.querySelector('a[href=\"materiais/content/cheatsheet.html\"]'))"), 'os dois caminhos de entrada devem estar disponíveis'
         assert execute("return !document.querySelector('.hero').textContent.includes('Esc volta ao modo normal ou cancela uma operação')"), 'a dica isolada de Esc não deve aparecer no hero'
         assert execute("return document.querySelector('#aulas article').textContent.includes('editor de texto modal') && document.querySelector('#aulas article').textContent.includes('modo de inserção')"), 'a introdução deve explicar Vim e seus modos'
@@ -337,4 +340,9 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except AssertionError as error:
+        message = str(error).replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A')
+        print(f'::error title=Falha no smoke test do Chrome::{message}')
+        raise
