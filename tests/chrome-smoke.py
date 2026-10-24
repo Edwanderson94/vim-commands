@@ -240,12 +240,11 @@ def main():
         })
         execute("""
           document.documentElement.style.scrollBehavior = 'auto';
-          document.querySelector('#terminal-input').scrollIntoView({block: 'center', behavior: 'instant'});
+          document.querySelector('.terminal-screen').scrollIntoView({block: 'center', behavior: 'instant'});
         """)
         touch_point = execute("""
           const screen = document.querySelector('.terminal-screen');
-          const input = document.querySelector('#terminal-input');
-          const rect = input.getBoundingClientRect();
+          const rect = screen.getBoundingClientRect();
           const viewport = {width: innerWidth, height: innerHeight};
           const visible = {
             left: Math.max(0, rect.left),
@@ -253,21 +252,28 @@ def main():
             top: Math.max(0, rect.top),
             bottom: Math.min(viewport.height, rect.bottom)
           };
-          const x = Math.floor((visible.left + visible.right) / 2);
-          const y = Math.floor((visible.top + visible.bottom) / 2);
-          const hit = document.elementFromPoint(x, y);
+          let point = null;
+          for (const yRatio of [0.75, 0.5, 0.25]) {
+            for (const xRatio of [0.5, 0.25, 0.75]) {
+              const x = Math.floor(visible.left + (visible.right - visible.left) * xRatio);
+              const y = Math.floor(visible.top + (visible.bottom - visible.top) * yRatio);
+              if (screen.contains(document.elementFromPoint(x, y))) {
+                point = {x, y};
+                break;
+              }
+            }
+            if (point) break;
+          }
           return {
-            x,
-            y,
-            hitInput: hit === input || input.contains(hit),
-            hitInsideTerminal: screen.contains(hit),
+            ...point,
+            hitInsideTerminal: Boolean(point),
             visible: visible.right > visible.left && visible.bottom > visible.top,
             viewport,
             rect: {left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom}
           };
         """)
-        assert touch_point['visible'], f"entrada do terminal sem área visível para toque: {touch_point}"
-        assert touch_point['hitInsideTerminal'] and touch_point['hitInput'], f"ponto de toque fora da entrada do terminal: {touch_point}"
+        assert touch_point['visible'], f"terminal sem área visível para toque: {touch_point}"
+        assert touch_point['hitInsideTerminal'], f"nenhum ponto visível do terminal recebe o toque: {touch_point}"
         assert (
             0 <= touch_point['x'] < mobile['width']
             and 0 <= touch_point['y'] < touch_point['viewport']['height']

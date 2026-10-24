@@ -23,13 +23,12 @@ em português do Brasil.
 - O resultado do workflow e a situação de publicação ficam registrados em
   `PLANS.md`.
 
-**Estado atual:** a investigação dos workflows confirmou que renderização,
-testes unitários e auditoria HTML passam. A rolagem suave e o movimento do
-ponteiro causavam coordenadas/targets instáveis. O workflow `40140400539` passou,
-mas execuções subsequentes mostraram que habilitar emulação de toque depois de
-medir a posição podia deslocar o seletor fixo sobre o ponto. O teste agora ativa
-emulação primeiro, rola a entrada com comportamento instantâneo e toca no centro
-visível do próprio campo. Essa versão ainda precisa de validação no workflow.
+**Estado atual:** renderização, testes unitários e auditoria HTML passam
+localmente. As execuções móveis mostraram que a linha de comando pode ficar sem
+largura útil em viewport estreita e que o seletor fixo pode cobrir pontos do
+terminal. O teste agora ativa emulação primeiro, rola a área visível do
+terminal com comportamento instantâneo e escolhe um ponto realmente atingido
+por ela, evitando o seletor. A revisão local passou; falta a validação remota.
 
 **Branch de trabalho:** `release/1.0.2`, criada a partir da `master` no commit
 `bd32474`.
