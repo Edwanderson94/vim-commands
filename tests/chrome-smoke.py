@@ -234,8 +234,32 @@ def main():
         mobile = execute("return {width: innerWidth, page: document.documentElement.scrollWidth}")
         assert 300 <= mobile['width'] <= 360, f"viewport móvel inesperada: {mobile}"
         assert mobile['page'] <= mobile['width'], f"transbordamento móvel: {mobile}"
-        execute("document.querySelector('.terminal-screen').scrollIntoView({block: 'center'})")
-        touch_point = execute("const rect = document.querySelector('.terminal-screen').getBoundingClientRect(); return {x: Math.floor(rect.left + rect.width / 2), y: Math.floor(rect.top + rect.height / 2)}")
+        execute("""
+          document.documentElement.style.scrollBehavior = 'auto';
+          document.querySelector('.terminal-screen').scrollIntoView({block: 'center', behavior: 'auto'});
+        """)
+        touch_point = execute("""
+          const rect = document.querySelector('.terminal-screen').getBoundingClientRect();
+          const viewport = {width: innerWidth, height: innerHeight};
+          const visible = {
+            left: Math.max(0, rect.left),
+            right: Math.min(viewport.width, rect.right),
+            top: Math.max(0, rect.top),
+            bottom: Math.min(viewport.height, rect.bottom)
+          };
+          return {
+            x: Math.floor((visible.left + visible.right) / 2),
+            y: Math.floor((visible.top + visible.bottom) / 2),
+            visible: visible.right > visible.left && visible.bottom > visible.top,
+            viewport,
+            rect: {left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom}
+          };
+        """)
+        assert touch_point['visible'], f"terminal sem área visível para toque: {touch_point}"
+        assert (
+            0 <= touch_point['x'] < mobile['width']
+            and 0 <= touch_point['y'] < touch_point['viewport']['height']
+        ), f"coordenada de toque fora da viewport: {touch_point}"
         command('/actions', {'actions': [{'type': 'pointer', 'id': 'touch', 'parameters': {'pointerType': 'touch'}, 'actions': [
             {'type': 'pointerMove', 'x': touch_point['x'], 'y': touch_point['y'], 'duration': 50},
             {'type': 'pointerDown', 'button': 0}, {'type': 'pointerUp', 'button': 0}
