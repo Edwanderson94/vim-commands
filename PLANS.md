@@ -136,7 +136,11 @@ layout móvel, busca, filtros, retorno do foco, tema, papel e nome acessíveis d
 simulador e regiões de status, entrada de teclado e conclusão dos cinco
 desafios. A evidência de execução veio do workflow `40100520037` (commit
 `8a52de7`): as etapas de validação, preparação do artefato e publicação
-concluíram com sucesso.
+concluíram com sucesso. Após consolidar as mensagens numa região única, o
+workflow `40101671553` (commit `7d3dfcf`) validou o papel e a contagem após a
+busca, a conclusão dos desafios e publicou o site. A execução anterior
+`40101587794` apontou que a asserção da contagem estava posicionada após limpar
+os filtros; ela foi movida para logo após a busca.
 
 **Árvore de acessibilidade:** no Firefox gráfico, AT-SPI expôs os links e
 controles com nomes e funções. A busca aparece como campo “Buscar comando”, os
