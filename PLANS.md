@@ -7,9 +7,10 @@ HTML estático local para leitura formatada no navegador.
 
 O goal ativo está em [`GOALS.md`](GOALS.md). A solicitação atual acrescentou o
 comando `clear` e deixou explícito que a trilha de Linux/terminal precede o
-módulo Vim. Ambos estão implementados localmente na branch `release/1.0.1`. Também foi
-resolvida localmente a discrepância entre exemplos de terminal Linux real
-(`cd`, `mkdir`, `touch`) e a lista menor do simulador web.
+módulo Vim. As três mudanças estão implementadas e publicadas na branch `release/1.0.1`
+(commit `d7b3bdc` e ajuste de smoke test `ec7e4ce`). Também foi resolvida a
+discrepância entre exemplos de terminal Linux real (`cd`, `mkdir`, `touch`) e a
+lista menor do simulador web.
 
 **Comportamento de `clear`:** remove as linhas de saída do terminal, restaura o
 prompt e o foco para a entrada e mantém intactos os arquivos virtuais. A
@@ -21,28 +22,23 @@ referência agora indicam Linux/terminal antes de Vim; o material também explic
 que Vim é um editor, não o sistema operacional. Os HTML derivados foram
 regenerados.
 
-**Verificações locais:** `node tests/simulator.test.mjs`,
+**Verificações:** `node tests/simulator.test.mjs`,
 `python3 tests/site-validation.py` (19 páginas e links locais) e
-`git diff --check` passaram. `python3 tests/chrome-smoke.py` não pôde executar
-porque ChromeDriver não está instalado neste ambiente. O smoke test foi
-atualizado para validar limpeza da tela, foco, prompt e persistência do arquivo;
-ainda precisa rodar no workflow Chrome.
+`git diff --check` passaram. O smoke test Chrome confirmou limpeza da tela, foco,
+prompt, persistência do arquivo e navegação por teclado após o link do novo
+módulo. O workflow `40136038532` passou; a página publicada respondeu HTTP 200.
 
-**Situação de promoção:** as alterações seguem sem commit/push nesta rodada. A
-validação integrada e a revisão da pessoa responsável são necessárias antes de
-fechar a release 1.0.1.
+**Situação de promoção:** as alterações estão no remoto e publicadas pelo GitHub
+Pages. A revisão da pessoa responsável ainda é necessária antes de fechar a
+release 1.0.1.
 
 ## Melhorias planejadas
 
 A fila priorizada com dez melhorias, critérios resumidos e status está em
-[`GOALS.md`](GOALS.md), na seção “Dez melhorias identificadas”. Os itens 1 e 2
-foram implementados localmente; os itens 3–10 permanecem planejados. O ponto de
-atenção mais próximo é explicar a diferença entre os comandos de um Linux real
-e a lista intencionalmente reduzida da prática web.
-
-
-Status revisado em 2026-10-24. As páginas Markdown também são renderizadas em
-HTML estático local para leitura formatada no navegador.
+[`GOALS.md`](GOALS.md), na seção “Dez melhorias identificadas”. Os itens 1–3
+foram implementados e publicados; os itens 4–10 permanecem planejados. O próximo
+item priorizado é ampliar a cobertura de erros e limites do terminal ponta a
+ponta.
 
 ## Fase 1 — Conteúdo Markdown — concluída
 

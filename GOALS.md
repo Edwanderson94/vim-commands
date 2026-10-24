@@ -31,12 +31,12 @@ em português do Brasil.
   da release e publicação são registradas em `PLANS.md`.
 - A pessoa responsável valida o fluxo de prática antes de fechar a release.
 
-**Estado atual:** as duas melhorias imediatas foram implementadas localmente na
-branch `release/1.0.1`. Testes unitários, auditoria dos 19 HTML, links locais e
-`git diff --check` passaram. O smoke test de navegador foi ampliado, mas não pôde
-ser executado localmente porque ChromeDriver não está disponível. As alterações
-ainda aguardam validação no workflow e validação da pessoa responsável antes do
-fechamento da release.
+**Estado atual:** `clear`, a ordem didática e a distinção entre Linux real e
+simulador foram implementados e publicados na branch `release/1.0.1`. Testes
+unitários, auditoria dos 19 HTML, links locais, `git diff --check` e smoke test
+Chrome passaram. O workflow `40136038532` concluiu com sucesso e a página
+publicada respondeu HTTP 200. Falta a pessoa responsável validar a experiência
+no site antes do fechamento da release.
 
 **Branch de trabalho:** `release/1.0.1`.
 
@@ -47,20 +47,18 @@ fluxo de release.
 
 ## Dez melhorias identificadas para trabalharmos
 
-Os itens 1 e 2 já estão implementados localmente como parte desta rodada. Os
-itens seguintes são oportunidades de trabalho priorizadas; devem ser detalhados
-na especificação antes de mudar o escopo do simulador.
+Os itens 1–3 foram implementados e publicados nesta rodada. Os itens 4–10 são
+oportunidades priorizadas; detalhar na especificação antes de mudar o escopo do
+simulador.
 
-1. **Limpar a tela com `clear` — feito localmente.** Aceitar o comando sem
-   argumentos, limpar o histórico visível, conservar o prompt/foco e preservar
-   os arquivos da sessão. Falta validar o fluxo integrado no navegador/CI.
-2. **Ordenar a trilha Linux → Vim — feito localmente.** Apresentar o módulo
-   Linux/terminal antes do Vim na página inicial e explicitar pré-requisitos nos
-   materiais. Falta validação final da experiência publicada.
-3. **Distinguir Linux real do terminal restrito do simulador — feito localmente.**
-   O módulo Linux ensina comandos comuns (`cd`, `mkdir`, `touch`) que a prática
-   web não aceita. README, módulo inicial e Aula 1 agora indicam o ambiente
-   correto para cada exemplo; falta validar a versão integrada/publicada.
+1. **Limpar a tela com `clear` — publicado.** Aceita o comando sem argumentos,
+   limpa o histórico visível, conserva o prompt/foco e preserva os arquivos da
+   sessão; integração passou no smoke test Chrome.
+2. **Ordenar a trilha Linux → Vim — publicado.** A página inicial apresenta o
+   módulo Linux antes das aulas Vim e os materiais declaram os pré-requisitos.
+3. **Distinguir Linux real do terminal restrito do simulador — publicado.**
+   README, módulo inicial e Aula 1 identificam que `cd`, `mkdir` e `touch` são
+   exemplos para um Linux real e apresentam a lista aceita pelo simulador.
 4. **Cobrir erros e limites do terminal ponta a ponta.** Ampliar testes de
    integração para comandos permitidos/negados, argumentos inválidos, arquivos
    inexistentes, caminhos externos, `clear` e preservação dos arquivos.
