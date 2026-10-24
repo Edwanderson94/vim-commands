@@ -123,11 +123,13 @@ def main():
         assert execute("return document.querySelector('#vim-carousel-position').textContent") == '3 de 4', 'controle próxima deve mudar o cartão'
         execute("document.querySelector('#vim-carousel-previous').click()")
         assert execute("return document.querySelector('#vim-carousel-position').textContent") == '2 de 4', 'controle anterior deve mudar o cartão'
+        execute("document.body.setAttribute('tabindex', '-1');document.body.focus()")
         actions = []
         for _ in range(10):
             actions.extend([{'type': 'keyDown', 'value': '\ue004'}, {'type': 'keyUp', 'value': '\ue004'}])
         command('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': actions}]})
         focused_carousel = execute("return {id:document.activeElement.id,live:document.querySelector('#vim-carousel').getAttribute('aria-live'),outline:getComputedStyle(document.activeElement).outlineStyle}")
+        execute("document.body.removeAttribute('tabindex')")
         assert focused_carousel['id'] == 'vim-carousel-autoplay', focused_carousel
         assert focused_carousel['live'] == 'polite' and focused_carousel['outline'] == 'solid', focused_carousel
         command('/actions', {'actions': [{'type': 'key', 'id': 'keyboard', 'actions': [
