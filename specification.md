@@ -206,7 +206,7 @@ Criar `simulator.js` e `challenges.js`. Implementar os comandos declarados, desf
 
 ### Fase 4 — Qualidade e publicação
 
-Validar HTML e links; testar tema, teclado, desktop, celular, Chrome, Firefox e leitor de tela; testar os comandos e garantir que atalhos externos não sejam bloqueados; adicionar testes unitários. O GitHub Pages da versão 1.0.1 é publicado pelo workflow quando há push em `release/1.0.1`, com o frontend em `/site` e os materiais HTML derivados ao lado.
+Validar HTML e links; testar tema, teclado, desktop, celular, Chrome, Firefox e leitor de tela; testar os comandos e garantir que atalhos externos não sejam bloqueados; adicionar testes unitários. O workflow executa a validação em pushes para `master` e `release/*`; publica no GitHub Pages apenas após a validação do push em `master`, com o frontend em `/site` e os materiais HTML derivados ao lado.
 
 ### Fase 5 — Evoluções
 

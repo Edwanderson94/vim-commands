@@ -3,7 +3,41 @@
 Status revisado em 2026-10-24. As páginas Markdown também são renderizadas em
 HTML estático local para leitura formatada no navegador.
 
-## Estado atual — release/1.0.1
+## Estado atual — release/1.0.2
+
+A branch `release/1.0.2` parte da `master` no commit `bd32474`. A investigação do
+workflow `40138061252` encontrou a causa precisa: renderização Markdown, testes
+do simulador e auditoria dos 19 HTML passaram; o smoke test Chrome falhou na
+ação de toque, com `move target out of bounds`.
+
+O teste rolava `.terminal-screen` para o centro e media seu retângulo logo em
+seguida. Como `site/styles.css` aplica `scroll-behavior: smooth` globalmente, a
+rolagem ainda estava em andamento quando o teste calculou as coordenadas. O
+Firefox local reproduziu a leitura do elemento fora da viewport nessa condição.
+O teste desativa a rolagem suave durante essa etapa, procura um ponto atingido
+realmente pelo terminal na área visível e verifica os limites antes de enviar o
+toque. Firefox WebDriver confirmou o gesto e o foco em `terminal-input` em
+viewport desktop. No workflow `40139803427`, o erro de coordenadas foi removido,
+mas o toque não focou a linha de comando: o log mostrou que, após o movimento de
+50 ms, o ponto passou a atingir um cartão de comando. O smoke agora usa duração
+zero para posicionar o ponteiro antes do toque e confirma o alvo e o foco.
+`40140038307` passou no Chrome, inclusive no toque móvel e no foco de
+`terminal-input`.
+
+O workflow agora separa validação e publicação: valida pushes em `release/**`
+sem exigir o ambiente `github-pages`, e publica somente após uma validação
+verde em `master`. Isso permite que a branch de release execute o Chrome smoke
+sem ser bloqueada pelas regras de deploy do ambiente.
+
+As verificações locais `python3 -m py_compile tests/chrome-smoke.py`,
+`node scripts/render-markdown.mjs`, `node tests/simulator.test.mjs`,
+`python3 tests/site-validation.py` e `git diff --check` passaram. O workflow
+`40139686095` foi bloqueado pelas regras do ambiente `github-pages` antes da
+validação; `40139803427` revelou a falha de foco; `40140038307` passou depois da
+correção. A branch `release/1.0.2` está validada. O deploy será executado pelo
+workflow após o merge em `master`.
+
+## Histórico — release/1.0.1
 
 O goal ativo está em [`GOALS.md`](GOALS.md). A solicitação atual acrescentou o
 comando `clear` e deixou explícito que a trilha de Linux/terminal precede o
@@ -12,24 +46,25 @@ módulo Vim. As três mudanças estão implementadas e publicadas na branch `rel
 discrepância entre exemplos de terminal Linux real (`cd`, `mkdir`, `touch`) e a
 lista menor do simulador web.
 
-**Ajuste adicional solicitado antes do fechamento — implementado e enviado:**
+**Ajuste adicional solicitado antes do fechamento — implementado e integrado:**
 o favicon foi redesenhado com dimensões SVG quadradas explícitas e URL
 versionada para renovar o cache. EDEVOPS foi registrada como publicadora em
 `FONTES.md`, README e rodapé do site. Os testes de simulador, auditoria das 19
 páginas, links e metadados do favicon passaram. O SVG também foi servido por HTTP
-local com MIME `image/svg+xml`. O commit `32385ab` foi enviado à branch
-`release/1.0.1`, mas o workflow `40137031143` falhou no passo combinado de
-validação. Nesta máquina, testes unitários e auditoria do site passaram; o
-Chrome smoke não pôde ser executado por falta de ChromeDriver. A página pública
-ainda serve a versão anterior, portanto a publicação do ajuste não foi
-confirmada. Repetir/diagnosticar a validação antes de fechar a release.
+local com MIME `image/svg+xml`. O commit `32385ab` foi enviado e depois
+substituído pelo ajuste de marca `15d8e51`, integrado em `master` no merge
+`bd32474` e marcado como `1.0.1`. O workflow `40138061252` falhou no teste de
+toque móvel; o diagnóstico e a correção do smoke test estão no estado atual da
+release `1.0.2`. Como o workflow abortou antes das etapas de artefato e deploy,
+o GitHub Pages não recebeu o favicon atualizado.
 
-**Revisão visual do favicon — local:** após consultar a imagem EDEVOPS usada no
+**Revisão visual do favicon — integrada na 1.0.1:** após consultar a imagem EDEVOPS usada no
 README do perfil GitHub, o ícone foi atualizado para uma letra E em degradê
 ciano/azul-roxo sobre fundo preto, seguindo a marca. `FONTES.md` registra essa
 imagem como referência, e o link do favicon recebeu um novo identificador para
 renovar o cache. Testes unitários, auditoria do site e `git diff --check`
-passaram. Esta revisão local ainda não foi enviada nem publicada.
+passaram. A revisão foi integrada em `master` no merge `bd32474`; a publicação
+no Pages aguarda a validação corrigida desta 1.0.2.
 
 **Comportamento de `clear`:** remove as linhas de saída do terminal, restaura o
 prompt e o foco para a entrada e mantém intactos os arquivos virtuais. A
@@ -47,9 +82,9 @@ regenerados.
 prompt, persistência do arquivo e navegação por teclado após o link do novo
 módulo. O workflow `40136038532` passou; a página publicada respondeu HTTP 200.
 
-**Situação de promoção:** as alterações estão no remoto e publicadas pelo GitHub
-Pages. A revisão da pessoa responsável ainda é necessária antes de fechar a
-release 1.0.1.
+**Situação de promoção:** a release 1.0.1 foi integrada em `master`, marcada e
+removida da branch de release. O deploy mais recente foi bloqueado pelo smoke
+test móvel; a página ainda não contém o favicon EDEVOPS.
 
 ## Melhorias planejadas
 

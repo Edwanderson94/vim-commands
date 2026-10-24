@@ -1,56 +1,43 @@
 # Objetivos do Vim Commands
 
-## Goal ativo — Concluir a release 1.0.1 e preparar as próximas melhorias
+## Goal ativo — estabilizar o smoke test móvel na release 1.0.2
 
-**Objetivo:** concluir a release 1.0.1 do Vim Commands e preparar uma fila
-priorizada de melhorias para o ambiente de aprendizagem do terminal e do Vim,
-mantendo o simulador seguro e a trilha Linux/terminal antes do módulo Vim.
+**Objetivo:** corrigir a falha de automação no toque móvel, validar novamente o
+fluxo de publicação e manter o simulador restrito e seguro.
 
 **Público:** iniciantes e autodidatas que estão aprendendo Linux/terminal e Vim
 em português do Brasil.
 
-**Escopo imediato da release 1.0.1:**
+**Escopo imediato da release 1.0.2:**
 
-- Disponibilizar `clear` no terminal virtual. Ele limpa a saída visível, mantém o
-  prompt pronto para uso e não remove arquivos da sessão.
-- Apresentar o módulo Linux/terminal como pré-requisito do módulo Vim na página
-  inicial, README, módulos, aulas e exercícios.
-- Explicar que Vim é um editor de texto muito usado no Linux, aberto a partir do
-  terminal, mas não é o sistema operacional e também existe em outros sistemas.
-- Atualizar o favicon para uma marca nítida na aba do navegador e identificar
-  EDEVOPS como publicadora em `FONTES.md` e no rodapé do site.
-- Registrar as mudanças e regressões na especificação e na checklist de QA.
+- Tornar determinístico o smoke test que redimensiona a janela e toca no terminal.
+- Calcular o ponto de toque dentro da parte visível do terminal e da viewport.
+- Registrar a causa, a correção e o resultado de validação em `PLANS.md`.
 
-**Critérios para concluir a release:**
+**Critérios para concluir a correção:**
 
-- `clear` limpa a tela, preserva o prompt e permite continuar digitando; arquivos
-  criados/salvos antes dele continuam disponíveis no sistema virtual.
-- O terminal permanece restrito à lista definida na especificação e não executa
-  comandos reais nem acessa arquivos locais.
-- A sequência Linux/terminal → Vim está clara nos caminhos de entrada e nos
-  materiais; links locais continuam válidos.
-- Testes do simulador, auditoria do site e fluxo de navegador passam; a validação
-  da release e publicação são registradas em `PLANS.md`.
-- A pessoa responsável valida o fluxo de prática antes de fechar a release.
+- O teste evita a animação global de rolagem antes de medir a posição do terminal.
+- O ponto de toque está dentro da interseção visível e o toque ainda foca a linha
+  de comando.
+- Sintaxe, testes do simulador, auditoria do site e smoke test de navegador passam.
+- O resultado do workflow e a situação de publicação ficam registrados em
+  `PLANS.md`.
 
-**Estado atual:** `clear`, a ordem didática, a distinção entre Linux real e
-simulador, os testes de terminal e foco móvel foram implementados e publicados
-na branch `release/1.0.1`. A solicitação mais recente (favicon e identificação
-EDEVOPS) teve uma primeira versão enviada no commit `32385ab`. Atendendo ao
-pedido mais recente, o favicon foi ajustado localmente para usar a letra E e a
-paleta do logo EDEVOPS no GitHub; essa revisão ainda não foi enviada. Os testes
-unitários, auditoria dos 19 HTML e links locais passaram nesta revisão. O workflow
-`40137031143` falhou no passo combinado de validação; como os logs detalhados não
-estão acessíveis neste ambiente, a publicação do favicon ainda precisa ser
-confirmada. A página pública continua servindo a versão anterior. O fechamento
-da release aguarda validação do workflow e do site pela pessoa responsável.
+**Estado atual:** a investigação do workflow `40138061252` confirmou que as etapas
+de renderização, testes unitários e auditoria HTML passaram. O smoke test falhava
+porque calculava o toque antes de a rolagem suave terminar. Depois de tornar a
+rolagem instantânea, o workflow `40139803427` mostrou que o movimento do ponteiro
+de 50 ms deslocava a página antes do toque. O teste agora usa movimento de
+duração zero e escolhe um ponto visível dentro do terminal. O workflow
+`40140038307` passou no Chrome e validou o fluxo; o deploy está configurado para
+acontecer após o merge em `master`.
 
-**Branch de trabalho:** `release/1.0.1`.
+**Branch de trabalho:** `release/1.0.2`, criada a partir da `master` no commit
+`bd32474`.
 
-**Fora do escopo da 1.0.1:** transformar o simulador em shell completo, ampliar
-comandos sem atualizar especificação, executar processos reais, persistir os
-arquivos virtuais após recarregar ou promover alterações para `master` sem o
-fluxo de release.
+**Fora do escopo da 1.0.2:** transformar o simulador em shell completo, ampliar
+comandos sem atualizar especificação, executar processos reais ou persistir os
+arquivos virtuais após recarregar.
 
 ## Dez melhorias identificadas para trabalharmos
 
