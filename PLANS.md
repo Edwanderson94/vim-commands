@@ -133,9 +133,10 @@ instalado nem em cache na máquina local; Firefox 158 é o navegador local.
 Chrome e ChromeDriver. O workflow agora executa `tests/chrome-smoke.py` com os
 binários já presentes no runner, sem instalar dependências. O teste valida o
 layout móvel, busca, filtros, retorno do foco, tema, papel e nome acessíveis do
-simulador, entrada de teclado e conclusão dos cinco desafios. A evidência de
-execução veio do workflow `40100119883` (commit `649ea0c`): as etapas de
-validação, preparação do artefato e publicação concluíram com sucesso.
+simulador e regiões de status, entrada de teclado e conclusão dos cinco
+desafios. A evidência de execução veio do workflow `40100520037` (commit
+`8a52de7`): as etapas de validação, preparação do artefato e publicação
+concluíram com sucesso.
 
 **Árvore de acessibilidade:** no Firefox gráfico, AT-SPI expôs os links e
 controles com nomes e funções. A busca aparece como campo “Buscar comando”, os
@@ -146,6 +147,13 @@ e focado após “Ativar simulador”; “Reiniciar desafio” fica indisponíve
 desafio ser selecionado. A navegação por Tab percorreu cabeçalho, trilha,
 catálogo, simulador e rodapé. Esta inspeção confirma a árvore consumida por
 leitores de tela, mas não substitui a verificação da fala do Orca.
+
+**Mensagens dinâmicas:** Orca não anunciou de forma confiável a contagem da
+busca nem a conclusão do desafio na sessão de fala desativada; em outra
+tentativa, o foco passou para o terminal. As três mensagens agora usam
+`role="status"`, `aria-live="polite"` e `aria-atomic="true"`. A validação
+estática e o papel computado no Chrome cobrem essa semântica. A fala do Orca
+segue pendente até uma sessão com foco estável.
 
 **Validação desta rodada:** Firefox abriu a cópia local e a publicação atual
 em GitHub Pages; ambas montaram 30 comandos e recursos sem erro. Busca por
@@ -165,7 +173,7 @@ autorização explícita.
 
 ## Sequência imediata
 
-1. Confirmar a execução do smoke test em Chrome no GitHub Actions e ouvir a
-   leitura completa com Orca; a inspeção AT-SPI do Firefox já cobre nome,
-   função, estado e foco por Tab.
+1. Ouvir a leitura completa das mensagens com Orca em uma sessão com foco
+   estável; Firefox AT-SPI e o Chrome no GitHub Actions já confirmam nome,
+   função, estado, semântica de status e foco por Tab.
 2. Corrigir regressões encontradas e registrar os resultados.
