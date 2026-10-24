@@ -125,6 +125,18 @@ kbd, .key {
   list-style: none;
 }
 
+.vim-intro {
+  max-width: 900px;
+  margin: 0 0 1.5rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: .7rem;
+  background: var(--surface);
+}
+
+.vim-intro h3 { margin-top: 0; }
+.vim-intro p:last-child { margin-bottom: 0; color: var(--muted); }
+
 .lessons a {
   display: block;
   padding: 1rem;

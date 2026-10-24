@@ -322,6 +322,12 @@ Markdown produz a mesma estrutura para aulas, exercícios, módulos e referênci
 As URLs do tema e do CSS levam um identificador de versão para não reutilizar
 uma folha de estilos antiga do cache do navegador.
 
+**Introdução na página inicial:** foram consultados o site e o manual oficial
+do Vim, a manpage do Ubuntu e materiais do Debian. `FONTES.md` registra também
+as referências a Nano, Emacs e Micro. A trilha inicial agora explica que Vim é
+um editor de texto modal, que se abre a partir do terminal e que há outros
+editores no Linux; distingue o Vim do terminal e do próprio Linux.
+
 ## Auditoria de promoção da 1.0.0
 
 **Estado do goal:** os quatro resultados descritos em `GOALS.md` estão

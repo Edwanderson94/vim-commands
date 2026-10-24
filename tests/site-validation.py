@@ -179,6 +179,10 @@ home = audits.get(Path('site/index.html'))
 if home:
     if home.lang != 'pt-BR':
         errors.append('site/index.html: documento principal deve declarar português do Brasil')
+    homepage_source = (SITE / 'index.html').read_text(encoding='utf-8')
+    for introduction in ('id="titulo-o-que-e-vim"', 'Vi IMproved', 'terminal do Linux', 'Nano', 'Emacs', 'Micro'):
+        if introduction not in homepage_source:
+            errors.append(f'site/index.html: falta a introdução básica sobre Vim ({introduction})')
     expected_scripts = ['commands.js', 'simulator.js', 'challenges.js', 'terminal.js', 'app.js']
     if [Path(urlsplit(src).path).name for src in home.script_sources] != expected_scripts:
         errors.append('site/index.html: scripts clássicos devem carregar na ordem especificada')
