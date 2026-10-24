@@ -39,9 +39,11 @@ A fila priorizada com dez melhorias, critérios resumidos e status está em
 foram implementados e validados; os itens 5–10 estão em andamento ou planejados.
 O smoke test Chrome do item 4 cobre a lista de comandos, rejeições, argumentos
 inválidos, caminhos externos, operadores, `clear` com argumento e persistência
-do arquivo. O workflow `40136235605` passou. O item 5 agora testa correção de
-comando por cursor e Backspace; o workflow `40136353939` passou. Colagem,
-seleção, telas táteis e retorno do foco ainda precisam de verificação manual.
+do arquivo. O workflow `40136235605` passou. O item 5 cobre correção por cursor/Backspace e
+agora também toque simulado em viewport móvel para focar a linha de comando; o
+novo teste de toque aguarda CI. O workflow `40136353939` validou a parte de
+teclado. Foco em aparelho real ainda requer verificação manual; o simulador não
+acessa a área de transferência.
 
 ## Fase 1 — Conteúdo Markdown — concluída
 

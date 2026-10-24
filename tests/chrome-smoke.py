@@ -234,6 +234,13 @@ def main():
         mobile = execute("return {width: innerWidth, page: document.documentElement.scrollWidth}")
         assert 300 <= mobile['width'] <= 360, f"viewport móvel inesperada: {mobile}"
         assert mobile['page'] <= mobile['width'], f"transbordamento móvel: {mobile}"
+        execute("document.querySelector('.terminal-screen').scrollIntoView({block: 'center'})")
+        touch_point = execute("const rect = document.querySelector('.terminal-screen').getBoundingClientRect(); return {x: Math.floor(rect.left + rect.width / 2), y: Math.floor(rect.top + rect.height / 2)}")
+        command('/actions', {'actions': [{'type': 'pointer', 'id': 'touch', 'parameters': {'pointerType': 'touch'}, 'actions': [
+            {'type': 'pointerMove', 'x': touch_point['x'], 'y': touch_point['y'], 'duration': 50},
+            {'type': 'pointerDown', 'button': 0}, {'type': 'pointerUp', 'button': 0}
+        ]}]})
+        assert execute("return document.activeElement.id") == 'terminal-input', 'toque no terminal móvel deve focar a linha de comando'
         mobile_home = execute("""
           const hero = document.querySelector('.hero').getBoundingClientRect();
           const lessons = document.querySelector('#aulas').getBoundingClientRect();

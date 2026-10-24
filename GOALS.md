@@ -63,10 +63,11 @@ simulador.
    test Chrome verifica `pwd`, comandos permitidos e negados, argumentos
    inválidos, arquivos inexistentes, caminhos externos, operadores, `clear` com
    argumento e preservação do arquivo. O workflow `40136235605` passou.
-5. **Polir a edição da linha de comando — correção por teclado validada.** O
-   smoke test Chrome digita `pwXd`, move o cursor e apaga o caractere errado
-   antes de executar `pwd`; o workflow `40136353939` passou. Colagem, seleção,
-   telas táteis e o retorno do foco ainda precisam de validação.
+5. **Polir a edição da linha de comando — teclado e toque simulado cobertos.**
+   Chrome verifica correção com cursor/Backspace e toque em viewport móvel para
+   focar o prompt. O workflow anterior `40136353939` validou a correção por
+   teclado; o novo teste de toque aguarda CI. Foco em aparelho real ainda requer
+   verificação manual. O simulador não acessa a área de transferência.
 6. **Tornar os desafios mais instrutivos.** Revisar a clareza dos critérios de
    conclusão, o feedback de sucesso/erro e como a pessoa retoma a instrução ao
    alternar entre terminal e Vim.
