@@ -84,6 +84,7 @@ function renderEditor() {
 
 function drawSimulator() {
   renderEditor();
+  editor.setAttribute('aria-disabled', String(!active));
   find('#simulator-mode').textContent = simulator.mode.toUpperCase();
   find('#simulator-command').textContent = simulator.commandBuffer || '—';
   find('#simulator-history').textContent = simulator.keyHistory.length ? simulator.keyHistory.join(' ') : '—';

@@ -46,6 +46,12 @@ colunas conforme os breakpoints.
 ficou entre 4,8:1 e 16,05:1. O contorno de foco claro foi escurecido para
 4,8:1 sobre o fundo principal; no simulador escuro, o contorno chega a 7,57:1.
 
+**Acessibilidade computada no Firefox:** os 23 controles visíveis e focáveis
+expõem nome acessível; o botão “Limpar filtros” só entra na árvore quando o
+estado vazio é mostrado. As três regiões de status usam `aria-live="polite"`.
+O simulador expõe a área como caixa de texto multilinha e informa via
+`aria-disabled` se está ativada.
+
 **Parada:** não avançar sem uma verificação manual básica e links relativos
 válidos.
 
@@ -117,7 +123,7 @@ locais das 19 páginas foram resolvidos.
 **Ainda falta:** validação em Chrome e com leitor de tela. Chrome não está
 instalado neste ambiente. Orca está disponível e reconheceu o Firefox como
 aplicativo Mozilla, mas a sessão gráfica não permitiu ativar a janela temporária
-para inspecionar os controles; a leitura assistiva do conteúdo segue pendente.
+para avaliar a leitura falada; a leitura assistiva do conteúdo segue pendente.
 
 **Publicação de validação:** o workflow do GitHub Pages publica `site/` a
 partir da branch `release/1.0.0`. Ela permite validar o catálogo, tema,
