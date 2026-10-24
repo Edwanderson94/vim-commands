@@ -160,8 +160,10 @@ instruções estáticas. A validação estática e o teste Chrome verificam a fu
 e o texto da região. O primeiro render mantém a região vazia para não
 substituir uma mensagem pelo feedback inicial antes de qualquer ação. O smoke
 test verifica esse estado e o workflow `40101978849` (commit `b3987d7`) passou.
-Orca ainda não confirmou a apresentação das mensagens: a tentativa de
-automação continuou sem foco no Firefox isolado e apresentou apenas o shell.
+No Firefox isolado, AT-SPI focou a janela de teste. Com intervalos entre as
+teclas, o log de depuração do Orca registrou na saída braille `3 de 30 comandos
+exibidos.` e `Desafio concluído. Modo normal.`. A fala ficou desativada, então
+a saída de voz ainda precisa de confirmação.
 
 **Validação desta rodada:** Firefox abriu a cópia local e a publicação atual
 em GitHub Pages; ambas montaram 30 comandos e recursos sem erro. Busca por
@@ -170,8 +172,8 @@ simulador e links locais foram conferidos. Uma moldura de navegador com largura
 de 320 px não apresentou elementos fora da área visível. O README agora aponta
 diretamente para `/site/`, que é o caminho publicado; a raiz do projeto contém
 apenas um redirecionamento para essa página. A suíte do simulador, auditoria
-estática das 19 páginas e `git diff --check` passaram nesta rodada; a verificação
-manual de Orca permanece inconclusiva.
+estática das 19 páginas e `git diff --check` passaram nesta rodada. Orca
+apresentou as mensagens na saída braille; a fala permanece pendente.
 
 **Publicação de validação:** o workflow do GitHub Pages publica `site/` a
 partir da branch `release/1.0.0`. Ela permite validar o catálogo, tema,
@@ -183,7 +185,7 @@ autorização explícita.
 
 ## Sequência imediata
 
-1. Ouvir a leitura completa das mensagens com Orca em uma sessão com foco
-   estável; Firefox AT-SPI e o Chrome no GitHub Actions já confirmam nome,
-   função, estado, semântica de status e foco por Tab.
+1. Confirmar a apresentação falada das mensagens com Orca; a saída braille já
+   foi registrada em uma sessão Firefox com foco estável. Chrome no GitHub
+   Actions confirma nome, função, estado, semântica de status e foco por Tab.
 2. Corrigir regressões encontradas e registrar os resultados.
