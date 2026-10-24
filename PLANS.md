@@ -134,7 +134,8 @@ Chrome e ChromeDriver. O workflow agora executa `tests/chrome-smoke.py` com os
 binários já presentes no runner, sem instalar dependências. O teste valida o
 layout móvel, busca, filtros, retorno do foco, tema, papel e nome acessíveis do
 simulador, entrada de teclado e conclusão dos cinco desafios. A evidência de
-execução fica pendente até o próximo workflow concluir.
+execução veio do workflow `40100119883` (commit `649ea0c`): as etapas de
+validação, preparação do artefato e publicação concluíram com sucesso.
 
 **Árvore de acessibilidade:** no Firefox gráfico, AT-SPI expôs os links e
 controles com nomes e funções. A busca aparece como campo “Buscar comando”, os
