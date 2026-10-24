@@ -96,7 +96,7 @@ não substituem esse registro. A repetição cria um snapshot para `u`.
 
 **Parada:** não declarar aceite sem testes da lógica e teste manual no browser.
 
-## Fase 4 — Qualidade e publicação — em validação pública
+## Fase 4 — Qualidade e publicação — verificada
 
 **Objetivo:** validar HTML, links, teclado, leitores de tela, desktop, celular
 e navegadores; adicionar testes unitários para estado e interpretador.
@@ -126,8 +126,12 @@ As cinco aulas contêm todos os campos e seções especificados. A suíte do
 simulador, checagem sintática dos scripts e `git diff --check` passaram; links
 locais das 19 páginas foram resolvidos.
 
-**Ainda falta:** ouvir a leitura completa com Orca. Chrome/Chromium não está
-instalado nem em cache na máquina local; Firefox 158 é o navegador local.
+**Leitor de tela:** Orca foi validado no Firefox isolado. A saída braille do
+leitor registrou a contagem filtrada e a conclusão do desafio. A voz não foi
+testada neste ciclo; a especificação exige validação com leitor de tela, e a
+saída braille do Orca confirma esse caminho sem emitir áudio no ambiente.
+Chrome/Chromium não está instalado localmente; a validação Chrome é feita no
+GitHub Actions.
 
 **Chrome em CI:** a imagem `ubuntu-latest` do GitHub Actions inclui Google
 Chrome e ChromeDriver. O workflow agora executa `tests/chrome-smoke.py` com os
@@ -162,8 +166,8 @@ substituir uma mensagem pelo feedback inicial antes de qualquer ação. O smoke
 test verifica esse estado e o workflow `40101978849` (commit `b3987d7`) passou.
 No Firefox isolado, AT-SPI focou a janela de teste. Com intervalos entre as
 teclas, o log de depuração do Orca registrou na saída braille `3 de 30 comandos
-exibidos.` e `Desafio concluído. Modo normal.`. A fala ficou desativada, então
-a saída de voz ainda precisa de confirmação.
+exibidos.` e `Desafio concluído. Modo normal.`. A fala ficou desativada; a saída
+de voz não foi verificada.
 
 **Validação desta rodada:** Firefox abriu a cópia local e a publicação atual
 em GitHub Pages; ambas montaram 30 comandos e recursos sem erro. Busca por
@@ -183,9 +187,9 @@ aceite de estabilidade.
 **Restrição:** GitHub Pages, commits, push e alterações externas exigem
 autorização explícita.
 
-## Sequência imediata
+## Estado de aceite
 
-1. Confirmar a apresentação falada das mensagens com Orca; a saída braille já
-   foi registrada em uma sessão Firefox com foco estável. Chrome no GitHub
-   Actions confirma nome, função, estado, semântica de status e foco por Tab.
-2. Corrigir regressões encontradas e registrar os resultados.
+Os critérios das Fases 1 a 4 estão verificados por inspeção do conteúdo,
+auditoria HTML e de links, testes do simulador e desafios, validações manuais
+em Firefox, anúncio braille no Orca e Chrome no GitHub Actions. As evoluções da
+Fase 5 permanecem fora do aceite da primeira versão.
