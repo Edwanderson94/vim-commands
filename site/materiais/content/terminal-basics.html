@@ -4,19 +4,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Material de aprendizagem de Vim em português.">
-  <title>Terminal básico para começar no Vim — Vim Commands</title>
-  <link rel="stylesheet" href="../../materiais.css">
+  <title>Módulo Linux — Terminal básico para começar no Vim — Vim Commands</title>
+  <script src="../../materiais-theme.js?v=theme-1"></script>
+  <link rel="stylesheet" href="../../materiais.css?v=theme-1">
 </head>
 <body>
   <header class="material-header">
     <a href="../../index.html">Vim Commands</a>
     <a href="../../index.html#aulas">Voltar à trilha</a>
+    <button id="theme-toggle" type="button" aria-pressed="false">Tema escuro</button>
   </header>
   <main class="material-content">
-<h1>Terminal básico para começar no Vim</h1>
+<h1>Módulo Linux — Terminal básico para começar no Vim</h1>
+<p><strong>Ordem da trilha:</strong> este é o primeiro módulo. Conclua-o antes do <a href="getting-started.html">Módulo Vim — Primeiros passos</a>. O Vim é um editor de texto muito usado no Linux e aberto a partir do terminal; ele não é o sistema Linux.</p>
 <p>Antes de abrir o Vim, você precisa saber localizar-se no terminal e criar um arquivo seguro para praticar. Todos os comandos desta página são digitados no <strong>terminal</strong>, não dentro do Vim.</p>
+<blockquote><p><strong>Sobre a prática no site:</strong> estes exemplos ensinam comandos de um terminal<br>Linux real. O terminal simulado do site tem escopo menor e aceita somente<br><code>pwd</code>, <code>ls</code>, <code>cat arquivo</code>, <code>clear</code> e <code>vim arquivo</code>; por exemplo, <code>cd</code>,<br><code>mkdir</code> e <code>touch</code> não são implementados nele. Use um terminal Linux real para<br>praticar esses comandos e use a janela do site para seguir os desafios de Vim.</p></blockquote>
 <h2>Comandos essenciais</h2>
-<div class="table-scroll"><table><thead><tr><th scope="col">Comando</th><th scope="col">O que faz</th><th scope="col">Exemplo</th></tr></thead><tbody><tr><td><code>pwd</code></td><td>Mostra a pasta atual.</td><td><code>pwd</code></td></tr><tr><td><code>ls</code></td><td>Lista arquivos e pastas.</td><td><code>ls</code></td></tr><tr><td><code>mkdir nome</code></td><td>Cria uma pasta.</td><td><code>mkdir vim-pratica</code></td></tr><tr><td><code>cd nome</code></td><td>Entra em uma pasta.</td><td><code>cd vim-pratica</code></td></tr><tr><td><code>cd ..</code></td><td>Volta uma pasta.</td><td><code>cd ..</code></td></tr><tr><td><code>touch nome</code></td><td>Cria um arquivo vazio.</td><td><code>touch notas.txt</code></td></tr><tr><td><code>vim nome</code></td><td>Abre um arquivo no Vim.</td><td><code>vim notas.txt</code></td></tr></tbody></table></div>
+<div class="table-scroll"><table><thead><tr><th scope="col">Comando</th><th scope="col">O que faz</th><th scope="col">Exemplo</th></tr></thead><tbody><tr><td><code>pwd</code></td><td>Mostra a pasta atual.</td><td><code>pwd</code></td></tr><tr><td><code>ls</code></td><td>Lista arquivos e pastas.</td><td><code>ls</code></td></tr><tr><td><code>mkdir nome</code></td><td>Cria uma pasta.</td><td><code>mkdir vim-pratica</code></td></tr><tr><td><code>cd nome</code></td><td>Entra em uma pasta.</td><td><code>cd vim-pratica</code></td></tr><tr><td><code>cd ..</code></td><td>Volta uma pasta.</td><td><code>cd ..</code></td></tr><tr><td><code>touch nome</code></td><td>Cria um arquivo vazio.</td><td><code>touch notas.txt</code></td></tr><tr><td><code>clear</code></td><td>Limpa o histórico visível do terminal; não apaga arquivos.</td><td><code>clear</code></td></tr><tr><td><code>vim nome</code></td><td>Abre um arquivo no Vim.</td><td><code>vim notas.txt</code></td></tr></tbody></table></div>
 <h2>Segurança para praticar</h2>
 <p>Crie uma pasta só para seus exercícios. Assim, você pratica sem risco de alterar arquivos importantes:</p>
 <pre><code class="language-bash">mkdir -p ~/vim-pratica

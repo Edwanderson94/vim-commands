@@ -89,7 +89,18 @@ h2 {
   letter-spacing: -.04em;
 }
 
-.hero { max-width: 760px; }
+.hero { max-width: 1000px; padding-bottom: .5rem; }
+#aulas { padding-top: 1rem; }
+#aulas > h2 { margin-top: .25rem; }
+.module-sequence {
+  max-width: 900px;
+  margin-block: 0 1.25rem;
+  padding: .85rem 1rem;
+  border-left: .25rem solid var(--primary);
+  border-radius: .35rem;
+  background: var(--surface);
+}
+.module-sequence p { margin: 0; }
 .hero > p:not(:first-child) { color: var(--muted); font-size: 1.1rem; }
 
 .hero > a, #praticar > a {
@@ -124,6 +135,34 @@ kbd, .key {
   padding: 0;
   list-style: none;
 }
+
+.vim-intro {
+  max-width: 900px;
+  margin: 0 0 1.5rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: .7rem;
+  background: var(--surface);
+}
+
+.vim-intro h3 { margin-top: 0; }
+.vim-intro p:last-child { margin-bottom: 0; color: var(--muted); }
+.vim-carousel { max-width: 900px; }
+.vim-carousel-slides { display: grid; }
+.vim-slide { grid-area: 1 / 1; align-self: start; width: 100%; }
+.vim-slide[aria-hidden="true"] { visibility: hidden; pointer-events: none; }
+.vim-slide-source { font-size: .9rem; }
+.vim-carousel-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .65rem;
+  margin-top: -.5rem;
+}
+.vim-carousel-controls button { min-height: 2.75rem; }
+#vim-carousel-position { min-width: 4.5rem; text-align: center; color: var(--muted); }
+.vim-carousel-help { margin-top: .65rem; color: var(--muted); font-size: .9rem; }
+.vim-carousel button:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
 
 .lessons a {
   display: block;
@@ -174,62 +213,117 @@ kbd, .key {
 .practice p { color: #c8d5e6; }
 .practice a { color: #ffffff !important; border-color: #53627a !important; }
 
-.practice button {
-  margin: .25rem .35rem .25rem 0;
-  border-color: #53627a;
+.practice label { display: block; font-weight: 700; }
+.practice #challenge-select { max-width: 32rem; background: #ffffff; color: #172033; }
+.practice .challenge-picker {
+  position: sticky;
+  top: .5rem;
+  z-index: 2;
+  max-width: 56rem;
+  margin-bottom: 1rem;
+  padding: .8rem 1rem;
+  border: 1px solid #53627a;
+  border-radius: .55rem;
+  background: #151e2b;
+  box-shadow: 0 .5rem 1.5rem #0005;
+}
+.practice .challenge-picker p { margin: .4rem 0 0; }
+
+.practice .terminal-screen,
+.practice .vim-workspace {
+  max-width: 56rem;
+  min-height: 19rem;
+  overflow: auto;
+  border: 1px solid #53627a;
+  border-radius: .55rem;
+  background: #080d14;
+  box-shadow: 0 .8rem 2rem #0004;
+  color: #e5eef8;
+  font: 15px/1.65 ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
+.practice .terminal-screen { display: flex; flex-direction: column; padding: .8rem 1rem; cursor: text; }
+.practice .terminal-output {
+  flex: none;
+  min-height: 0;
+  max-height: 14rem;
+  overflow: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+
+.terminal-entry { margin: 0 0 .6rem; white-space: pre-wrap; overflow-wrap: anywhere; }
+.terminal-command, .terminal-result { display: block; }
+.terminal-command { color: #8ce0d6; }
+.terminal-result { padding-left: 1.5rem; color: #c8d5e6; }
+.practice .terminal-current-line { display: flex; align-items: baseline; gap: .65rem; }
+.practice .terminal-current-line #terminal-prompt { flex: none; color: #8ce0d6; }
+.practice .terminal-command-input {
+  flex: 1;
+  min-width: 0;
+  min-height: 1.65em;
+  padding: 0;
+  color: #ffffff;
+  font: inherit;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.practice .terminal-command-input:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
+.practice .vim-workspace { min-height: 0; overflow: hidden; }
+.vim-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 2.7rem;
+  padding: .25rem .75rem;
+  background: #151e2b;
+  color: #c8d5e6;
+  font-size: .8rem;
+  font-weight: 700;
+}
+.practice #simulator-editor {
+  min-height: 15rem;
+  max-height: 55vh;
+  min-width: 0;
+  margin: 0;
+  overflow: auto;
+  padding: .75rem 1rem;
+  border: 0;
+  border-radius: 0;
+  background: #080d14;
+  color: #e5eef8;
+  font: inherit;
+  white-space: pre;
+}
+.vim-statusline {
+  display: flex;
+  gap: 1rem;
+  padding: .15rem .75rem;
   background: #26344b;
   color: #ffffff;
 }
-
-.practice button:disabled { cursor: not-allowed; opacity: .65; }
-
-.practice label { display: block; margin-top: 1rem; font-weight: 700; }
-.practice #challenge-select { max-width: 32rem; background: #ffffff; color: #172033; }
-
-.practice .terminal-output {
-  min-height: 7rem;
-  max-height: 14rem;
-  overflow: auto;
-  margin-block: 1rem .5rem;
-  padding: .75rem 1rem;
-  border: 1px solid #53627a;
-  border-radius: .5rem;
-  background: #08111f;
+.vim-statusline strong { min-width: 6ch; }
+.vim-command-line {
+  min-height: 1.65em;
+  padding: .15rem .75rem;
+  background: #080d14;
   color: #e5eef8;
-  font: 14px/1.6 ui-monospace, SFMono-Regular, Consolas, monospace;
+  white-space: pre-wrap;
 }
-
-.terminal-entry { margin: 0 0 .5rem; white-space: pre-wrap; overflow-wrap: anywhere; }
-.terminal-command, .terminal-result { display: block; }
-.terminal-command { color: #8ce0d6; }
-.terminal-result { padding-left: 1rem; }
-.practice .terminal-form { display: grid; grid-template-columns: minmax(0, 1fr); gap: .5rem; }
-.practice .terminal-form label { margin: 0; }
-.practice #terminal-input {
-  width: 100%;
-  min-width: 0;
-  padding: .65rem .75rem;
-  border: 1px solid #53627a;
-  border-radius: .4rem;
-  background: #08111f;
-  color: #ffffff;
-  font: 15px ui-monospace, SFMono-Regular, Consolas, monospace;
+.vim-feedback {
+  min-height: 1.65em;
+  margin: 0;
+  padding: .15rem .75rem;
+  background: #080d14;
+  color: #c8d5e6;
+  white-space: pre-wrap;
 }
-.practice #vim-workspace { margin-top: 1.5rem; padding-top: .5rem; border-top: 1px solid #53627a; }
 [hidden] { display: none !important; }
-
-.practice #simulator-editor {
-  min-height: 9rem;
-  margin-top: 1rem;
-  overflow: auto;
-  padding: 1rem;
-  border: 1px solid #53627a;
-  border-radius: .5rem;
-  background: #08111f;
-  color: #e5eef8;
-  font: 15px/1.65 ui-monospace, SFMono-Regular, Consolas, monospace;
-  white-space: pre;
-}
+.terminal-entry + .terminal-entry { margin-top: .25rem; }
 
 .editor-line { display: flex; min-width: max-content; }
 .editor-line.is-current { background: #20314a; }
@@ -253,7 +347,7 @@ select:focus-visible, #simulator-editor:focus-visible {
   .filters { grid-template-columns: 2fr 1fr 1fr; }
   #command-list, .lessons { grid-template-columns: repeat(2, 1fr); }
   .simulator-meta { grid-template-columns: 1fr 2fr; }
-  .practice .terminal-form { grid-template-columns: minmax(0, 1fr) auto; align-items: end; }
+  .practice .terminal-screen { padding: 1rem 1.2rem; }
 }
 
 @media (min-width: 1000px) {

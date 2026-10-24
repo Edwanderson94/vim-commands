@@ -1,5 +1,8 @@
 # Navegação no Vim
 
+**Pré-requisito:** conclua [Módulo Linux — Terminal básico](terminal-basics.md)
+e [Módulo Vim — Primeiros passos](getting-started.md).
+
 No modo normal, você move o cursor sem precisar das setas. Comece devagar: os
 comandos abaixo parecem pequenos, mas são usados o tempo todo.
 

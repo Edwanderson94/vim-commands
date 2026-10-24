@@ -1,5 +1,9 @@
 # Busca e substituição
 
+**Pré-requisito:** conclua [Módulo Linux — Terminal básico](terminal-basics.md),
+[Primeiros passos no Vim](getting-started.md), [Navegação](navigation.md) e
+[Edição de texto](editing.md).
+
 Use estes comandos no modo normal. Eles ajudam a encontrar e alterar texto sem
 percorrer o arquivo manualmente.
 

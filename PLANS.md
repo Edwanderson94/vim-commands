@@ -3,6 +3,66 @@
 Status revisado em 2026-10-24. As páginas Markdown também são renderizadas em
 HTML estático local para leitura formatada no navegador.
 
+## Estado atual — release/1.0.1
+
+O goal ativo está em [`GOALS.md`](GOALS.md). A solicitação atual acrescentou o
+comando `clear` e deixou explícito que a trilha de Linux/terminal precede o
+módulo Vim. As três mudanças estão implementadas e publicadas na branch `release/1.0.1`
+(commit `d7b3bdc` e ajuste de smoke test `ec7e4ce`). Também foi resolvida a
+discrepância entre exemplos de terminal Linux real (`cd`, `mkdir`, `touch`) e a
+lista menor do simulador web.
+
+**Ajuste adicional solicitado antes do fechamento — implementado e enviado:**
+o favicon foi redesenhado com dimensões SVG quadradas explícitas e URL
+versionada para renovar o cache. EDEVOPS foi registrada como publicadora em
+`FONTES.md`, README e rodapé do site. Os testes de simulador, auditoria das 19
+páginas, links e metadados do favicon passaram. O SVG também foi servido por HTTP
+local com MIME `image/svg+xml`. O commit `32385ab` foi enviado à branch
+`release/1.0.1`, mas o workflow `40137031143` falhou no passo combinado de
+validação. Nesta máquina, testes unitários e auditoria do site passaram; o
+Chrome smoke não pôde ser executado por falta de ChromeDriver. A página pública
+ainda serve a versão anterior, portanto a publicação do ajuste não foi
+confirmada. Repetir/diagnosticar a validação antes de fechar a release.
+
+**Revisão visual do favicon — local:** após consultar a imagem EDEVOPS usada no
+README do perfil GitHub, o ícone foi atualizado para uma letra E em degradê
+ciano/azul-roxo sobre fundo preto, seguindo a marca. `FONTES.md` registra essa
+imagem como referência, e o link do favicon recebeu um novo identificador para
+renovar o cache. Testes unitários, auditoria do site e `git diff --check`
+passaram. Esta revisão local ainda não foi enviada nem publicada.
+
+**Comportamento de `clear`:** remove as linhas de saída do terminal, restaura o
+prompt e o foco para a entrada e mantém intactos os arquivos virtuais. A
+especificação, a instrução da página, README, checklist QA, testes unitários e
+o smoke test Chrome foram atualizados.
+
+**Ordem didática:** README, página inicial, módulos, primeira aula, exercícios e
+referência agora indicam Linux/terminal antes de Vim; o material também explica
+que Vim é um editor, não o sistema operacional. Os HTML derivados foram
+regenerados.
+
+**Verificações:** `node tests/simulator.test.mjs`,
+`python3 tests/site-validation.py` (19 páginas e links locais) e
+`git diff --check` passaram. O smoke test Chrome confirmou limpeza da tela, foco,
+prompt, persistência do arquivo e navegação por teclado após o link do novo
+módulo. O workflow `40136038532` passou; a página publicada respondeu HTTP 200.
+
+**Situação de promoção:** as alterações estão no remoto e publicadas pelo GitHub
+Pages. A revisão da pessoa responsável ainda é necessária antes de fechar a
+release 1.0.1.
+
+## Melhorias planejadas
+
+A fila priorizada com dez melhorias, critérios resumidos e status está em
+[`GOALS.md`](GOALS.md), na seção “Dez melhorias identificadas”. Os itens 1–4
+foram implementados e validados; os itens 5–10 estão em andamento ou planejados.
+O smoke test Chrome do item 4 cobre a lista de comandos, rejeições, argumentos
+inválidos, caminhos externos, operadores, `clear` com argumento e persistência
+do arquivo. O workflow `40136235605` passou. O item 5 cobre correção por cursor/Backspace e
+agora também toque simulado em viewport móvel para focar a linha de comando; o
+workflow `40136432867` passou. Foco em aparelho real ainda requer verificação
+manual; o simulador não acessa a área de transferência.
+
 ## Fase 1 — Conteúdo Markdown — concluída
 
 **Objetivo:** disponibilizar a trilha e a referência inicial.
@@ -211,6 +271,123 @@ Chrome agora também percorre terminal → Vim → terminal e verifica o arquivo
 Chrome não está instalado localmente; o resultado de navegador será confirmado
 pelo workflow após a publicação desta alteração.
 
+**Ajuste de experiência após validação com a pessoa responsável:** reduzir a
+prática a uma janela visual de terminal com prompt e entrada de comando na
+mesma linha. O diretório inicial é `/home/aluno` e contém `teste.txt`; o fluxo
+principal é `vim teste.txt`. Ao abrir o arquivo, o editor ocupa a mesma área do
+terminal; o nome do arquivo e o modo aparecem na barra de status. Clicar na
+janela ativa a linha de comando. Desafios e detalhes técnicos ficam recolhidos.
+A página não foca nem rola até a entrada do terminal ao carregar.
+
+**Goal da release 1.0.1:** a solicitação registrada em `GOALS.md` deixa explícito
+que a linha editável precisa fazer parte da janela de terminal, eliminando o
+campo de comando separado visto na página publicada. O próximo fluxo a validar é
+`ls` → `vim teste.txt` → edição no Vim → `:wq` → prompt do terminal.
+
+**Verificação local dessa mudança:** Firefox/WebDriver percorreu o comando
+`vim arquivo.txt` por `Enter`, inserção, `:wq` e leitura de volta com `cat`; o
+terminal e o Vim alternaram na mesma área. Os testes locais de lógica e auditoria
+estática passaram. Chrome/ChromeDriver não estão instalados localmente; a
+regressão Chrome foi atualizada no smoke test e precisa passar no workflow antes
+da próxima publicação.
+
+**Correção de edição:** a tecla `Backspace` não chegava ao simulador. No modo de
+inserção, ela agora apaga o caractere anterior; no início de uma linha, une as
+linhas. `u` desfaz a sessão inteira e `.` repete também a sequência de
+Backspace. A cobertura inclui início do arquivo, união de linhas, undo e
+repetição; o smoke test Chrome verifica a interação de teclado.
+
+**Refino solicitado para a 1.0.1:** a experiência principal deve parecer uma
+sessão Linux simples: sem botão de execução, formulário ou caixa de comando
+separada. Na camada Linux, somente `pwd`, `ls` e `vim arquivo` funcionam. O
+diretório fica fixo em `/home/aluno` e `teste.txt` começa criado. A saída dos
+comandos `:wq`, `:q` e `:q!` controla o retorno do Vim; não há botão externo para
+fechar o editor. Comandos de administração e consulta como `mkdir`, `cd`,
+`touch`, `cat`, `clear` e `help` ficam fora da camada Linux desta prática.
+Depois de salvar, a pessoa pode reabrir o arquivo com `vim teste.txt` e conferir
+o conteúdo dentro do editor.
+
+**Verificação exigida:** testar digitação por teclado diretamente após o prompt,
+rejeição de comandos fora da lista, edição com `Backspace`, recusa de `:q` com
+alterações pendentes, salvamento com `:wq` e reabertura do arquivo salvo.
+
+**Verificação local concluída:** Firefox/WebDriver digitou os comandos por
+eventos de teclado na linha do prompt, confirmou a ausência do formulário e do
+botão de execução, verificou `pwd` e `ls`, a recusa de `cat`, edição com
+`Backspace`, bloqueio de `:q` com alterações pendentes, salvamento com `:wq` e
+reabertura do conteúdo. Testes unitários e validação do site também passaram.
+
+**Simplificação solicitada da prática:** manter somente a janela de terminal e
+um seletor opcional de desafio. A escolha prepara o conteúdo inicial de
+`teste.txt`; o aluno abre o arquivo com `vim teste.txt`. Foram removidos os
+botões “Ativar simulador”, “Restaurar texto” e “Reiniciar desafio”, além dos
+detalhes técnicos recolhidos do editor. Para reiniciar, escolha “Praticar sem
+desafio” e selecione o desafio novamente.
+
+**Verificação:** Firefox/WebDriver percorreu os cinco desafios: escolheu cada
+um no seletor, abriu `teste.txt` digitando `vim teste.txt`, concluiu a tarefa e
+voltou ao terminal com `:q!`. Também confirmou que selecionar novamente um
+desafio prepara seu texto inicial e que não há botões de ativação, restauração
+ou reinício. Os testes unitários, validação estática, links relativos e
+`git diff --check` passaram.
+
+**Publicação da 1.0.1:** o workflow do GitHub Pages agora é acionado por push em
+`release/1.0.1`, já que `release/1.0.0` foi encerrada. O push desta versão deve
+passar pela validação Chrome do workflow antes de atualizar o site público.
+
+**Ajuste solicitado para a 1.0.1 — desafio persistente e navegação no Vim:** ao
+abrir `vim teste.txt`, o painel do desafio deve continuar visível junto ao
+editor, em vez de desaparecer. A seleção fica bloqueada enquanto o arquivo
+estiver aberto para não trocar o texto-base durante a atividade. No editor, as
+setas e `Home`/`End` complementam `h`, `j`, `k`, `l`; o cursor deve acompanhar a
+navegação mesmo quando o arquivo ultrapassa a área visível. O painel do desafio
+fica preso ao topo da seção de prática durante o uso.
+
+**Implementado nesta rodada:** removido o rótulo “Desafio opcional”; a área de
+desafio permanece na tela ao entrar e sair do Vim; o seletor fica desabilitado
+durante a edição; setas, `Home` e `End` movem o cursor tanto no modo normal
+quanto no modo de inserção; a rolagem interna mantém o cursor visível. QA manual
+de teclado, seleção e rolagem deve ser registrado antes da próxima publicação.
+
+**Melhoria de interação Vim:** teste manual reproduziu que `i` entrava em
+`INSERT`, porém o comando Ex não aparecia visualmente enquanto era digitado; ao
+editar o arquivo, `:q` bloqueava a saída por haver alterações sem salvar e a
+mensagem só era anunciada por leitor de tela. A área de prática agora explica
+`i`, `Esc`, `:q`, `:wq` e `:q!`, e uma linha visível exibe `:q` antes de
+pressionar Enter. Mantém-se a regra do Vim: `:q` sai sem alterações pendentes;
+para salvar usa-se `:wq`, e para descartar usa-se `:q!`.
+O resultado dos comandos Ex e os avisos, inclusive a recusa de `:q` com
+alterações, também ficam visíveis na janela e não dependem de leitor de tela.
+
+**Fonte adicionada:** `FONTES.md` registra o Gist “Comandos VIM” indicado pela
+pessoa responsável e delimita que a lista ampla ali reunida não amplia os
+comandos aceitos pelo simulador.
+
+**Comando de terminal adicionado:** a solicitação para usar `cat teste.txt`
+agora é atendida por um `cat arquivo` restrito ao sistema de arquivos virtual
+em `/home/aluno`. O conteúdo salvo com `:wq` pode ser lido pelo terminal; nomes
+inexistentes, opções, caminhos externos e operadores são recusados. A
+especificação, os guias, a checklist e os testes foram atualizados.
+
+**Cache do navegador:** após a publicação, foi observada uma aba com o HTML novo
+e a mensagem de comandos antigos. Uma sessão limpa já carregava `cat`, portanto
+o JavaScript local estava em cache. A URL do `terminal.js` agora inclui uma
+versão associada à implementação de `cat` para forçar o download após atualizar
+a página.
+
+**Tema nas subpáginas:** as páginas derivadas dos materiais agora leem a mesma
+preferência `vim-theme` da página inicial, aplicam cores escuras antes de
+carregar o CSS e oferecem um botão próprio para alternar o tema. O gerador
+Markdown produz a mesma estrutura para aulas, exercícios, módulos e referência.
+As URLs do tema e do CSS levam um identificador de versão para não reutilizar
+uma folha de estilos antiga do cache do navegador.
+
+**Introdução na página inicial:** foram consultados o site e o manual oficial
+do Vim, a manpage do Ubuntu e materiais do Debian. `FONTES.md` registra também
+as referências a Nano, Emacs e Micro. A trilha inicial agora explica que Vim é
+um editor de texto modal, que se abre a partir do terminal e que há outros
+editores no Linux; distingue o Vim do terminal e do próprio Linux.
+
 ## Auditoria de promoção da 1.0.0
 
 **Estado do goal:** os quatro resultados descritos em `GOALS.md` estão
@@ -231,17 +408,14 @@ fluxos publicados. A fala do Orca e a repetição manual de toda a matriz QA nã
 foram verificadas nesta auditoria; não são bloqueios documentados para o
 aceite, mas devem continuar explícitas nos registros.
 
-**Itens mapeados para a próxima release:**
+**Itens mapeados para releases futuras:**
 
-1. Generalizar o gatilho do workflow de Pages: hoje o push automático atende
-   somente `release/1.0.0`. Antes de abrir outra branch de release, ajustar o
-   gatilho ou documentar uma execução manual aprovada.
-2. Definir uma etapa de prévia para candidatos futuros. O workflow atual publica
-   diretamente no Pages quando há push em `release/1.0.0`, então QA nessa branch
+1. Definir uma etapa de prévia para candidatos futuros. O workflow publica
+   diretamente no Pages em pushes para `release/1.0.1`, então QA nessa branch
    altera o site público de validação.
-3. Completar a matriz manual com o terminal simulado no Firefox, testar a saída
+2. Completar a matriz manual com o terminal simulado no Firefox, testar a saída
    falada do Orca e, se disponíveis, Safari e dispositivos móveis reais.
-4. Ampliar os testes de integração para erros de terminal, `:q` com e sem
+3. Ampliar os testes de integração para erros de terminal, `:q` com e sem
    alterações, `:q!`, arquivos vazios e caminhos de arquivo aninhados. O smoke
    test atual cobre o percurso principal e recusa comandos não permitidos.
 

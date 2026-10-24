@@ -1,5 +1,9 @@
 # Arquivos e janelas
 
+**Pré-requisito:** conclua [Módulo Linux — Terminal básico](terminal-basics.md)
+e os módulos [Primeiros passos](getting-started.md), [Navegação](navigation.md),
+[Edição](editing.md) e [Busca e substituição](search-and-replace.md).
+
 Depois de dominar edição e navegação, estes comandos ajudam a trabalhar com
 mais de um arquivo sem sair do Vim.
 

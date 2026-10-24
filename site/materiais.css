@@ -8,7 +8,24 @@
   --border: #d9e1ea;
   --code: #172033;
   --code-ink: #e5eef8;
+  --focus: #b45309;
+  --inline-code: #e8edf3;
+  --table-head: #e8edf3;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #101827;
+  --surface: #182235;
+  --ink: #eef4fb;
+  --muted: #b0bed0;
+  --link: #4fd1c5;
+  --border: #33445e;
+  --code: #08111f;
+  --code-ink: #e5eef8;
   --focus: #f59e0b;
+  --inline-code: #26344b;
+  --table-head: #26344b;
 }
 
 * { box-sizing: border-box; }
@@ -35,6 +52,17 @@ body {
 }
 
 .material-header a:first-child { font-weight: 800; }
+.material-header button {
+  padding: .5rem .7rem;
+  border: 1px solid var(--border);
+  border-radius: .4rem;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+.material-header button:hover { border-color: var(--link); }
+.material-header button:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
 .material-content { padding-block: 2rem 4rem; }
 .material-content h1, .material-content h2, .material-content h3 { line-height: 1.25; }
 .material-content h1 { font-size: clamp(2rem, 6vw, 3rem); }
@@ -42,13 +70,13 @@ body {
 a { color: var(--link); text-underline-offset: .18em; }
 a:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
 code, pre { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
-:not(pre) > code { padding: .1em .3em; border-radius: .25rem; background: #e8edf3; }
+:not(pre) > code { padding: .1em .3em; border-radius: .25rem; background: var(--inline-code); }
 pre { overflow: auto; padding: 1rem; border-radius: .65rem; background: var(--code); color: var(--code-ink); }
 blockquote { margin-inline: 0; padding: .25rem 1rem; border-left: 4px solid var(--link); color: var(--muted); }
 .table-scroll { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; }
 th, td { padding: .65rem .75rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
-th { background: #e8edf3; }
+th { background: var(--table-head); }
 li + li { margin-top: .35rem; }
 .material-footer { padding-block: 1rem 2rem; border-top: 1px solid var(--border); color: var(--muted); }
 

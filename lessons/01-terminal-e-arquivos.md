@@ -1,10 +1,17 @@
 # Aula 1 — Terminal e seu primeiro arquivo no Vim
 
+**Posição na trilha:** primeiro conclua o [Módulo Linux — Terminal básico](../content/terminal-basics.md).
+Esta aula faz a ponte entre os comandos do terminal e a abertura do Vim.
+
 **Duração estimada:** 15 minutos
 
 **Nível:** iniciante
 
 **Pré-requisito:** um terminal Linux aberto e o Vim instalado (`vim --version`).
+
+> Os comandos `mkdir` e `cd` desta aula são para um terminal Linux real. A
+> prática web é um simulador limitado: nela, use apenas `pwd`, `ls`,
+> `cat arquivo`, `clear` e `vim arquivo`.
 
 ## Objetivo
 

@@ -4,16 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Material de aprendizagem de Vim em português.">
-  <title>Primeiros passos no Vim — Vim Commands</title>
-  <link rel="stylesheet" href="../../materiais.css">
+  <title>Módulo Vim — Primeiros passos — Vim Commands</title>
+  <script src="../../materiais-theme.js?v=theme-1"></script>
+  <link rel="stylesheet" href="../../materiais.css?v=theme-1">
 </head>
 <body>
   <header class="material-header">
     <a href="../../index.html">Vim Commands</a>
     <a href="../../index.html#aulas">Voltar à trilha</a>
+    <button id="theme-toggle" type="button" aria-pressed="false">Tema escuro</button>
   </header>
   <main class="material-content">
-<h1>Primeiros passos no Vim</h1>
+<h1>Módulo Vim — Primeiros passos</h1>
+<p><strong>Pré-requisito:</strong> conclua primeiro o <a href="terminal-basics.html">Módulo Linux — Terminal básico</a>. O Vim é um editor de texto modal muito usado no Linux, mas também disponível em outros sistemas. Você o inicia no terminal com <code>vim nome-do-arquivo</code>; depois, os comandos de edição são digitados dentro do Vim.</p>
 <p>O Vim trabalha com modos. No começo, isso parece estranho, mas é o que torna a edição rápida quando os comandos se tornam familiares.</p>
 <h2>Os dois modos essenciais</h2>
 <div class="table-scroll"><table><thead><tr><th scope="col">Modo</th><th scope="col">Para que serve</th><th scope="col">Como entrar</th></tr></thead><tbody><tr><td>Normal</td><td>Mover, copiar, apagar e executar comandos</td><td><code>Esc</code></td></tr><tr><td>Inserção</td><td>Digitar ou alterar texto</td><td><code>i</code>, <code>a</code> ou <code>o</code></td></tr></tbody></table></div>

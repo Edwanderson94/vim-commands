@@ -1,5 +1,7 @@
 # Exercício: edição
 
+**Pré-requisito:** conclua [Módulo Linux — Terminal básico](../content/terminal-basics.md), [Navegação](../content/navigation.md) e [Edição de texto](../content/editing.md).
+
 Crie um arquivo com estas três linhas:
 
 ```text

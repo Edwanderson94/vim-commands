@@ -4,9 +4,9 @@ const initialLines = ['Linha para praticar.', 'Apague esta linha.', 'Bom estudo!
 function createState(lines = initialLines) {
   return {
     mode: 'normal', lines: [...lines], cursor: { line: 0, column: 0 }, register: '',
-    commandBuffer: '', searchTerm: '', undoStack: [], redoStack: [], keyHistory: [],
-    lastChange: null, insertText: '', insertKind: null,
-    feedback: 'Ative o simulador para começar a praticar.'
+    commandBuffer: '', searchTerm: '', undoStack: [], redoStack: [],
+    lastChange: null, insertText: '', insertKind: null, insertOperations: [],
+    feedback: 'Use os comandos do Vim para praticar.'
   };
 }
 
@@ -16,7 +16,10 @@ function keyForSimulator(event, state) {
     return null;
   }
   if (event.altKey || event.metaKey) return null;
+  if (event.key === 'Backspace') return state.mode === 'insert' ? 'Backspace' : null;
   if (event.key === 'Escape') return 'Escape';
+  if (event.key.startsWith('Arrow')) return event.key;
+  if (event.key === 'Home' || event.key === 'End') return event.key;
   if (event.key === 'Enter') {
     return state.mode === 'insert' || state.commandBuffer.startsWith('/') || state.commandBuffer.startsWith(':')
       ? 'Enter'
@@ -54,6 +57,45 @@ function startInsert(state, kind = 'insert') {
   state.mode = 'insert';
   state.insertText = '';
   state.insertKind = kind;
+  state.insertOperations = [];
+}
+
+function insertAtCursor(state, value) {
+  if (value === '\n') {
+    const line = state.lines[state.cursor.line];
+    state.lines.splice(state.cursor.line + 1, 0, line.slice(state.cursor.column));
+    state.lines[state.cursor.line] = line.slice(0, state.cursor.column);
+    state.cursor.line += 1;
+    state.cursor.column = 0;
+    return;
+  }
+  const line = state.lines[state.cursor.line];
+  state.lines[state.cursor.line] = line.slice(0, state.cursor.column) + value + line.slice(state.cursor.column);
+  state.cursor.column += value.length;
+}
+
+function deleteBeforeCursor(state) {
+  const { line, column } = state.cursor;
+  if (column > 0) {
+    const current = state.lines[line];
+    state.lines[line] = current.slice(0, column - 1) + current.slice(column);
+    state.cursor.column -= 1;
+    return 'character';
+  }
+  if (line > 0) {
+    const previousLength = state.lines[line - 1].length;
+    state.lines[line - 1] += state.lines[line];
+    state.lines.splice(line, 1);
+    state.cursor.line -= 1;
+    state.cursor.column = previousLength;
+    return 'line';
+  }
+  return null;
+}
+
+function applyInsertOperation(state, operation) {
+  if (operation.type === 'backspace') deleteBeforeCursor(state);
+  else insertAtCursor(state, operation.value);
 }
 
 function repeatChange(state) {
@@ -61,7 +103,14 @@ function repeatChange(state) {
   if (!change) return finish(state, 'Ainda não há alteração para repetir.');
   const line = state.lines[state.cursor.line];
   save(state);
-  if (change.type === 'insert' || change.type === 'open-line-insert') {
+  if (change.type === 'insert-session') {
+    if (change.insertKind === 'open-line') {
+      state.lines.splice(state.cursor.line + 1, 0, '');
+      state.cursor.line += 1;
+      state.cursor.column = 0;
+    }
+    change.operations.forEach((operation) => applyInsertOperation(state, operation));
+  } else if (change.type === 'insert' || change.type === 'open-line-insert') {
     if (change.type === 'open-line-insert') {
       state.lines.splice(state.cursor.line + 1, 0, '');
       state.cursor.line += 1;
@@ -161,37 +210,56 @@ function moveSearch(state, direction) {
 }
 
 function applyKey(state, key) {
-  state.keyHistory = [...state.keyHistory.slice(-11), key];
-
   if (state.mode === 'insert') {
+    if (key === 'ArrowLeft') state.cursor.column -= 1;
+    else if (key === 'ArrowRight') state.cursor.column += 1;
+    else if (key === 'ArrowUp') state.cursor.line -= 1;
+    else if (key === 'ArrowDown') state.cursor.line += 1;
+    else if (key === 'Home') state.cursor.column = 0;
+    else if (key === 'End') state.cursor.column = state.lines[state.cursor.line].length;
+    if (key.startsWith('Arrow') || key === 'Home' || key === 'End') {
+      return finish(state, 'Cursor movido.');
+    }
     if (key === 'Escape') {
       state.mode = 'normal';
-      if (state.insertText) state.lastChange = {
-        type: state.insertKind === 'open-line' ? 'open-line-insert' : 'insert',
-        text: state.insertText
+      if (state.insertOperations.length) state.lastChange = {
+        type: 'insert-session', insertKind: state.insertKind,
+        operations: [...state.insertOperations]
       };
       state.insertText = '';
       state.insertKind = null;
+      state.insertOperations = [];
       return finish(state, 'Modo normal.');
     }
+    if (key === 'Backspace') {
+      const removed = deleteBeforeCursor(state);
+      if (!removed) return finish(state, 'Não há texto antes do cursor.');
+      state.insertOperations.push({ type: 'backspace' });
+      if (state.insertText) state.insertText = state.insertText.slice(0, -1);
+      state.feedback = removed === 'line' ? 'Linha unida à anterior.' : 'Caractere anterior removido.';
+      return state;
+    }
     if (key === 'Enter') {
-      const line = state.lines[state.cursor.line];
-      state.lines.splice(state.cursor.line + 1, 0, line.slice(state.cursor.column));
-      state.lines[state.cursor.line] = line.slice(0, state.cursor.column);
-      state.cursor.line += 1;
-      state.cursor.column = 0;
+      insertAtCursor(state, '\n');
       state.insertText += '\n';
+      state.insertOperations.push({ type: 'text', value: '\n' });
       state.feedback = 'Nova linha inserida.';
       return state;
     }
     if (key.length !== 1) return finish(state, 'Tecla não suportada no modo de inserção.');
-    const line = state.lines[state.cursor.line];
-    state.lines[state.cursor.line] = line.slice(0, state.cursor.column) + key + line.slice(state.cursor.column);
-    state.cursor.column += 1;
+    insertAtCursor(state, key);
     state.insertText += key;
+    state.insertOperations.push({ type: 'text', value: key });
     state.feedback = 'Texto inserido. Pressione Esc para voltar ao modo normal.';
     return state;
   }
+
+  if (key === 'ArrowLeft') key = 'h';
+  else if (key === 'ArrowDown') key = 'j';
+  else if (key === 'ArrowUp') key = 'k';
+  else if (key === 'ArrowRight') key = 'l';
+  else if (key === 'Home') key = '0';
+  else if (key === 'End') key = '$';
 
   if (key === 'Escape') return finish(state, 'Operação cancelada.');
   if (key === 'Ctrl-r') {
@@ -235,7 +303,7 @@ function applyKey(state, key) {
 
   if (command === 'i') { startInsert(state); return finish(state, 'Modo de inserção.'); }
   if (command === 'a') { state.cursor.column = Math.min(state.cursor.column + 1, line().length); startInsert(state); return finish(state, 'Modo de inserção.'); }
-  if (command === 'o') { save(state); state.lines.splice(state.cursor.line + 1, 0, ''); state.cursor.line += 1; state.cursor.column = 0; state.mode = 'insert'; state.insertText = ''; state.insertKind = 'open-line'; return finish(state, 'Nova linha para inserir.'); }
+  if (command === 'o') { save(state); state.lines.splice(state.cursor.line + 1, 0, ''); state.cursor.line += 1; state.cursor.column = 0; state.mode = 'insert'; state.insertText = ''; state.insertKind = 'open-line'; state.insertOperations = []; return finish(state, 'Nova linha para inserir.'); }
   if (command === 'h') { state.cursor.column -= 1; return finish(state, 'Cursor à esquerda.'); }
   if (command === 'l') { state.cursor.column += 1; return finish(state, 'Cursor à direita.'); }
   if (command === 'j') { state.cursor.line += 1; return finish(state, 'Cursor abaixo.'); }

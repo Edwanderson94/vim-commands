@@ -1,5 +1,6 @@
 from html.parser import HTMLParser
 from pathlib import Path
+from xml.etree import ElementTree
 from urllib.parse import unquote, urlsplit
 import re
 import sys
@@ -164,12 +165,61 @@ if actual_materials != expected_materials:
     errors.append('páginas HTML derivadas não correspondem às fontes Markdown')
 
 audits = {page.relative_to(ROOT): audit_page(page) for page in html_pages if page.exists()}
+for material_path in expected_materials:
+    material = audits.get(material_path.relative_to(ROOT))
+    if not material:
+        continue
+    if not any(Path(urlsplit(source).path).name == 'materiais-theme.js' for source in material.script_sources):
+        errors.append(f'{material_path.relative_to(ROOT)}: subpágina deve carregar o tema compartilhado')
+    if 'theme-toggle' not in material.ids:
+        errors.append(f'{material_path.relative_to(ROOT)}: subpágina deve oferecer controle de tema')
+    if not any(Path(urlsplit(link).path).name == 'materiais.css' for link in material.links):
+        errors.append(f'{material_path.relative_to(ROOT)}: subpágina deve carregar o CSS de materiais')
+
 home = audits.get(Path('site/index.html'))
 if home:
     if home.lang != 'pt-BR':
         errors.append('site/index.html: documento principal deve declarar português do Brasil')
-    expected_scripts = ['commands.js', 'simulator.js', 'challenges.js', 'terminal.js', 'app.js']
-    if [Path(src).name for src in home.script_sources] != expected_scripts:
+    homepage_source = (SITE / 'index.html').read_text(encoding='utf-8')
+    if '<link rel="icon" href="assets/favicon.svg?v=edevops-2" type="image/svg+xml" sizes="any">' not in homepage_source:
+        errors.append('site/index.html: favicon deve usar SVG escalável e URL versionada para invalidar cache')
+    if 'Conteúdo publicado por EDEVOPS.' not in homepage_source:
+        errors.append('site/index.html: rodapé deve identificar EDEVOPS como publicadora')
+    source_notes = (ROOT / 'FONTES.md').read_text(encoding='utf-8')
+    if '## Publicação do conteúdo' not in source_notes or '**EDEVOPS**' not in source_notes:
+        errors.append('FONTES.md: deve registrar EDEVOPS como publicadora do conteúdo')
+    try:
+        favicon = ElementTree.parse(SITE / 'assets' / 'favicon.svg').getroot()
+        if favicon.get('viewBox') != '0 0 64 64' or favicon.get('width') != '64' or favicon.get('height') != '64':
+            errors.append('site/assets/favicon.svg: favicon deve ter dimensões quadradas explícitas e viewBox correspondente')
+    except (ElementTree.ParseError, OSError) as exc:
+        errors.append(f'site/assets/favicon.svg: SVG inválido ou ausente: {exc}')
+    if '<h2 id="titulo-aulas">Informações sobre o Vim</h2>' not in homepage_source:
+        errors.append('site/index.html: a seção introdutória deve se chamar Informações sobre o Vim')
+    if 'Módulo Linux — Terminal básico' not in homepage_source or 'id="modulo-vim">Aulas do módulo Vim' not in homepage_source or 'não é o sistema operacional Linux' not in homepage_source:
+        errors.append('site/index.html: deve explicar que o módulo Linux vem antes do módulo Vim e que Vim é um editor')
+    if homepage_source.index('materiais/content/terminal-basics.html') > homepage_source.index('id="modulo-vim"'):
+        errors.append('site/index.html: o módulo Linux deve ser apresentado antes das aulas de Vim')
+    terminal_module = (ROOT / 'content' / 'terminal-basics.md').read_text(encoding='utf-8')
+    if any(term not in terminal_module for term in ('terminal Linux real', '`pwd`', '`clear`', '`vim arquivo`', '`cd`', '`mkdir`', '`touch`', 'não são implementados nele')):
+        errors.append('content/terminal-basics.md: deve distinguir comandos Linux reais da lista reduzida do simulador web')
+    carousel_ids = {'vim-carousel', 'vim-carousel-slides', 'vim-slide-1', 'vim-slide-2', 'vim-slide-3', 'vim-slide-4', 'vim-carousel-previous', 'vim-carousel-next', 'vim-carousel-autoplay', 'vim-carousel-position', 'vim-carousel-help'}
+    if not carousel_ids.issubset(home.ids):
+        errors.append(f'site/index.html: carrossel incompleto; faltam {sorted(carousel_ids - home.ids)}')
+    if 'data-interval="10000"' not in homepage_source or homepage_source.count('aria-roledescription="slide"') != 4 or 'aria-live="off"' not in homepage_source:
+        errors.append('site/index.html: carrossel deve ter quatro cartões, intervalo de 10 segundos e anúncio controlado')
+    for curiosity in ('vimtutor', ':set spell', 'plugins'):
+        if curiosity not in homepage_source:
+            errors.append(f'site/index.html: falta curiosidade sobre {curiosity}')
+    for introduction in ('id="titulo-o-que-e-vim"', 'Vi IMproved', 'editor de texto modal', 'modo de inserção', 'terminal do Linux', 'Nano', 'Emacs', 'Micro'):
+        if introduction not in homepage_source:
+            errors.append(f'site/index.html: falta a introdução básica sobre Vim ({introduction})')
+    if 'Esc</kbd> volta ao modo normal ou cancela uma operação.' in homepage_source:
+        errors.append('site/index.html: dica isolada de Esc removida da apresentação inicial')
+    if 'href="#aulas">Começar a aprender</a>' not in homepage_source:
+        errors.append('site/index.html: botão principal deve levar à trilha inicial')
+    expected_scripts = ['commands.js', 'simulator.js', 'challenges.js', 'terminal.js', 'carousel.js', 'app.js']
+    if [Path(urlsplit(src).path).name for src in home.script_sources] != expected_scripts:
         errors.append('site/index.html: scripts clássicos devem carregar na ordem especificada')
     for live_id in ('status-announcer',):
         if home.live_regions.get(live_id) != 'polite':
@@ -178,13 +228,18 @@ if home:
             errors.append(f'site/index.html: #{live_id} deve ser uma região status atômica')
     if home.aria_hidden.get('challenge-status') != 'true':
         errors.append('site/index.html: #challenge-status duplicado deve ficar fora da árvore assistiva')
-    if home.aria_hidden.get('simulator-feedback') != 'true':
-        errors.append('site/index.html: #simulator-feedback visual deve ficar fora da árvore assistiva')
+    for removed_control in ('activate-simulator', 'reset-simulator', 'restart-challenge', 'practice-extras'):
+        if removed_control in home.ids:
+            errors.append(f'site/index.html: controle obsoleto #{removed_control} ainda existe')
+    if 'challenge-select' not in home.ids or 'challenge-picker' not in home.ids:
+        errors.append('site/index.html: seletor opcional de desafio deve estar disponível junto à prática')
     if not home.editor_attrs or not (
         home.editor_attrs.get('role') == 'textbox'
         and home.editor_attrs.get('aria-multiline') == 'true'
         and home.editor_attrs.get('aria-label')
-        and home.editor_attrs.get('aria-describedby') == 'simulator-instructions'
+        and {'simulator-instructions', 'challenge-instruction'}.issubset(
+            set(home.editor_attrs.get('aria-describedby', '').split())
+        )
     ):
         errors.append('site/index.html: simulador deve expor caixa de texto multilinha nomeada e descrita')
 
@@ -225,6 +280,10 @@ for css_file in SITE.glob('*.css'):
 css = (SITE / 'styles.css').read_text(encoding='utf-8')
 if ':focus-visible' not in css or 'prefers-reduced-motion' not in css:
     errors.append('site/styles.css deve oferecer foco visível e respeitar movimento reduzido')
+
+materials_css = (SITE / 'materiais.css').read_text(encoding='utf-8')
+if 'html[data-theme="dark"]' not in materials_css or 'var(--page)' not in materials_css:
+    errors.append('site/materiais.css deve aplicar o tema escuro às páginas de materiais')
 
 if errors:
     print('\n'.join(f'ERRO: {error}' for error in errors), file=sys.stderr)

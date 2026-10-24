@@ -1,4 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Vim Commands">
-  <rect width="64" height="64" rx="12" fill="#0f766e"/>
-  <path d="M17 17h30L32 47 17 17Zm9 8 6 13 6-13H26Z" fill="#fff"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="EDEVOPS">
+  <defs>
+    <linearGradient id="edevops" x1="12" y1="12" x2="52" y2="52" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#12c6dc"/>
+      <stop offset="1" stop-color="#5b55dc"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#05070c"/>
+  <path d="M16 13h34v9H26v8h21v9H26v8h24v9H16V13Z" fill="url(#edevops)"/>
 </svg>
