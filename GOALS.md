@@ -65,9 +65,9 @@ simulador.
    argumento e preservação do arquivo. O workflow `40136235605` passou.
 5. **Polir a edição da linha de comando — teclado e toque simulado cobertos.**
    Chrome verifica correção com cursor/Backspace e toque em viewport móvel para
-   focar o prompt. O workflow anterior `40136353939` validou a correção por
-   teclado; o novo teste de toque aguarda CI. Foco em aparelho real ainda requer
-   verificação manual. O simulador não acessa a área de transferência.
+   focar o prompt; o workflow `40136432867` passou. Foco e teclado virtual em
+   aparelho real ainda requerem verificação manual. O simulador não acessa a
+   área de transferência.
 6. **Tornar os desafios mais instrutivos.** Revisar a clareza dos critérios de
    conclusão, o feedback de sucesso/erro e como a pessoa retoma a instrução ao
    alternar entre terminal e Vim.
