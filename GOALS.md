@@ -24,13 +24,12 @@ em português do Brasil.
   `PLANS.md`.
 
 **Estado atual:** a investigação dos workflows confirmou que renderização,
-testes unitários e auditoria HTML passam. O smoke falhava primeiro por medir
-durante a rolagem suave; depois, o run `40140176786` mostrou que a ação de
-ponteiro ainda deslocava a página e o toque terminava sobre um cartão. O teste
-agora usa `scrollIntoView` instantâneo e eventos de toque do Chrome DevTools sem
-ação de movimento. O workflow `40140400539` passou no Chrome, inclusive no foco
-da linha de comando em viewport móvel. A correção está validada na branch; resta
-integrá-la ao `master`, alinhar a tag e confirmar a publicação.
+testes unitários e auditoria HTML passam. A rolagem suave e o movimento do
+ponteiro causavam coordenadas/targets instáveis. O workflow `40140400539` passou,
+mas execuções subsequentes mostraram que habilitar emulação de toque depois de
+medir a posição podia deslocar o seletor fixo sobre o ponto. O teste agora ativa
+emulação primeiro, rola a entrada com comportamento instantâneo e toca no centro
+visível do próprio campo. Essa versão ainda precisa de validação no workflow.
 
 **Branch de trabalho:** `release/1.0.2`, criada a partir da `master` no commit
 `bd32474`.

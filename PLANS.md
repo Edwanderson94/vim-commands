@@ -25,8 +25,10 @@ zero para posicionar o ponteiro antes do toque e confirma o alvo e o foco.
 `40140176786` repetiu a falha: o ponteiro deslocou a página e o toque terminou
 sobre um cartão. O teste agora usa `scrollIntoView` com `behavior: 'instant'` e
 eventos `touchStart`/`touchEnd` do Chrome DevTools, sem movimento intermediário.
-O workflow `40140400539` passou no Chrome e confirmou o foco de
-`terminal-input` em viewport móvel.
+`40140400539` passou, mas `40140579171` mostrou que habilitar a emulação de toque
+depois de medir o ponto podia deslocar o seletor fixo sobre a coordenada. O smoke
+agora ativa toque antes de rolar e mede o próprio `#terminal-input`; essa revisão
+precisa de nova validação remota.
 
 O workflow agora separa validação e publicação: valida pushes em `release/**`
 sem exigir o ambiente `github-pages`, e publica somente após uma validação
@@ -37,11 +39,12 @@ As verificações locais `python3 -m py_compile tests/chrome-smoke.py`,
 `node scripts/render-markdown.mjs`, `node tests/simulator.test.mjs`,
 `python3 tests/site-validation.py` e `git diff --check` passaram. O workflow
 `40139686095` foi bloqueado pelas regras do ambiente `github-pages` antes da
-validação. O run de `master` `40140176786` falhou no foco móvel; a branch de
-release foi corrigida e o workflow `40140400539` passou em Chrome. A tag `1.0.2`
-foi criada antes dessa correção, no merge `2fa7f96`; ao promover o commit
-validado, alinhar a tag ao novo merge e remover a branch de release. O deploy de
-Pages deve ser confirmado pelo workflow executado em `master`.
+validação. O run de `master` `40140176786` falhou no foco móvel; o smoke passou em
+`40140400539`, mas `40140579171` revelou outra mudança de alvo após emulação de
+toque. O ajuste atual na `release/1.0.2` ativa emulação antes de medir a entrada
+e aguarda nova validação. A tag `1.0.2` está no merge anterior `2fa7f96`; só deve
+ser realinhada ao merge final após validação verde. O deploy de Pages deverá ser
+confirmado no workflow de `master`.
 
 ## Histórico — release/1.0.1
 
