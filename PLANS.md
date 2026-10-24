@@ -12,6 +12,14 @@ módulo Vim. As três mudanças estão implementadas e publicadas na branch `rel
 discrepância entre exemplos de terminal Linux real (`cd`, `mkdir`, `touch`) e a
 lista menor do simulador web.
 
+**Ajuste adicional solicitado antes do fechamento — implementado localmente:**
+o favicon foi redesenhado com dimensões SVG quadradas explícitas e URL
+versionada para renovar o cache. EDEVOPS foi registrada como publicadora em
+`FONTES.md`, README e rodapé do site. Os testes de simulador, auditoria das 19
+páginas, links e metadados do favicon passaram. O SVG também foi servido por HTTP
+local com MIME `image/svg+xml`. As mudanças aguardam sua validação antes da
+próxima publicação.
+
 **Comportamento de `clear`:** remove as linhas de saída do terminal, restaura o
 prompt e o foco para a entrada e mantém intactos os arquivos virtuais. A
 especificação, a instrução da página, README, checklist QA, testes unitários e

@@ -4,6 +4,8 @@ Um guia prático, em português, para aprender Vim passo a passo. O conteúdo é
 mantido em Markdown para leitura no GitHub e apresentado em páginas estáticas
 no site, que também oferece catálogo, simulador e desafios interativos.
 
+**Publicadora do conteúdo:** EDEVOPS.
+
 ## Acesse o site
 
 Abra [Vim Commands — site estático](https://edwanderson94.github.io/vim-commands/site/)

@@ -34,7 +34,7 @@ vim-commands/
     ├── simulator.js
     ├── challenges.js
     ├── terminal.js
-    ├── assets/favicon.svg
+    ├── assets/favicon.svg (favicon SVG quadrado, com dimensões intrínsecas explícitas)
     ├── materiais.css
     ├── materiais/ (HTML derivado, gerado pelo script)
     └── README.md
@@ -66,7 +66,7 @@ O site usa HTML5 semântico, CSS3 e JavaScript puro em arquivos separados, sem f
 
 | Arquivo | Responsabilidade |
 | :--- | :--- |
-| `index.html` | Estrutura semântica e pontos de montagem. |
+| `index.html` | Estrutura semântica, pontos de montagem, favicon e atribuição da publicadora EDEVOPS. |
 | `styles.css` | Tokens, tema, layout e responsividade. |
 | `app.js` | Inicialização, tema, busca e filtros. |
 | `carousel.js` | Carrossel de introdução com rotação, controles e pausa acessíveis. |
@@ -83,7 +83,7 @@ funcionem offline. O tema claro/escuro é compartilhado entre a página inicial 
 todas as páginas de materiais; cada subpágina oferece um botão para alterná-lo.
 O workflow de publicação executa o mesmo gerador.
 
-A página contém cabeçalho com âncoras e botão de tema; apresentação com os botões “Começar a aprender” e “Ver cola rápida”; a seção “Informações sobre o Vim”, com um carrossel de quatro cartões: a explicação do Vim e três curiosidades apoiadas por fontes, além da ordem recomendada dos módulos Linux e Vim sempre visível; aulas renderizadas; catálogo; prática por terminal simulado com desafio sempre visível; e rodapé. O carrossel avança a cada 10 segundos quando está visível, oferece controles anterior/próximo e pausa, pausa ao receber foco ou ponteiro ou quando a aba fica oculta e inicia pausado quando a pessoa prefere movimento reduzido. Os cartões e controles precisam continuar utilizáveis por teclado e tecnologia assistiva.
+A página contém cabeçalho com âncoras e botão de tema; apresentação com os botões “Começar a aprender” e “Ver cola rápida”; a seção “Informações sobre o Vim”, com um carrossel de quatro cartões: a explicação do Vim e três curiosidades apoiadas por fontes, além da ordem recomendada dos módulos Linux e Vim sempre visível; aulas renderizadas; catálogo; prática por terminal simulado com desafio sempre visível; e rodapé com identificação da publicadora EDEVOPS. O carrossel avança a cada 10 segundos quando está visível, oferece controles anterior/próximo e pausa, pausa ao receber foco ou ponteiro ou quando a aba fica oculta e inicia pausado quando a pessoa prefere movimento reduzido. Os cartões e controles precisam continuar utilizáveis por teclado e tecnologia assistiva.
 
 O catálogo mostra tecla, título, descrição, categoria, nível, modo e aula. A busca verifica tecla, título, descrição, categoria e modo. Os filtros de categoria e nível atuam juntos. Sem resultado, há mensagem clara e botão para limpar filtros.
 

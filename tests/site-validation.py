@@ -1,5 +1,6 @@
 from html.parser import HTMLParser
 from pathlib import Path
+from xml.etree import ElementTree
 from urllib.parse import unquote, urlsplit
 import re
 import sys
@@ -180,6 +181,19 @@ if home:
     if home.lang != 'pt-BR':
         errors.append('site/index.html: documento principal deve declarar português do Brasil')
     homepage_source = (SITE / 'index.html').read_text(encoding='utf-8')
+    if '<link rel="icon" href="assets/favicon.svg?v=edevops-1" type="image/svg+xml" sizes="any">' not in homepage_source:
+        errors.append('site/index.html: favicon deve usar SVG escalável e URL versionada para invalidar cache')
+    if 'Conteúdo publicado por EDEVOPS.' not in homepage_source:
+        errors.append('site/index.html: rodapé deve identificar EDEVOPS como publicadora')
+    source_notes = (ROOT / 'FONTES.md').read_text(encoding='utf-8')
+    if '## Publicação do conteúdo' not in source_notes or '**EDEVOPS**' not in source_notes:
+        errors.append('FONTES.md: deve registrar EDEVOPS como publicadora do conteúdo')
+    try:
+        favicon = ElementTree.parse(SITE / 'assets' / 'favicon.svg').getroot()
+        if favicon.get('viewBox') != '0 0 64 64' or favicon.get('width') != '64' or favicon.get('height') != '64':
+            errors.append('site/assets/favicon.svg: favicon deve ter dimensões quadradas explícitas e viewBox correspondente')
+    except (ElementTree.ParseError, OSError) as exc:
+        errors.append(f'site/assets/favicon.svg: SVG inválido ou ausente: {exc}')
     if '<h2 id="titulo-aulas">Informações sobre o Vim</h2>' not in homepage_source:
         errors.append('site/index.html: a seção introdutória deve se chamar Informações sobre o Vim')
     if 'Módulo Linux — Terminal básico' not in homepage_source or 'id="modulo-vim">Aulas do módulo Vim' not in homepage_source or 'não é o sistema operacional Linux' not in homepage_source:

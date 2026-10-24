@@ -1,5 +1,11 @@
 # Fontes e referências
 
+## Publicação do conteúdo
+
+O conteúdo educacional deste projeto é publicado por **EDEVOPS**. Esta
+identificação registra a publicadora e não atribui à empresa a autoria das
+ferramentas, documentações ou referências listadas abaixo.
+
 ## Definição do Vim e alternativas
 
 - [Vim — About](https://www.vim.org/about.php), site oficial do projeto. Descreve o Vim como editor de texto configurável, derivado do Vi, para editar diferentes tipos de texto.

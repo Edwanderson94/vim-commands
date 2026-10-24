@@ -17,6 +17,8 @@ em português do Brasil.
   inicial, README, módulos, aulas e exercícios.
 - Explicar que Vim é um editor de texto muito usado no Linux, aberto a partir do
   terminal, mas não é o sistema operacional e também existe em outros sistemas.
+- Atualizar o favicon para uma marca nítida na aba do navegador e identificar
+  EDEVOPS como publicadora em `FONTES.md` e no rodapé do site.
 - Registrar as mudanças e regressões na especificação e na checklist de QA.
 
 **Critérios para concluir a release:**
@@ -31,12 +33,13 @@ em português do Brasil.
   da release e publicação são registradas em `PLANS.md`.
 - A pessoa responsável valida o fluxo de prática antes de fechar a release.
 
-**Estado atual:** `clear`, a ordem didática e a distinção entre Linux real e
-simulador foram implementados e publicados na branch `release/1.0.1`. Testes
-unitários, auditoria dos 19 HTML, links locais, `git diff --check` e smoke test
-Chrome passaram. O workflow `40136038532` concluiu com sucesso e a página
-publicada respondeu HTTP 200. Falta a pessoa responsável validar a experiência
-no site antes do fechamento da release.
+**Estado atual:** `clear`, a ordem didática, a distinção entre Linux real e
+simulador, os testes de terminal e foco móvel foram implementados e publicados
+na branch `release/1.0.1`. A solicitação mais recente (favicon e identificação
+EDEVOPS) está em implementação local, ainda não publicada. Testes unitários,
+auditoria dos 19 HTML, links locais, `git diff --check` e workflows Chrome
+anteriores passaram. O fechamento da release aguarda validação do site e desses
+ajustes pela pessoa responsável.
 
 **Branch de trabalho:** `release/1.0.1`.
 

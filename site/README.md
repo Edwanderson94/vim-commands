@@ -1,5 +1,8 @@
 # Site do Vim Commands
 
+O conteúdo é publicado por **EDEVOPS** (identificação registrada em
+[`FONTES.md`](../FONTES.md)).
+
 Interface estática, offline e sem dependências externas. Abra `index.html` em
 um navegador moderno ou sirva a raiz do projeto. O site oferece uma introdução
 em carrossel com quatro cartões sobre Vim, troca automática a cada 10 segundos
