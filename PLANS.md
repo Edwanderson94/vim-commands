@@ -60,6 +60,10 @@ desafios em memória.
 comandos definidos na especificação, busca, inserção, repetição, undo/redo,
 restauração e conclusão dos cinco desafios.
 
+**Correções desta rodada:** `n`/`N` agora percorrem ocorrências adicionais na
+mesma linha, e `dw` reconhece letras acentuadas e marcas Unicode combinantes.
+Há casos de regressão para essas situações na suíte do simulador.
+
 **Verificado em Firefox:** tecla ignorada antes da ativação, foco transferido
 para a área ao ativar, `Tab` não capturado, inserção e restauração pelo botão.
 Os cinco desafios foram concluídos conforme suas instruções e reiniciados para
@@ -109,10 +113,10 @@ As cinco aulas contêm todos os campos e seções especificados. A suíte do
 simulador, checagem sintática dos scripts e `git diff --check` passaram; links
 locais das 19 páginas foram resolvidos.
 
-**Ainda falta:** validação em Chrome e com leitor de tela. Os testes de
-responsividade e interação foram executados em Firefox headless; não há uma
-janela gráfica de navegador exposta neste ambiente para avaliação assistiva
-manual.
+**Ainda falta:** validação em Chrome e com leitor de tela. Chrome não está
+instalado neste ambiente. Orca está disponível e reconheceu o Firefox como
+aplicativo Mozilla, mas a sessão gráfica não permitiu ativar a janela temporária
+para inspecionar os controles; a leitura assistiva do conteúdo segue pendente.
 
 **Publicação de validação:** o workflow do GitHub Pages publica `site/` a
 partir da branch `release/1.0.0`. Ela permite validar o catálogo, tema,

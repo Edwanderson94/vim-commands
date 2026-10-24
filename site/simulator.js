@@ -44,7 +44,7 @@ function finish(state, feedback) {
 
 function deleteWord(line, column) {
   const rest = line.slice(column);
-  const match = rest.match(/^\w+\s*/);
+  const match = rest.match(/^[\p{L}\p{M}\p{N}_]+\s*/u);
   const count = match ? match[0].length : 0;
   return { removed: rest.slice(0, count), line: line.slice(0, column) + rest.slice(count) };
 }
@@ -114,7 +114,7 @@ function setCursorFromAbsolute(state, position) {
 }
 
 function isWordCharacter(character) {
-  return Boolean(character && /[\p{L}\p{N}_]/u.test(character));
+  return Boolean(character && /[\p{L}\p{M}\p{N}_]/u.test(character));
 }
 
 function moveWord(state, direction) {
@@ -131,6 +131,33 @@ function moveWord(state, direction) {
     if (position < 0) position = 0;
   }
   setCursorFromAbsolute(state, position);
+}
+
+function moveSearch(state, direction) {
+  const lineCount = state.lines.length;
+  const currentLine = state.lines[state.cursor.line];
+  const sameLineMatch = direction === 'forward'
+    ? currentLine.indexOf(state.searchTerm, state.cursor.column + 1)
+    : state.cursor.column > 0
+      ? currentLine.lastIndexOf(state.searchTerm, state.cursor.column - 1)
+      : -1;
+  if (sameLineMatch >= 0) {
+    state.cursor.column = sameLineMatch;
+    return true;
+  }
+
+  const step = direction === 'forward' ? 1 : -1;
+  for (let offset = 1; offset <= lineCount; offset += 1) {
+    const lineIndex = (state.cursor.line + step * offset + lineCount) % lineCount;
+    const match = direction === 'forward'
+      ? state.lines[lineIndex].indexOf(state.searchTerm)
+      : state.lines[lineIndex].lastIndexOf(state.searchTerm);
+    if (match >= 0) {
+      state.cursor = { line: lineIndex, column: match };
+      return true;
+    }
+  }
+  return false;
 }
 
 function applyKey(state, key) {
@@ -220,13 +247,8 @@ function applyKey(state, key) {
   if (command === 'G') { state.cursor.line = state.lines.length - 1; state.cursor.column = 0; return finish(state, 'Fim do arquivo.'); }
   if (command === '.') return repeatChange(state);
   if ((command === 'n' || command === 'N') && state.searchTerm) {
-    const step = command === 'n' ? 1 : -1;
-    for (let offset = 1; offset <= state.lines.length; offset += 1) {
-      const index = (state.cursor.line + step * offset + state.lines.length) % state.lines.length;
-      const column = state.lines[index].indexOf(state.searchTerm);
-      if (column >= 0) { state.cursor.line = index; state.cursor.column = column; return finish(state, 'Ocorrência encontrada.'); }
-    }
-    return finish(state, 'Texto não encontrado.');
+    const found = moveSearch(state, command === 'n' ? 'forward' : 'backward');
+    return finish(state, found ? 'Ocorrência encontrada.' : 'Texto não encontrado.');
   }
   if (command === 'x') { save(state); state.lines[state.cursor.line] = line().slice(0, state.cursor.column) + line().slice(state.cursor.column + 1); state.lastChange = { type: 'x' }; return finish(state, 'Caractere removido.'); }
   if (command === 'dd') { save(state); state.register = line(); state.lines.splice(state.cursor.line, 1); if (!state.lines.length) state.lines.push(''); state.lastChange = { type: 'dd' }; return finish(state, 'Linha removida.'); }
