@@ -59,9 +59,10 @@ simulador.
 3. **Distinguir Linux real do terminal restrito do simulador — publicado.**
    README, módulo inicial e Aula 1 identificam que `cd`, `mkdir` e `touch` são
    exemplos para um Linux real e apresentam a lista aceita pelo simulador.
-4. **Cobrir erros e limites do terminal ponta a ponta.** Ampliar testes de
-   integração para comandos permitidos/negados, argumentos inválidos, arquivos
-   inexistentes, caminhos externos, `clear` e preservação dos arquivos.
+4. **Cobrir erros e limites do terminal ponta a ponta — smoke test ampliado.**
+   O teste de navegador agora percorre `pwd`, comandos permitidos e negados,
+   argumentos inválidos, arquivos inexistentes, caminhos externos, operadores,
+   `clear` com argumento e preservação do arquivo. Aguardando workflow Chrome.
 5. **Polir a edição da linha de comando.** Verificar cursor, seleção, colagem,
    apagar/corrigir o comando antes de Enter, comportamento em telas táteis e
    retorno do foco, sem capturar teclas fora do terminal.

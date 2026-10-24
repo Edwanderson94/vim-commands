@@ -168,8 +168,10 @@ observado.
 - [ ] Tentar comandos que não pertencem ao terminal mínimo: `help`,
   `touch outro.txt` e `cd /tmp`.
 - [ ] Tentar abrir caminho fora da pasta virtual com `vim ../fora.txt`.
-- [ ] Tentar ler caminho fora da pasta e opção não suportada com `cat ../fora.txt`
-  e `cat -n teste.txt`.
+- [ ] Tentar arquivos inexistentes e opções não suportadas: `cat inexistente.txt`,
+  `cat ../fora.txt`, `cat -n teste.txt`, `vim ../fora.txt` e `vim -c`.
+- [ ] Tentar `clear extra` e confirmar que o terminal informa o uso correto e
+  mantém o histórico existente.
 - [ ] Tentar encadear comandos, por exemplo `pwd; ls`.
 - **Esperado:** `pwd`, `ls`, `cat arquivo`, `clear` e `vim arquivo` são aceitos;
   `clear` limpa a tela sem apagar arquivos e não aceita argumentos; `cat`

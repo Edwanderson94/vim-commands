@@ -146,8 +146,23 @@ def main():
         assert execute("return document.querySelector('#terminal-input').getAttribute('contenteditable')") == 'plaintext-only'
         execute("document.querySelector('.terminal-screen').click()")
         assert execute("return document.activeElement.id") == 'terminal-input', 'clicar no terminal deve ativar a linha de comando'
+        run_terminal('pwd')
+        assert '/home/aluno' in execute("return document.querySelector('#terminal-output').textContent"), 'pwd deve mostrar o diretório virtual fixo'
         run_terminal('ls')
         assert 'teste.txt' in execute("return document.querySelector('#terminal-output').textContent"), 'teste.txt deve existir no diretório inicial'
+        for unsupported in ('cd /tmp', 'mkdir pasta', 'touch outro.txt', 'help', 'rm -rf /'):
+            run_terminal(unsupported)
+            rejected = execute("return document.querySelector('#terminal-output').textContent")
+            assert 'Comando não disponível' in rejected, f'{unsupported} não deve executar no simulador: {rejected}'
+        run_terminal('cat inexistente.txt')
+        assert 'arquivo não encontrado' in execute("return document.querySelector('#terminal-output').textContent")
+        run_terminal('cat -n teste.txt')
+        assert 'Uso: cat' in execute("return document.querySelector('#terminal-output').textContent")
+        run_terminal('vim ../fora.txt')
+        outside = execute("return {terminalVisible: !document.querySelector('#terminal-view').hidden, output: document.querySelector('#terminal-output').textContent}")
+        assert outside['terminalVisible'] and 'Uso: vim' in outside['output'], outside
+        run_terminal('pwd; ls')
+        assert 'operadores de shell' in execute("return document.querySelector('#terminal-output').textContent")
 
         run_terminal('vim teste.txt')
         terminal_flow = execute("""
@@ -193,6 +208,9 @@ def main():
         run_terminal('cat teste.txt')
         displayed = execute("return document.querySelector('#terminal-output').textContent")
         assert 'O!' in displayed, displayed
+        run_terminal('clear extra')
+        invalid_clear = execute("return document.querySelector('#terminal-output').textContent")
+        assert 'Uso: clear' in invalid_clear and 'O!' in invalid_clear, invalid_clear
         run_terminal('clear')
         cleared = execute("return {output: document.querySelector('#terminal-output').textContent, input: document.querySelector('#terminal-input').textContent, prompt: document.querySelector('#terminal-prompt').textContent, focused: document.activeElement.id}")
         assert cleared == {'output': '', 'input': '', 'prompt': 'aluno@vim:/home/aluno$', 'focused': 'terminal-input'}, cleared
